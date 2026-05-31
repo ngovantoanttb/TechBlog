@@ -1,0 +1,63 @@
+/*
+Theme Name: TechJournal Custom Theme
+Theme URI: https://techjournal.com/
+Author: Antigravity Team
+Author URI: https://deepmind.google/
+Description: Custom, high-performance, minimalist blog theme built with Tailwind CSS. Specially optimized for SEO and technical content reading.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: techjournal
+Tags: one-column, two-columns, right-sidebar, custom-menu, featured-images, translation-ready, accessibility-ready, minimal, SEO-ready
+*/
+
+/* Global resets and standard WordPress class alignments if needed */
+.aligncenter {
+    display: block;
+    margin: 24px auto;
+}
+.alignleft {
+    float: left;
+    margin: 0 24px 24px 0;
+}
+.alignright {
+    float: right;
+    margin: 0 0 24px 24px;
+}
+.wp-caption {
+    max-width: 100%;
+    margin-bottom: 24px;
+}
+.wp-caption-text {
+    font-size: 14px;
+    color: #464554;
+    text-align: center;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+.back-to-top{
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 50px;
+    height: 50px;
+
+    background-color: var(--color-accent);
+
+    color:#fff;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    z-index:999;
+    transition:.3s;
+}
+
+.back-to-top:hover{
+    transform:translateY(-4px);
+}

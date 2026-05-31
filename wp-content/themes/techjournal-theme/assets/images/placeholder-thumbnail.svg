@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    
+    <!-- Accent Gradient -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff0000" />
+      <stop offset="100%" stop-color="#ef4444" />
+    </linearGradient>
+
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-width="0.5" opacity="0.3" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bgGrad)" />
+
+  <!-- Technical Grid Overlay -->
+  <rect width="800" height="500" fill="url(#grid)" />
+
+  <!-- Decorative Circuit lines / Tech shapes -->
+  <!-- Center circle design -->
+  <circle cx="400" cy="220" r="120" fill="none" stroke="#1e293b" stroke-width="8" opacity="0.5"/>
+  <circle cx="400" cy="220" r="100" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="10 15" opacity="0.7"/>
+  
+  <!-- Circuit Paths -->
+  <path d="M 150 150 L 250 150 L 300 200" fill="none" stroke="#475569" stroke-width="1.5" opacity="0.4" />
+  <circle cx="150" cy="150" r="4" fill="#475569" opacity="0.4" />
+  <circle cx="300" cy="200" r="3" fill="#ff0000" opacity="0.8" />
+  
+  <path d="M 650 350 L 550 350 L 500 300" fill="none" stroke="#475569" stroke-width="1.5" opacity="0.4" />
+  <circle cx="650" cy="350" r="4" fill="#475569" opacity="0.4" />
+  <circle cx="500" cy="300" r="3" fill="#ff0000" opacity="0.8" />
+
+  <!-- Abstract glowing camera/image icon -->
+  <g transform="translate(360, 180)" stroke="url(#accentGrad)" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 25 C5 15, 10 10, 20 10 L60 10 C70 10, 75 15, 75 25 L75 55 C75 65, 70 70, 60 70 L20 70 C10 70, 5 65, 5 55 Z" stroke="url(#accentGrad)" />
+    <path d="M15 60 L35 35 L50 50 L60 40 L70 55" stroke="#94a3b8" stroke-width="3.5" />
+    <circle cx="55" cy="25" r="4" fill="#ff0000" />
+  </g>
+
+  <!-- Typography -->
+  <text x="400" y="340" font-family="'Outfit', 'Inter', -apple-system, sans-serif" font-size="22" font-weight="900" fill="#f8fafc" letter-spacing="4" text-anchor="middle" opacity="0.95">
+    TECHBLOG
+  </text>
+  
+  <text x="400" y="370" font-family="'Inter', sans-serif" font-size="12" font-weight="700" fill="#64748b" letter-spacing="2" text-anchor="middle">
+    HÌNH ẢNH ĐANG CẬP NHẬT
+  </text>
+
+  <!-- Corner tech accents -->
+  <path d="M 20 40 L 20 20 L 40 20" fill="none" stroke="#ff0000" stroke-width="3" opacity="0.8"/>
+  <path d="M 780 40 L 780 20 L 760 20" fill="none" stroke="#ff0000" stroke-width="3" opacity="0.8"/>
+  <path d="M 20 460 L 20 480 L 40 480" fill="none" stroke="#ff0000" stroke-width="3" opacity="0.8"/>
+  <path d="M 780 460 L 780 480 L 760 480" fill="none" stroke="#ff0000" stroke-width="3" opacity="0.8"/>
+</svg>

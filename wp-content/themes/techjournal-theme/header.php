@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html <?php language_attributes(); ?> class="scroll-smooth">
+<head>
+    <meta charset="<?php bloginfo( 'charset' ); ?>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Favicon & Icons (Chuẩn SEO & Retina) -->
+    <link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/favicon.svg' ); ?>" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-icon.svg' ); ?>" />
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-icon.svg' ); ?>" />
+    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-icon.svg' ); ?>" />
+
+    <!-- Google Fonts & Material Symbols (Premium Font & Icons) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb', // Royal Blue (Xanh chủ đạo)
+                        'primary-container': '#eff6ff',
+                        background: '#f8fafc',
+                        surface: '#ffffff',
+                        'surface-container': '#f1f5f9',
+                        'surface-container-low': '#f8fafc',
+                        'on-surface': '#0f172a',
+                        'on-surface-variant': '#475569',
+                        'outline-variant': '#e2e8f0',
+                        'slate-855': '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['"Be Vietnam Pro"', 'sans-serif'],
+                        display: ['"Be Vietnam Pro"', 'sans-serif']
+                    },
+                    spacing: {
+                        'section-gap': '2rem',
+                        'gutter': '1.5rem'
+                    },
+                    maxWidth: {
+                        'container-max': '1280px',
+                        'article-max': '720px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-background text-on-surface font-sans antialiased selection:bg-primary selection:text-white;
+            }
+        }
+        /* Custom styles to prevent layout shifts */
+        .sticky-header {
+            @apply sticky top-0 z-40 bg-white border-b border-slate-100 shadow-sm;
+        }
+        /* Custom styled bottom dots on active menus */
+        .nav-link-active {
+            @apply text-primary font-bold relative;
+        }
+        .nav-link-active::after {
+            content: '';
+            @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary;
+        }
+    </style>
+
+    <?php wp_head(); ?>
+
+    <!-- SEO Structured Data Schema JSON-LD for Search Console Rich Snippets -->
+    <?php if ( is_single() ) : global $post; ?>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "<?php echo esc_attr( get_the_title() ); ?>",
+      "image": [
+        "<?php echo esc_url( has_post_thumbnail() ? get_the_post_thumbnail_url( get_the_ID(), 'full' ) : techblog_get_placeholder_img() ); ?>"
+      ],
+      "datePublished": "<?php echo get_the_date('c'); ?>",
+      "dateModified": "<?php echo get_the_modified_date('c'); ?>",
+      "author": {
+        "@type": "Person",
+        "name": "Admin TechBlog"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-logo.svg' ); ?>"
+        }
+      },
+      "description": "<?php echo esc_attr( wp_strip_all_tags( get_the_excerpt() ) ); ?>"
+    }
+    </script>
+    <?php endif; ?>
+</head>
+<body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
+
+<!-- Upper Header with Date and Real-time Greeting (No Ticker) -->
+<div class="bg-slate-50 border-b border-slate-100 text-slate-500 py-2.5 text-[11px] font-bold hidden md:block">
+    <div class="max-w-container-max mx-auto px-4 flex items-center justify-between">
+        <!-- Left: Date & Greeting -->
+        <div class="flex items-center gap-4">
+            <!-- Date display -->
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                <span><?php echo date_i18n('l, d F Y'); ?></span>
+            </div>
+            
+            <!-- Divider -->
+            <span class="text-slate-300">|</span>
+            
+            <!-- Greeting Display Only (Client-side JS to bypass WP Timezone and Caching issues) -->
+            <span id="header-greeting" class="text-primary uppercase tracking-wider"></span>
+        </div>
+        
+        <!-- Right: Social shortcuts -->
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3 text-slate-400">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors" title="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 fill-current" viewBox="0 0 320 512" aria-hidden="true">
+                        <path d="M80 299.3V512H196V299.3h86.5l13.6-103.6H196V129.3c0-30 8.3-50.5 51.4-50.5H302V3.6C292.8 2.4 261.5 0 225.1 0 149 0 97 46.4 97 131.6v64.1H7V299.3H80z"/>
+                    </svg>
+                </a>
+                <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors" title="Telegram">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 fill-current" viewBox="0 0 496 512" aria-hidden="true">
+                        <path d="M248,8C111,8,0,119,0,256S111,504,248,504,496,393,496,256,385,8,248,8ZM363,177.3,322,370.7c-3,13.5-11,16.8-22.3,10.5l-62.5-46.1L207,364c-3.4,3.4-6.3,6.3-12.9,6.3l4.5-63.7L314,195.4c5-4.4-1.1-6.9-7.7-2.5L181.8,304,120,284.7c-13.5-4.2-13.8-13.5,2.8-20L264,166C275.1,161.4,285.8,168.3,363,177.3Z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Sticky Header Bar -->
+<header class="sticky-header" role="banner">
+    <div class="max-w-container-max mx-auto px-4 h-16 flex items-center justify-between gap-4">
+        <!-- Logo (Đã thay logo techblog-logo.svg vào theo yêu cầu) -->
+        <div class="flex items-center active:scale-95 transition-all shrink-0">
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" class="flex items-center">
+                <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-logo.svg' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-8 w-auto block" />
+            </a>
+        </div>
+
+        <!-- Desktop Navigation Navbar (Aligned Right - Gồm Home, Bài viết, Giới thiệu, Liên hệ và Ô Tìm kiếm cho nhập luôn) -->
+        <nav class="hidden md:flex items-center gap-6 ml-auto" role="navigation" aria-label="Desktop Primary Navigation Menu">
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="text-[12px] font-black uppercase tracking-wider transition-colors py-2 <?php echo is_front_page() ? 'nav-link-active' : 'text-slate-600 hover:text-primary'; ?>">
+                Home
+            </a>
+            
+            <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" class="text-[12px] font-black uppercase tracking-wider transition-colors py-2 <?php echo (is_home() || is_archive()) ? 'nav-link-active' : 'text-slate-600 hover:text-primary'; ?>">
+                Bài viết
+            </a>
+
+            <?php
+            $about_page = get_page_by_path('gioi-thieu');
+            if ( $about_page ) :
+            ?>
+                <a href="<?php echo esc_url( get_permalink( $about_page->ID ) ); ?>" class="text-[12px] font-black uppercase tracking-wider transition-colors py-2 <?php echo is_page( $about_page->ID ) ? 'nav-link-active' : 'text-slate-600 hover:text-primary'; ?>">
+                    Giới thiệu
+                </a>
+            <?php endif; ?>
+
+            <?php
+            $contact_page = get_page_by_path('lien-he');
+            if ( $contact_page ) :
+            ?>
+                <a href="<?php echo esc_url( get_permalink( $contact_page->ID ) ); ?>" class="text-[12px] font-black uppercase tracking-wider transition-colors py-2 <?php echo is_page( $contact_page->ID ) ? 'nav-link-active' : 'text-slate-600 hover:text-primary'; ?>">
+                    Liên hệ
+                </a>
+            <?php endif; ?>
+
+            <!-- Inline Search Form (Cho gõ nhập tìm kiếm luôn trực tiếp) -->
+            <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="relative flex items-center bg-slate-50 border border-slate-200 focus-within:border-primary/80 transition-all px-2.5 py-1.5 w-[160px] lg:w-[220px]">
+                <input type="search" placeholder="Tìm kiếm..." name="s" value="<?php echo get_search_query(); ?>" class="w-full bg-transparent text-[11px] font-bold text-slate-700 placeholder-slate-400 focus:outline-none uppercase tracking-wider" />
+                <button type="submit" aria-label="Tìm kiếm" class="text-slate-400 hover:text-primary transition-colors cursor-pointer flex items-center">
+                    <span class="material-symbols-outlined text-[16px] font-bold">search</span>
+                </button>
+            </form>
+        </nav>
+
+        <!-- Header Actions (Commented search button & contact CTA button as requested, only mobile hamburger kept) -->
+        <div class="flex items-center gap-3">
+            <!-- Search trigger button (Commented out as requested)
+            <button onclick="toggleHeaderSearch()" aria-label="Open Search Box" class="w-9 h-9 border border-slate-200 text-slate-500 hover:text-primary hover:border-primary flex items-center justify-center cursor-pointer active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-[20px]">search</span>
+            </button>
+            -->
+
+            <!-- Contact CTA button (Commented out as it is merged into the main navbar)
+            <?php
+            $contact_page = get_page_by_path('lien-he');
+            if ( $contact_page ) :
+            ?>
+                <a href="<?php echo esc_url( get_permalink( $contact_page->ID ) ); ?>" class="hidden sm:flex bg-primary hover:bg-primary/95 text-white text-[10px] font-black uppercase px-4 py-2.5 tracking-wider items-center gap-1.5 transition-colors">
+                    Liên hệ <span class="material-symbols-outlined text-[13px]">arrow_right_alt</span>
+                </a>
+            <?php endif; ?>
+            -->
+
+            <!-- Mobile Hamburger Menu Button -->
+            <button onclick="toggleMobileCategoryDrawer()" aria-label="Open mobile categories drawer" class="md:hidden w-9 h-9 border border-slate-200 text-slate-500 hover:text-primary hover:border-primary flex items-center justify-center cursor-pointer active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-[20px]">menu</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Dropdown Search Bar (Commented out as requested for inline input)
+    <div id="header-search-bar" class="absolute left-0 w-full bg-white border-b border-slate-100 shadow-md py-4 px-4 hidden z-50">
+        <div class="max-w-container-max mx-auto">
+            <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex gap-2">
+                <input type="search" placeholder="Nhập từ khóa tìm kiếm..." name="s" value="<?php echo get_search_query(); ?>" class="flex-grow bg-slate-50 border border-slate-200 px-4 py-2.5 text-[13px] font-medium focus:outline-none focus:border-primary" />
+                <button type="submit" class="bg-primary hover:bg-primary/90 text-white font-bold px-6 py-2.5 text-[11px] uppercase tracking-wider transition-colors cursor-pointer">
+                    Tìm kiếm
+                </button>
+            </form>
+        </div>
+    </div>
+    -->
+
+    <!-- ================= CATEGORY QUICK-NAVBAR SUB-HEADER (Red for Active Category only) ================= -->
+    <?php if ( is_front_page() || is_home() || is_archive() || is_search() || is_single() ) : ?>
+    <div class="bg-white border-b border-slate-100/80 py-3 hidden md:block">
+        <div class="max-w-container-max mx-auto px-4 flex items-center justify-between">
+            <div class="flex flex-wrap items-center gap-2 py-1">
+                <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" 
+                   class="px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all <?php echo (!is_category() && !is_single() && !is_search()) ? 'bg-primary text-white shadow-sm font-black' : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-primary'; ?>">
+                    Tất Cả
+                </a>
+                <?php
+                $exclude_ids = array();
+                $default_cat_id = (int) get_option( 'default_category' );
+                if ( $default_cat_id ) {
+                    $default_cat = get_category( $default_cat_id );
+                    if ( $default_cat && in_array( $default_cat->slug, array( 'chua-phan-loai', 'uncategorized' ) ) ) {
+                        $exclude_ids[] = $default_cat_id;
+                    }
+                }
+
+                $all_cats = get_categories( array(
+                    'orderby'    => 'count',
+                    'order'      => 'DESC',
+                    'parent'     => 0,
+                    'hide_empty' => false,
+                    'exclude'    => $exclude_ids
+                ) );
+                
+                $current_cat_id = 0;
+                if ( is_single() ) {
+                    $post_cats = get_the_category();
+                    if ( ! empty( $post_cats ) ) {
+                        $current_cat_id = $post_cats[0]->term_id;
+                    }
+                }
+                
+                foreach ( $all_cats as $cat ) :
+                    $cat_link = get_category_link( $cat->term_id );
+                    $is_active = is_category( $cat->term_id ) || (is_single() && $current_cat_id === $cat->term_id);
+                    
+                    $sub_cats = get_categories( array(
+                        'orderby'    => 'count',
+                        'order'      => 'DESC',
+                        'parent'     => $cat->term_id,
+                        'hide_empty' => false
+                    ) );
+                    
+                    if ( ! empty( $sub_cats ) ) {
+                        foreach ( $sub_cats as $sub ) {
+                            if ( is_category( $sub->term_id ) || (is_single() && $current_cat_id === $sub->term_id) ) {
+                                $is_active = true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    $active_class = $is_active ? 'bg-primary text-white shadow-sm font-black' : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-primary';
+                    
+                    if ( ! empty( $sub_cats ) ) :
+                    ?>
+                        <div class="relative group shrink-0 z-30">
+                            <a href="<?php echo esc_url( $cat_link ); ?>" class="px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1 <?php echo $active_class; ?>">
+                                <?php echo esc_html( $cat->name ); ?>
+                                <span class="material-symbols-outlined text-[13px] font-black pointer-events-none">keyboard_arrow_down</span>
+                            </a>
+                            <!-- Dropdown Menu -->
+                            <div class="absolute left-0 top-full mt-1.5 hidden group-hover:block bg-white border border-slate-200/80 shadow-md py-1.5 min-w-[180px] z-50 transform origin-top transition-all duration-200">
+                                <?php foreach ( $sub_cats as $sub_cat ) : 
+                                    $sub_active = is_category( $sub_cat->term_id ) || (is_single() && $current_cat_id === $sub_cat->term_id);
+                                ?>
+                                    <a href="<?php echo esc_url( get_category_link( $sub_cat->term_id ) ); ?>" class="block px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-primary border-b border-slate-100/50 last:border-0 transition-colors uppercase tracking-wider <?php echo $sub_active ? 'text-primary bg-slate-50 font-black' : ''; ?>">
+                                        <?php echo esc_html( $sub_cat->name ); ?>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <a href="<?php echo esc_url( $cat_link ); ?>" class="px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all shrink-0 <?php echo $active_class; ?>">
+                            <?php echo esc_html( $cat->name ); ?>
+                        </a>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+            <!-- Right quick motto -->
+            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider hidden lg:block">
+                Khám Phá Công Nghệ Mới Mỗi Ngày
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile category scroll list -->
+    <div class="bg-white border-b border-slate-100/80 py-2.5 overflow-x-auto scrollbar-hide flex gap-2 px-4 md:hidden">
+        <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" 
+           class="px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-wider shrink-0 transition-all <?php echo (!is_category() && !is_single() && !is_search()) ? 'bg-[#ff0000] text-white shadow-sm' : 'bg-slate-50 text-slate-600'; ?>">
+            Tất Cả
+        </a>
+        <?php
+        $mobile_cats = get_categories( array(
+            'orderby'    => 'count',
+            'order'      => 'DESC',
+            'hide_empty' => false,
+            'exclude'    => $exclude_ids
+        ) );
+        foreach ( $mobile_cats as $cat ) :
+            $is_active = is_category( $cat->term_id ) || (is_single() && $current_cat_id === $cat->term_id);
+            $active_class = $is_active ? 'bg-[#ff0000] text-white shadow-sm' : 'bg-slate-50 text-slate-600';
+            ?>
+            <a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>" class="px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-wider shrink-0 transition-all <?php echo $active_class; ?>">
+                <?php echo esc_html( $cat->name ); ?>
+            </a>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+</header>
+
+<script>
+    // Header Dropdown Search logic (Commented out as it is now inline)
+    /*
+    function toggleHeaderSearch() {
+        const searchBar = document.getElementById('header-search-bar');
+        if (searchBar.classList.contains('hidden')) {
+            searchBar.classList.remove('hidden');
+            searchBar.querySelector('input').focus();
+        } else {
+            searchBar.classList.add('hidden');
+        }
+    }
+    */
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Greeting Display Only (Client-side JS to bypass WP Timezone and Caching issues)
+        const greetingSpan = document.getElementById("header-greeting");
+        if (greetingSpan) {
+            const hr = new Date().getHours();
+            let greeting = "";
+            if (hr >= 1 && hr <= 10) greeting = "Chúc bạn buổi sáng vui vẻ";
+            else if (hr >= 11 && hr <= 12) greeting = "Chúc bạn buổi trưa vui vẻ";
+            else if (hr >= 13 && hr <= 17) greeting = "Chúc bạn buổi chiều vui vẻ";
+            else greeting = "Chúc bạn buổi tối vui vẻ";
+            greetingSpan.textContent = greeting.toUpperCase();
+        }
+    });
+</script>
