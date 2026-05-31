@@ -1,11 +1,15 @@
 <!-- Mobile App-style Bottom Navigation Bar (Visible only on mobile) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-outline-variant/60 z-50 flex justify-around items-center py-2 px-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]" aria-label="Mobile Navigation Menu">
+<?php
+$posts_page_id = get_option( 'page_for_posts' );
+$posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '/' );
+?>
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-outline-variant/60 z-50 flex justify-around items-center py-2 px-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]" aria-label="Mobile Navigation Menu">
     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex flex-col items-center gap-0.5 <?php echo is_front_page() ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'; ?> transition-all active:scale-90" aria-label="Navigate to Home">
         <span class="material-symbols-outlined text-[24px]" aria-hidden="true" style="<?php echo is_front_page() ? "font-variation-settings: 'FILL' 1;" : ""; ?>">home</span>
         <span class="font-label-md text-[10px]">Home</span>
     </a>
     
-    <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" class="flex flex-col items-center gap-0.5 <?php echo (is_home() || is_archive()) ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'; ?> transition-all active:scale-90" aria-label="Navigate to Articles">
+    <a href="<?php echo esc_url( $posts_page_url ); ?>" class="flex flex-col items-center gap-0.5 <?php echo (is_home() || is_archive()) ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'; ?> transition-all active:scale-90" aria-label="Navigate to Articles">
         <span class="material-symbols-outlined text-[24px]" aria-hidden="true" style="<?php echo (is_home() || is_archive()) ? "font-variation-settings: 'FILL' 1;" : ""; ?>">article</span>
         <span class="font-label-md text-[10px]">Articles</span>
     </a>
@@ -58,7 +62,7 @@
 <footer class="w-full mt-section-gap bg-slate-900 border-t border-slate-800 text-slate-400" role="contentinfo">
     <div class="max-w-container-max mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-12 gap-12">
         <!-- Brand Info (Chuẩn SEO) -->
-        <div class="col-span-12 lg:col-span-5 space-y-5">
+        <div class="col-span-12 md:col-span-4 lg:col-span-5 space-y-5">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" class="block hover:opacity-90 active:scale-95 transition-all">
                 <!-- <span class="text-2xl font-display font-black text-white tracking-tighter hover:text-primary">
                     Tech<span class="text-primary">Blog</span>
@@ -96,7 +100,7 @@
         </div>
         
         <!-- Top categories - Flattened -->
-        <div class="col-span-6 sm:col-span-4 lg:col-span-4 space-y-4">
+        <div class="col-span-6 md:col-span-4 lg:col-span-4 space-y-4">
             <span class="font-display text-xs font-black uppercase tracking-wider text-slate-200 block border-b border-slate-800 pb-2.5">Chủ đề chính</span>
             <nav class="grid grid-cols-2 gap-x-4 gap-y-2.5 text-[13px]" aria-label="Footer Categories Links">
                 <?php
@@ -127,7 +131,7 @@
         </div>
 
         <!-- Resources / Quick Links -->
-        <div class="col-span-6 sm:col-span-4 lg:col-span-3 space-y-4">
+        <div class="col-span-6 md:col-span-4 lg:col-span-3 space-y-4">
             <span class="font-display text-xs font-black uppercase tracking-wider text-slate-200 block border-b border-slate-800 pb-2.5">Các trang khác</span>
             <nav class="flex flex-col gap-2.5 text-[13px]" aria-label="Footer Company Links">
                 <?php
@@ -216,7 +220,7 @@
 </script>
 
 <!-- Back to Top Button (Floating Zero Border-Radius Red Theme with Font Awesome SVG) -->
-<button class="back-to-top fixed bottom-20 md:bottom-8 right-6 z-50 bg-primary text-white w-10 h-10 flex items-center justify-center rounded-none shadow-md hover:bg-primary/80 transition-all cursor-pointer duration-300 active:scale-95" id="backToTop" style="display: none;" aria-label="Quay lại đầu trang">
+<button class="back-to-top fixed bottom-20 lg:bottom-8 right-6 z-50 bg-primary text-white w-10 h-10 flex items-center justify-center rounded-none shadow-md hover:bg-primary/80 transition-all cursor-pointer duration-300 active:scale-95" id="backToTop" style="display: none;" aria-label="Quay lại đầu trang">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-white" viewBox="0 0 640 640" aria-hidden="true">
         <!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
         <path d="M342.6 73.4C330.1 60.9 309.8 60.9 297.3 73.4L137.3 233.4C124.8 245.9 124.8 266.2 137.3 278.7C149.8 291.2 170.1 291.2 182.6 278.7L288 173.3L288 544C288 561.7 302.3 576 320 576C337.7 576 352 561.7 352 544L352 173.3L457.4 278.7C469.9 291.2 490.2 291.2 502.7 278.7C515.2 266.2 515.2 245.9 502.7 233.4L342.7 73.4z"/>

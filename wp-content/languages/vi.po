@@ -13693,7 +13693,7 @@ msgstr "Blog"
 #: wp-includes/theme.php:2456
 msgctxt "Theme starter content"
 msgid "Contact"
-msgstr "Liên hệ"
+msgstr "Liên hệ"    
 
 #: wp-includes/theme.php:2448
 msgctxt "Theme starter content"

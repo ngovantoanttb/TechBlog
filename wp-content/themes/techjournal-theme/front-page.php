@@ -59,7 +59,7 @@ get_header(); ?>
                 $track_width = $slide_count * 100;
                 $slide_width = 100 / $slide_count;
                 ?>
-                <div class="relative w-full aspect-[16/10] bg-slate-900 overflow-hidden group/hero-slider border border-slate-100 shadow-sm">
+                <div class="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-slate-900 overflow-hidden group/hero-slider border border-slate-100 shadow-sm">
                     <div class="w-full h-full relative overflow-hidden" id="hero-slider-wrapper">
                         <div class="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" id="hero-slider-track" style="width: <?php echo $track_width; ?>%; transform: translateX(0%);">
                             <?php 
@@ -107,23 +107,23 @@ get_header(); ?>
                 </div>
 
                 <!-- Thumbnail indicators horizontally underneath the slider -->
-                <div class="grid gap-2" style="grid-template-columns: repeat(<?php echo $slide_count; ?>, minmax(0, 1fr));">
-                    <?php 
-                    foreach ( $slider_posts as $idx => $sp ) : 
-                        $sp_thumb = get_the_post_thumbnail_url($sp->ID, 'thumbnail');
-                        if ( !$sp_thumb ) $sp_thumb = techblog_get_placeholder_img();
-                    ?>
+                <div class="hidden sm:grid gap-2" style="grid-template-columns: repeat(7, minmax(0, 1fr));">
+                        <?php 
+                        foreach ( $slider_posts as $idx => $sp ) : 
+                            $sp_thumb = get_the_post_thumbnail_url($sp->ID, 'thumbnail');
+                            if ( !$sp_thumb ) $sp_thumb = techblog_get_placeholder_img();
+                        ?>
                         <div class="hero-thumb-btn aspect-[16/10] cursor-pointer transition-all relative group" data-thumb-index="<?php echo $idx; ?>">
-                            <!-- Small upward triangle indicator placed above the border, visible only when active -->
-                            <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-primary transition-opacity duration-300 pointer-events-none indicator-triangle <?php echo $idx === 0 ? '' : 'opacity-0'; ?>"></div>
-                            <div class="w-full h-full overflow-hidden relative">
-                                <img src="<?php echo esc_url($sp_thumb); ?>" class="w-full h-full object-cover" alt="" />
-                                <!-- Dark overlay, active = opacity-100 (make image a bit darker) -->
-                                <div class="absolute inset-0 bg-black/30 pointer-events-none transition-opacity duration-300 active-overlay <?php echo $idx === 0 ? 'opacity-100' : 'opacity-0'; ?>"></div>
+                                <!-- Small upward triangle indicator placed above the border, visible only when active -->
+                                <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-primary transition-opacity duration-300 pointer-events-none indicator-triangle <?php echo $idx === 0 ? '' : 'opacity-0'; ?>"></div>
+                                <div class="w-full h-full overflow-hidden relative">
+                                    <img src="<?php echo esc_url($sp_thumb); ?>" class="w-full h-full object-cover" alt="" />
+                                    <!-- Dark overlay, active = opacity-100 (make image a bit darker) -->
+                                    <div class="absolute inset-0 bg-black/30 pointer-events-none transition-opacity duration-300 active-overlay <?php echo $idx === 0 ? 'opacity-100' : 'opacity-0'; ?>"></div>
+                                </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+                        <?php endforeach; ?>
+                    </div>
 
                 <!-- ================= ARTICLES LIST SECTION ================= -->
                 <div class="space-y-6 pt-4">
@@ -149,48 +149,7 @@ get_header(); ?>
 
                         if ( $latest_query->have_posts() ) :
                             while ( $latest_query->have_posts() ) : $latest_query->the_post();
-                                $post_image = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
-                                if ( ! $post_image ) {
-                                    $post_image = techblog_get_placeholder_img();
-                                }
-                                
-                                $cats = get_the_category();
-                                $category_to_show = null;
-                                if ( ! empty( $cats ) ) {
-                                    foreach($cats as $c) {
-                                        if($c->term_id != get_option('default_category')) {
-                                            $category_to_show = $c;
-                                            break;
-                                        }
-                                    }
-                                    if (!$category_to_show) {
-                                        $category_to_show = $cats[0];
-                                    }
-                                }
-                                ?>
-                                <article class="group flex flex-col cursor-pointer transition-all duration-300">
-                                    <!-- Image container with absolute Category Badge overlay -->
-                                    <a href="<?php the_permalink(); ?>" class="aspect-[16/10] overflow-hidden block relative bg-slate-950">
-                                        <img class="w-full h-full object-cover transition-transform duration-750 group-hover:scale-102 opacity-95 group-hover:opacity-100" src="<?php echo esc_url($post_image); ?>" alt="<?php the_title_attribute(); ?>" />
-                                        <?php if ($category_to_show) : ?>
-                                            <span class="absolute bottom-3 left-3 bg-[#ff0000] text-white text-[9px] font-black uppercase px-2.5 py-1 tracking-widest shadow-sm">
-                                                <?php echo esc_html($category_to_show->name); ?>
-                                            </span>
-                                        <?php endif; ?>
-                                    </a>
-                                    <div class="pt-4 flex flex-col flex-grow">
-                                        <h3 class="font-display text-[14px] sm:text-base text-slate-800 group-hover:text-primary transition-colors font-bold leading-snug mb-2 break-words">
-                                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                        </h3>
-                                        
-                                        <!-- Date and Clock at the bottom -->
-                                        <div class="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium mt-auto">
-                                            <span class="material-symbols-outlined text-[13px] text-blue-500">schedule</span>
-                                            <?php echo get_the_date('d/m/Y'); ?>
-                                        </div>
-                                    </div>
-                                </article>
-                                <?php
+                                get_template_part( 'template-parts/content-grid' );
                             endwhile;
                             wp_reset_postdata();
                         else :
@@ -216,7 +175,7 @@ get_header(); ?>
             </div>
 
             <!-- Right Column: Sidebar (Unified vertically without gaps) -->
-            <aside class="col-span-12 lg:col-span-4 space-y-6">
+            <aside class="col-span-12 lg:col-span-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
                 
                 <!-- Sidebar Widget 1: Ranked Popular Posts Widget (Photo 5 Style) -->
                 <div class="bg-white border border-slate-100 p-5 shadow-sm">
@@ -418,6 +377,19 @@ get_header(); ?>
                 }
                 const newTriangle = thumbs[currentIdx].querySelector('.indicator-triangle');
                 if (newTriangle) newTriangle.classList.remove('opacity-0');
+            }
+            
+            // Slide thumbnail track if there are more than 7 thumbnails
+            const thumbsTrack = document.getElementById('hero-thumbs-track');
+            if (thumbsTrack && thumbs.length > 7) {
+                let shiftIdx = currentIdx - 3;
+                if (shiftIdx < 0) shiftIdx = 0;
+                const maxShift = thumbs.length - 7;
+                if (shiftIdx > maxShift) shiftIdx = maxShift;
+                const thumbWidth = thumbs[0].offsetWidth;
+                const gap = 8;
+                const translateX = -shiftIdx * (thumbWidth + gap);
+                thumbsTrack.style.transform = `translateX(${translateX}px)`;    
             }
         }
         

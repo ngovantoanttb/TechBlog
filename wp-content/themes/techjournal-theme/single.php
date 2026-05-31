@@ -12,11 +12,23 @@ get_header(); ?>
     <div class="max-w-container-max mx-auto px-4 grid grid-cols-12 gap-6 items-start">
         
         <!-- Left: Main Post Reading Area -->
-        <article class="col-span-12 lg:col-span-8 bg-white border border-slate-100/80 p-5 sm:p-8 premium-shadow">
+        <div class="col-span-12 lg:col-span-8 bg-white border border-slate-100/80 p-5 sm:p-8 premium-shadow">
             <?php
             if ( have_posts() ) :
                 while ( have_posts() ) : the_post();
                     $cats = get_the_category();
+                    $category_to_show = null;
+                    if ( ! empty( $cats ) ) {
+                        foreach($cats as $c) {
+                            if($c->term_id != get_option('default_category')) {
+                                $category_to_show = $c;
+                                break;
+                            }
+                        }
+                        if (!$category_to_show) {
+                            $category_to_show = $cats[0];
+                        }
+                    }
                     $read_time = techjournal_calculate_read_time( get_the_content() );
                     $views = techjournal_get_post_views( get_the_ID() );
                     ?>
@@ -25,8 +37,8 @@ get_header(); ?>
                     <nav class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
                         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="hover:text-primary transition-all">Trang Chủ</a>
                         <span class="material-symbols-outlined text-[12px]">chevron_right</span>
-                        <?php if ( ! empty( $cats ) && $cats[0]->term_id != get_option( 'default_category' ) ) : ?>
-                            <a href="<?php echo esc_url( get_category_link( $cats[0]->term_id ) ); ?>" class="hover:text-primary transition-all"><?php echo esc_html( $cats[0]->name ); ?></a>
+                        <?php if ( $category_to_show ) : ?>
+                            <a href="<?php echo esc_url( get_category_link( $category_to_show->term_id ) ); ?>" class="hover:text-primary transition-all"><?php echo esc_html( $category_to_show->name ); ?></a>
                             <span class="material-symbols-outlined text-[12px]">chevron_right</span>
                         <?php endif; ?>
                         <span class="text-slate-600 truncate max-w-[150px] sm:max-w-[300px] inline-block"><?php the_title(); ?></span>
@@ -40,7 +52,7 @@ get_header(); ?>
                     <!-- Article Meta -->
                     <div class="flex flex-wrap items-center gap-y-2.5 gap-x-4 pb-5 border-b border-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-6">
                         <span class="flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[13px] text-primary">person</span> Admin TechBlog
+                            <span class="material-symbols-outlined text-[13px] text-primary">person</span> <?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?>
                         </span>
                         <span class="flex items-center gap-1">
                             <span class="material-symbols-outlined text-[13px] text-primary">calendar_today</span> <?php echo get_the_date(); ?>
@@ -128,26 +140,7 @@ get_header(); ?>
 
                             if ( $related_query->have_posts() ) :
                                 while ( $related_query->have_posts() ) : $related_query->the_post();
-                                    $rel_image = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
-                                    if ( ! $rel_image ) $rel_image = techblog_get_placeholder_img();
-                                    ?>
-                                    <article class="group bg-white flex flex-col cursor-pointer transition-all duration-300">
-                                        <a href="<?php the_permalink(); ?>" class="aspect-[16/10] overflow-hidden block bg-slate-950">
-                                            <img class="w-full h-full object-cover transition-transform duration-750 group-hover:scale-102 opacity-95 group-hover:opacity-100" src="<?php echo esc_url($rel_image); ?>" alt="<?php the_title_attribute(); ?>" />
-                                        </a>
-                                        <div class="pt-4 flex flex-col flex-grow">
-                                            <h4 class="font-display text-xs sm:text-sm font-bold text-slate-800 group-hover:text-[#ff0000] transition-colors leading-snug mb-2 break-words">
-                                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                            </h4>
-                                            
-                                            <!-- Date and Clock at the bottom -->
-                                            <div class="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium mt-auto">
-                                                <span class="material-symbols-outlined text-[13px] text-blue-500">schedule</span>
-                                                <?php echo get_the_date('d/m/Y'); ?>
-                                            </div>
-                                        </div>
-                                    </article>
-                                    <?php
+                                    get_template_part( 'template-parts/content', 'grid' );
                                 endwhile;
                                 wp_reset_postdata();
                             else :
@@ -170,10 +163,10 @@ get_header(); ?>
                 endwhile;
             endif;
             ?>
-        </article>
+        </div>
         
         <!-- Right Sidebar (TechBlog Premium Sidebar Style) -->
-        <aside class="col-span-12 lg:col-span-4 space-y-6">
+        <aside class="col-span-12 lg:col-span-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
 
             <!-- Sidebar: BÀI VIẾT NỔI BẬT (Featured/Pinned Posts - Strictly Pinned/Sticky system) -->
             <?php

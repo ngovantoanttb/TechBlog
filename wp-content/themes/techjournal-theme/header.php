@@ -15,7 +15,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN (With console warning suppression) -->
+    <script>
+        (function() {
+            const originalWarn = console.warn;
+            console.warn = function(...args) {
+                if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) {
+                    return;
+                }
+                originalWarn.apply(console, args);
+            };
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -102,9 +113,13 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<?php
+$posts_page_id = get_option( 'page_for_posts' );
+$posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '/' );
+?>
 
 <!-- Upper Header with Date and Real-time Greeting (No Ticker) -->
-<div class="bg-slate-50 border-b border-slate-100 text-slate-500 py-2.5 text-[11px] font-bold hidden md:block">
+<div class="bg-slate-50 border-b border-slate-100 text-slate-500 py-2.5 text-[11px] font-bold hidden lg:block">
     <div class="max-w-container-max mx-auto px-4 flex items-center justify-between">
         <!-- Left: Date & Greeting -->
         <div class="flex items-center gap-4">
@@ -150,12 +165,12 @@
         </div>
 
         <!-- Desktop Navigation Navbar (Aligned Right - Gồm Home, Bài viết, Giới thiệu, Liên hệ và Ô Tìm kiếm cho nhập luôn) -->
-        <nav class="hidden md:flex items-center gap-6 ml-auto" role="navigation" aria-label="Desktop Primary Navigation Menu">
+        <nav class="hidden lg:flex items-center gap-6 ml-auto" role="navigation" aria-label="Desktop Primary Navigation Menu">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="text-[12px] font-black uppercase tracking-wider transition-colors py-2 <?php echo is_front_page() ? 'nav-link-active' : 'text-slate-600 hover:text-primary'; ?>">
-                Home
+                Trang chủ
             </a>
             
-            <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" class="text-[12px] font-black uppercase tracking-wider transition-colors py-2 <?php echo (is_home() || is_archive()) ? 'nav-link-active' : 'text-slate-600 hover:text-primary'; ?>">
+            <a href="<?php echo esc_url( $posts_page_url ); ?>" class="text-[12px] font-black uppercase tracking-wider transition-colors py-2 <?php echo (is_home() || is_archive()) ? 'nav-link-active' : 'text-slate-600 hover:text-primary'; ?>">
                 Bài viết
             </a>
 
@@ -179,7 +194,7 @@
 
             <!-- Inline Search Form (Cho gõ nhập tìm kiếm luôn trực tiếp) -->
             <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="relative flex items-center bg-slate-50 border border-slate-200 focus-within:border-primary/80 transition-all px-2.5 py-1.5 w-[160px] lg:w-[220px]">
-                <input type="search" placeholder="Tìm kiếm..." name="s" value="<?php echo get_search_query(); ?>" class="w-full bg-transparent text-[11px] font-bold text-slate-700 placeholder-slate-400 focus:outline-none uppercase tracking-wider" />
+                <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full bg-transparent text-[12px] text-slate-700 placeholder-slate-400 placeholder:text-[10px] placeholder:font-bold placeholder:tracking-wider focus:outline-none" />
                 <button type="submit" aria-label="Tìm kiếm" class="text-slate-400 hover:text-primary transition-colors cursor-pointer flex items-center">
                     <span class="material-symbols-outlined text-[16px] font-bold">search</span>
                 </button>
@@ -206,7 +221,7 @@
             -->
 
             <!-- Mobile Hamburger Menu Button -->
-            <button onclick="toggleMobileCategoryDrawer()" aria-label="Open mobile categories drawer" class="md:hidden w-9 h-9 border border-slate-200 text-slate-500 hover:text-primary hover:border-primary flex items-center justify-center cursor-pointer active:scale-95 transition-all">
+            <button onclick="toggleMobileCategoryDrawer()" aria-label="Open mobile categories drawer" class="lg:hidden w-9 h-9 border border-slate-200 text-slate-500 hover:text-primary hover:border-primary flex items-center justify-center cursor-pointer active:scale-95 transition-all">
                 <span class="material-symbols-outlined text-[20px]">menu</span>
             </button>
         </div>
@@ -227,10 +242,10 @@
 
     <!-- ================= CATEGORY QUICK-NAVBAR SUB-HEADER (Red for Active Category only) ================= -->
     <?php if ( is_front_page() || is_home() || is_archive() || is_search() || is_single() ) : ?>
-    <div class="bg-white border-b border-slate-100/80 py-3 hidden md:block">
+    <div class="bg-white border-b border-slate-100/80 py-3 hidden lg:block">
         <div class="max-w-container-max mx-auto px-4 flex items-center justify-between">
             <div class="flex flex-wrap items-center gap-2 py-1">
-                <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" 
+                <a href="<?php echo esc_url( $posts_page_url ); ?>" 
                    class="px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all <?php echo (!is_category() && !is_single() && !is_search()) ? 'bg-primary text-white shadow-sm font-black' : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-primary'; ?>">
                     Tất Cả
                 </a>
@@ -315,9 +330,9 @@
     </div>
     
     <!-- Mobile category scroll list -->
-    <div class="bg-white border-b border-slate-100/80 py-2.5 overflow-x-auto scrollbar-hide flex gap-2 px-4 md:hidden">
-        <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ); ?>" 
-           class="px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-wider shrink-0 transition-all <?php echo (!is_category() && !is_single() && !is_search()) ? 'bg-[#ff0000] text-white shadow-sm' : 'bg-slate-50 text-slate-600'; ?>">
+    <div class="bg-white border-b border-slate-100/80 py-2.5 overflow-x-auto scrollbar-hide flex gap-2 px-4 lg:hidden">
+        <a href="<?php echo esc_url( $posts_page_url ); ?>" 
+           class="px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-wider shrink-0 transition-all <?php echo (!is_category() && !is_single() && !is_search()) ? 'bg-primary text-white shadow-sm font-black' : 'bg-slate-50 text-slate-600'; ?>">
             Tất Cả
         </a>
         <?php
@@ -329,7 +344,7 @@
         ) );
         foreach ( $mobile_cats as $cat ) :
             $is_active = is_category( $cat->term_id ) || (is_single() && $current_cat_id === $cat->term_id);
-            $active_class = $is_active ? 'bg-[#ff0000] text-white shadow-sm' : 'bg-slate-50 text-slate-600';
+            $active_class = $is_active ? 'bg-primary text-white shadow-sm font-black' : 'bg-slate-50 text-slate-600';
             ?>
             <a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>" class="px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-wider shrink-0 transition-all <?php echo $active_class; ?>">
                 <?php echo esc_html( $cat->name ); ?>
