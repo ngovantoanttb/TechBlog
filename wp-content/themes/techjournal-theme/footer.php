@@ -68,7 +68,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                     Tech<span class="text-primary">Blog</span>
                 </span>
                 <span class="sr-only"><?php bloginfo( 'name' ); ?></span> -->
-                <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog-footer.svg' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-12 w-auto block" style="clip-path: inset(1px);" />
+                <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog-footer.png' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-12 w-auto block" style="clip-path: inset(1px);" />
             </a>
             <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
                 <?php 

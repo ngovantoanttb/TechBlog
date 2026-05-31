@@ -4,6 +4,43 @@
     <meta charset="<?php bloginfo( 'charset' ); ?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
+    <!-- Meta Description (Tối ưu SEO chuẩn Lighthouse) -->
+    <?php
+    $meta_desc = '';
+    if ( is_single() || is_page() ) {
+        global $post;
+        if ( ! empty( $post->post_excerpt ) ) {
+            $meta_desc = wp_strip_all_tags( $post->post_excerpt );
+        } else {
+            $meta_desc = wp_strip_all_tags( get_the_excerpt() );
+        }
+        if ( empty( $meta_desc ) ) {
+            $meta_desc = wp_strip_all_tags( strip_shortcodes( $post->post_content ) );
+        }
+    } elseif ( is_category() ) {
+        $meta_desc = category_description();
+    } elseif ( is_tag() ) {
+        $meta_desc = tag_description();
+    }
+    
+    if ( empty( $meta_desc ) ) {
+        $meta_desc = get_bloginfo( 'description' );
+    }
+    
+    if ( empty( $meta_desc ) ) {
+        $meta_desc = 'TechBlog - Trang tin tức công nghệ, tạp chí trực tuyến chia sẻ kiến thức chuyên sâu về lập trình, thiết kế web và xu hướng công nghệ mới nhất.';
+    }
+    
+    $meta_desc = html_entity_decode( $meta_desc, ENT_QUOTES, 'UTF-8' );
+    $meta_desc = wp_strip_all_tags( $meta_desc );
+    $meta_desc = preg_replace( '/\s+/', ' ', $meta_desc );
+    $meta_desc = trim( $meta_desc );
+    if ( mb_strlen( $meta_desc ) > 160 ) {
+        $meta_desc = mb_substr( $meta_desc, 0, 157 ) . '...';
+    }
+    ?>
+    <meta name="description" content="<?php echo esc_attr( $meta_desc ); ?>" />
+    
     <!-- Favicon & Icons (Chuẩn SEO & Retina) -->
     <link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/favicon.svg' ); ?>" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-icon.svg' ); ?>" />
@@ -103,7 +140,7 @@
         "name": "<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>",
         "logo": {
           "@type": "ImageObject",
-          "url": "<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-logo.svg' ); ?>"
+          "url": "<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog-header.png' ); ?>"
         }
       },
       "description": "<?php echo esc_attr( wp_strip_all_tags( get_the_excerpt() ) ); ?>"
@@ -160,7 +197,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         <!-- Logo (Đã thay logo techblog-logo.svg vào theo yêu cầu) -->
         <div class="flex items-center active:scale-95 transition-all shrink-0">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" class="flex items-center">
-                <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-logo.svg' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-8 w-auto block" />
+                <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog-header.png' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-8 w-auto block" />
             </a>
         </div>
 

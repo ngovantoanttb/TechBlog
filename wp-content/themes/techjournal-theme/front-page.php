@@ -129,7 +129,7 @@ get_header(); ?>
                 <div class="space-y-6 pt-4">
                     <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-3 relative">
                         <div class="flex items-center gap-1.5 relative">
-                            <span class="material-symbols-outlined text-primary text-[20px] font-bold">local_fire_department</span>
+                            <span class="material-symbols-outlined text-[#ff0000] text-[20px] font-bold">local_fire_department</span>
                             <h2 class="font-display text-[16px] font-black text-slate-800 uppercase tracking-tight">
                                 Bài viết mới
                             </h2>
