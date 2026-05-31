@@ -231,7 +231,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 
             <!-- Inline Search Form (Cho gõ nhập tìm kiếm luôn trực tiếp) -->
             <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="relative flex items-center bg-slate-50 border border-slate-200 focus-within:border-primary/80 transition-all px-2.5 py-1.5 w-[160px] lg:w-[220px]">
-                <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full bg-transparent text-[12px] text-slate-700 placeholder-slate-400 placeholder:text-[10px] placeholder:font-bold placeholder:tracking-wider focus:outline-none" />
+                <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full text-[12px] text-slate-700 placeholder-slate-400 placeholder:text-[10px] placeholder:font-bold placeholder:tracking-wider focus:outline-none" />
                 <button type="submit" aria-label="Tìm kiếm" class="text-slate-400 hover:text-primary transition-colors cursor-pointer flex items-center">
                     <span class="material-symbols-outlined text-[16px] font-bold">search</span>
                 </button>

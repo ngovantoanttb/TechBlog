@@ -71,13 +71,14 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog-footer.png' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-12 w-auto block" style="clip-path: inset(1px);" />
             </a>
             <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
-                <?php 
+                Nơi mà bạn có thể tìm thấy những kiến thức, thủ thuật hữu ích về công nghệ mà nhà trường không giảng dạy cho bạn biết.
+                <!-- <?php 
                 $site_desc = get_bloginfo( 'description' );
                 if ( empty( $site_desc ) || $site_desc === 'Một trang web sử dụng WordPress' || $site_desc === 'Just another WordPress site' ) {
                     $site_desc = 'Kênh thông tin công nghệ hàng đầu, chuyên cập nhật các tin tức công nghệ mới nhất, đánh giá chi tiết thiết bị, kiến thức lập trình và giải pháp phần mềm hiện đại.';
                 }
                 echo esc_html( $site_desc ); 
-                ?>
+                ?> -->
             </p>
             <!-- Social profiles - Flattened -->
             <div class="flex gap-3 pt-2">

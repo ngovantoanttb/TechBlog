@@ -105,13 +105,54 @@ get_header(); ?>
                     <!-- Social Share CTA (Minimalistic TechBlog style - Flattened) -->
                     <div class="mt-10 py-5 border-y border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <span class="font-display text-[11px] font-black uppercase tracking-wider text-slate-400">CHIA SẺ BÀI VIẾT</span>
-                        <div class="flex items-center gap-2">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <!-- Facebook -->
                             <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#1877f2] hover:bg-[#166fe5] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 active:scale-95">
                                 <span class="material-symbols-outlined text-[14px]">share</span> Facebook
                             </a>
-                            <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#1da1f2] hover:bg-[#1a91da] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 active:scale-95">
-                                <span class="material-symbols-outlined text-[14px]">share</span> Twitter
+                            <!-- Zalo -->
+                            <a href="https://sp.zalo.me/share_to_zalo?url=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0068ff] hover:bg-[#0056d6] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 active:scale-95">
+                                <span class="material-symbols-outlined text-[14px]">share</span> Zalo
                             </a>
+                            <!-- Telegram -->
+                            <a href="https://t.me/share/url?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0088cc] hover:bg-[#0077b5] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 active:scale-95">
+                                <span class="material-symbols-outlined text-[14px]">send</span> Telegram
+                            </a>
+                            <!-- Copy Link -->
+                            <button onclick="(function(btn){
+                                var text = '<?php echo esc_js(get_permalink()); ?>';
+                                if (navigator.clipboard && window.isSecureContext) {
+                                    navigator.clipboard.writeText(text).then(function() {
+                                        alert('Đã sao chép liên kết bài viết vào bộ nhớ tạm!');
+                                    }).catch(function() {
+                                        fallbackCopy(text);
+                                    });
+                                } else {
+                                    fallbackCopy(text);
+                                }
+                                function fallbackCopy(val) {
+                                    var textArea = document.createElement('textarea');
+                                    textArea.value = val;
+                                    textArea.style.position = 'fixed';
+                                    textArea.style.opacity = '0';
+                                    document.body.appendChild(textArea);
+                                    textArea.focus();
+                                    textArea.select();
+                                    try {
+                                        var successful = document.execCommand('copy');
+                                        if (successful) {
+                                            alert('Đã sao chép liên kết bài viết vào bộ nhớ tạm!');
+                                        } else {
+                                            prompt('Không thể tự động sao chép. Hãy nhấn Ctrl+C để sao chép liên kết:', val);
+                                        }
+                                    } catch (err) {
+                                        prompt('Không thể tự động sao chép. Hãy nhấn Ctrl+C để sao chép liên kết:', val);
+                                    }
+                                    document.body.removeChild(textArea);
+                                }
+                            })(this)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 active:scale-95 cursor-pointer border border-slate-200">
+                                <span class="material-symbols-outlined text-[14px]">link</span> Sao Chép Link
+                            </button>
                         </div>
                     </div>
 
