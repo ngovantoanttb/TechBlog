@@ -102,8 +102,8 @@ get_header(); ?>
                         ?>
                     </div>
 
-                    <!-- Social Share CTA (Minimalistic TechBlog style - Flattened) -->
-                    <div class="mt-10 py-5 border-y border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <!-- Social Share CTA (Minimalistic TechBlog style - Left Aligned) -->
+                    <div class="mt-10 py-5 border-y border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <span class="font-display text-[11px] font-black uppercase tracking-wider text-slate-400">CHIA SẺ BÀI VIẾT</span>
                         <div class="flex flex-wrap items-center gap-2">
                             <!-- Facebook -->

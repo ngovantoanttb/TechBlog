@@ -72,3 +72,32 @@ function techblog_create_contact_table() {
 }
 add_action( 'after_switch_theme', 'techblog_create_contact_table' );
 add_action( 'init', 'techblog_create_contact_table', 5 );
+
+// 4. Exclude static Pages and Privacy Policy posts from site search results
+function techjournal_customize_search_query( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
+        // Only return blog posts (bài viết) in search results, excluding normal pages
+        $query->set( 'post_type', 'post' );
+        
+        // Exclude specific privacy policy page/post slugs just in case
+        $excluded_slugs = array( 'chinh-sach-bao-mat', 'privacy-policy' );
+        $excluded_ids = array();
+        
+        foreach ( $excluded_slugs as $slug ) {
+            $post = get_page_by_path( $slug, OBJECT, array( 'post', 'page' ) );
+            if ( $post ) {
+                $excluded_ids[] = $post->ID;
+            }
+        }
+        
+        if ( ! empty( $excluded_ids ) ) {
+            $current_not_in = $query->get( 'post__not_in' );
+            if ( ! is_array( $current_not_in ) ) {
+                $current_not_in = ! empty( $current_not_in ) ? array( $current_not_in ) : array();
+            }
+            $query->set( 'post__not_in', array_merge( $current_not_in, $excluded_ids ) );
+        }
+    }
+}
+add_action( 'pre_get_posts', 'techjournal_customize_search_query' );
+

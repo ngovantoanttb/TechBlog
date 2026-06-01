@@ -1,59 +1,107 @@
-<!-- Mobile App-style Bottom Navigation Bar (Visible only on mobile) -->
 <?php
 $posts_page_id = get_option( 'page_for_posts' );
 $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '/' );
 ?>
-<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-outline-variant/60 z-50 flex justify-around items-center py-2 px-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]" aria-label="Mobile Navigation Menu">
-    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex flex-col items-center gap-0.5 <?php echo is_front_page() ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'; ?> transition-all active:scale-90" aria-label="Navigate to Home">
-        <span class="material-symbols-outlined text-[24px]" aria-hidden="true" style="<?php echo is_front_page() ? "font-variation-settings: 'FILL' 1;" : ""; ?>">home</span>
-        <span class="font-label-md text-[10px]">Home</span>
-    </a>
-    
-    <a href="<?php echo esc_url( $posts_page_url ); ?>" class="flex flex-col items-center gap-0.5 <?php echo (is_home() || is_archive()) ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'; ?> transition-all active:scale-90" aria-label="Navigate to Articles">
-        <span class="material-symbols-outlined text-[24px]" aria-hidden="true" style="<?php echo (is_home() || is_archive()) ? "font-variation-settings: 'FILL' 1;" : ""; ?>">article</span>
-        <span class="font-label-md text-[10px]">Articles</span>
-    </a>
-    
-    <button onclick="toggleMobileCategoryDrawer()" class="flex flex-col items-center gap-0.5 text-on-surface-variant hover:text-primary transition-all active:scale-90" aria-haspopup="dialog" aria-expanded="false" aria-label="Explore engineering topics">
-        <span class="material-symbols-outlined text-[24px]" aria-hidden="true">explore</span>
-        <span class="font-label-md text-[10px]">Topics</span>
-    </button>
-    
-    <?php
-    $contact_page = get_page_by_path('lien-he');
-    if ( $contact_page ) :
-    ?>
-        <a href="<?php echo esc_url( get_permalink( $contact_page->ID ) ); ?>" class="flex flex-col items-center gap-0.5 <?php echo is_page( $contact_page->ID ) ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'; ?> transition-all active:scale-90" aria-label="Navigate to Contact Page">
-            <span class="material-symbols-outlined text-[24px]" aria-hidden="true" style="<?php echo is_page( $contact_page->ID ) ? "font-variation-settings: 'FILL' 1;" : ""; ?>">mail</span>
-            <span class="font-label-md text-[10px]">Contact</span>
-        </a>
-    <?php endif; ?>
-</nav>
 
-<!-- Mobile Dynamic Category Drawer overlay - Flattened -->
-<div id="mobile-category-drawer" class="fixed inset-0 bg-black/40 z-50 hidden transition-all duration-300" role="dialog" aria-modal="true" aria-label="Topics Menu Drawer">
-    <div class="absolute bottom-0 w-full bg-white max-h-[70vh] overflow-y-auto p-6 transition-transform duration-300 translate-y-full" id="drawer-content">
-        <div class="flex justify-between items-center mb-6 pb-2 border-b border-outline-variant">
-            <h3 class="font-headline-md text-headline-md text-primary font-bold">Engineering Topics</h3>
-            <button onclick="toggleMobileCategoryDrawer()" aria-label="Close topics drawer" class="material-symbols-outlined text-on-surface-variant hover:text-primary p-1 bg-surface-container cursor-pointer">close</button>
+<!-- Mobile Dynamic Drawer overlay - Replaces category drawer and bottom bar with full site menu -->
+<div id="mobile-category-drawer" class="fixed inset-0 bg-black/40 z-50 hidden transition-all duration-300" role="dialog" aria-modal="true" aria-label="Menu Navigation Drawer">
+    <div class="absolute top-0 left-0 w-full bg-white max-h-[90vh] overflow-y-auto p-6 shadow-xl transition-transform duration-300 -translate-y-full" id="drawer-content">
+        <!-- Drawer Header -->
+        <div class="flex justify-between items-center mb-6 pb-2 border-b border-slate-100">
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center active:scale-95 transition-all shrink-0">
+                <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog-header.png' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-6 w-auto block" />
+            </a>
+            <button onclick="toggleMobileCategoryDrawer()" aria-label="Close menu drawer" class="material-symbols-outlined text-slate-400 hover:text-primary p-1 bg-slate-50 cursor-pointer">close</button>
         </div>
-        
-        <div class="grid grid-cols-2 gap-4 pb-10">
-            <?php
-            $drawer_cats = get_categories( array(
-                'exclude' => get_option( 'default_category' )
-            ) );
-            if ( ! empty( $drawer_cats ) ) {
-                foreach ( $drawer_cats as $cat ) {
-                    echo '<a class="flex items-center gap-3 bg-surface-container-low border border-outline-variant p-4 font-label-md text-label-md text-on-surface-variant hover:bg-primary-container hover:text-white transition-all duration-150" href="' . esc_url( get_category_link( $cat->term_id ) ) . '">
-                        <span class="material-symbols-outlined text-primary" aria-hidden="true">terminal</span>
-                        ' . esc_html( $cat->name ) . '
-                    </a>';
-                }
-            } else {
-                echo '<p class="col-span-2 text-on-surface-variant">No categories loaded yet.</p>';
-            }
-            ?>
+
+        <!-- Search Bar for Mobile -->
+        <div class="mb-6">
+            <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="relative flex items-center bg-slate-50 border border-slate-200 focus-within:border-primary/80 transition-all px-3.5 py-2">
+                <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full text-[12px] text-slate-700 placeholder-slate-400 placeholder:text-[10px] placeholder:font-bold placeholder:tracking-wider focus:outline-none bg-transparent" />
+                <button type="submit" aria-label="Tìm kiếm" class="text-slate-400 hover:text-primary transition-colors cursor-pointer flex items-center">
+                    <span class="material-symbols-outlined text-[16px] font-bold">search</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Hierarchical Site Navigation for Mobile -->
+        <div class="space-y-4 mb-8">
+            <span class="font-display text-[10px] font-bold uppercase tracking-wider text-slate-400 block border-b border-slate-100 pb-1.5">Danh mục</span>
+            <nav class="space-y-1.5" aria-label="Mobile Site Navigation">
+                <!-- Home -->
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
+                    <span class="material-symbols-outlined text-[16px] text-primary group-hover:text-white">home</span>
+                    Trang chủ
+                </a>
+                
+                <!-- Parent: Articles (with toggleable child category list) -->
+                <div class="relative">
+                    <button onclick="toggleMobileSubmenu()" class="w-full flex items-center justify-between py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all text-left cursor-pointer">
+                        <span class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[16px] text-primary group-hover:text-white">article</span>
+                            Bài viết
+                        </span>
+                        <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-white transition-transform duration-200" id="submenu-arrow">keyboard_arrow_down</span>
+                    </button>
+                    
+                    <!-- Child Categories List (Accordion Container) -->
+                    <div id="mobile-submenu-cats" class="hidden pl-4 bg-slate-50/50 border-x border-b border-slate-100 py-1.5 transition-all duration-300">
+                        <!-- Link to All Articles -->
+                        <a href="<?php echo esc_url( $posts_page_url ); ?>" class="flex items-center gap-2 py-2 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all">
+                            <span class="w-1.5 h-1.5 bg-slate-400"></span>
+                            Tất cả bài viết
+                        </a>
+                        <?php
+                        $exclude_ids = array();
+                        $default_cat_id = (int) get_option( 'default_category' );
+                        if ( $default_cat_id ) {
+                            $default_cat = get_category( $default_cat_id );
+                            if ( $default_cat && in_array( $default_cat->slug, array( 'chua-phan-loai', 'uncategorized' ) ) ) {
+                                $exclude_ids[] = $default_cat_id;
+                            }
+                        }
+
+                        $drawer_cats = get_categories( array(
+                            'orderby'    => 'count',
+                            'order'      => 'DESC',
+                            'parent'     => 0,
+                            'hide_empty' => false,
+                            'exclude'    => $exclude_ids
+                        ) );
+                        if ( ! empty( $drawer_cats ) ) {
+                            foreach ( $drawer_cats as $cat ) {
+                                echo '<a class="flex items-center gap-2 py-2 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all" href="' . esc_url( get_category_link( $cat->term_id ) ) . '">
+                                    <span class="w-1.5 h-1.5 bg-primary/60"></span>
+                                    ' . esc_html( $cat->name ) . '
+                                </a>';
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+                
+                <!-- About Us -->
+                <?php
+                $about_page = get_page_by_path('gioi-thieu');
+                if ( $about_page ) :
+                ?>
+                    <a href="<?php echo esc_url( get_permalink( $about_page->ID ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
+                        <span class="material-symbols-outlined text-[16px] text-primary group-hover:text-white">info</span>
+                        Giới thiệu
+                    </a>
+                <?php endif; ?>
+                
+                <!-- Contact -->
+                <?php
+                $contact_page = get_page_by_path('lien-he');
+                if ( $contact_page ) :
+                ?>
+                    <a href="<?php echo esc_url( get_permalink( $contact_page->ID ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
+                        <span class="material-symbols-outlined text-[16px] text-primary group-hover:text-white">mail</span>
+                        Liên hệ
+                    </a>
+                <?php endif; ?>
+            </nav>
         </div>
     </div>
 </div>
@@ -62,7 +110,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 <footer class="w-full mt-section-gap bg-slate-900 border-t border-slate-800 text-slate-400" role="contentinfo">
     <div class="max-w-container-max mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-12 gap-12">
         <!-- Brand Info (Chuẩn SEO) -->
-        <div class="col-span-12 md:col-span-4 lg:col-span-5 space-y-5">
+        <div class="col-span-full md:col-span-4 lg:col-span-5 space-y-5">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" class="block hover:opacity-90 active:scale-95 transition-all">
                 <!-- <span class="text-2xl font-display font-black text-white tracking-tighter hover:text-primary">
                     Tech<span class="text-primary">Blog</span>
@@ -101,7 +149,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         </div>
         
         <!-- Top categories - Flattened -->
-        <div class="col-span-6 md:col-span-4 lg:col-span-4 space-y-4">
+        <div class="col-span-full md:col-span-4 lg:col-span-4 space-y-4">
             <span class="font-display text-xs font-black uppercase tracking-wider text-slate-200 block border-b border-slate-800 pb-2.5">Chủ đề chính</span>
             <nav class="grid grid-cols-2 gap-x-4 gap-y-2.5 text-[13px]" aria-label="Footer Categories Links">
                 <?php
@@ -132,7 +180,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         </div>
 
         <!-- Resources / Quick Links -->
-        <div class="col-span-6 md:col-span-4 lg:col-span-3 space-y-4">
+        <div class="col-span-full md:col-span-4 lg:col-span-3 space-y-4">
             <span class="font-display text-xs font-black uppercase tracking-wider text-slate-200 block border-b border-slate-800 pb-2.5">Các trang khác</span>
             <nav class="flex flex-col gap-2.5 text-[13px]" aria-label="Footer Company Links">
                 <?php
@@ -196,10 +244,10 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         if (drawer.classList.contains('hidden')) {
             drawer.classList.remove('hidden');
             setTimeout(() => {
-                content.classList.remove('translate-y-full');
+                content.classList.remove('-translate-y-full');
             }, 10);
         } else {
-            content.classList.add('translate-y-full');
+            content.classList.add('-translate-y-full');
             setTimeout(() => {
                 drawer.classList.add('hidden');
             }, 300);
@@ -212,6 +260,19 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
             toggleMobileCategoryDrawer();
         }
     });
+
+    // Toggle Mobile Accordion Submenu
+    function toggleMobileSubmenu() {
+        const submenu = document.getElementById('mobile-submenu-cats');
+        const arrow = document.getElementById('submenu-arrow');
+        if (submenu.classList.contains('hidden')) {
+            submenu.classList.remove('hidden');
+            arrow.classList.add('rotate-180');
+        } else {
+            submenu.classList.add('hidden');
+            arrow.classList.remove('rotate-180');
+        }
+    }
 
     // Elegant hover effect for article cards
     const cards = document.querySelectorAll('article');

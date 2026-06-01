@@ -109,4 +109,128 @@ if ( post_password_required() ) {
         ?>
     </div>
 
+    <!-- Client-side Comment Form validation micro-interaction -->
+    <style>
+        #commentform .border-red-500 {
+            border-color: #ef4444 !important;
+        }
+        #commentform .border-red-500:focus {
+            border-color: #ef4444 !important;
+            outline: 2px solid transparent !important;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+        }
+    </style>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const commentForm = document.getElementById('commentform');
+        if (!commentForm) return;
+
+        commentForm.addEventListener('submit', function(e) {
+            let hasError = false;
+            let firstErrorField = null;
+
+            // Clear previous error messages and styles
+            commentForm.querySelectorAll('.comment-error-msg').forEach(msg => msg.remove());
+            commentForm.querySelectorAll('input, textarea').forEach(field => {
+                field.classList.remove('border-red-500');
+            });
+
+            // Helper to show error
+            function showError(field, message) {
+                hasError = true;
+                if (!firstErrorField) {
+                    firstErrorField = field;
+                }
+                
+                // Highlight field
+                field.classList.add('border-red-500');
+
+                // Insert elegant error message
+                const errorMsg = document.createElement('p');
+                errorMsg.className = 'comment-error-msg text-[11px] text-red-500 font-bold uppercase tracking-wider mt-1.5 transition-all duration-300 ease-in-out';
+                errorMsg.innerText = message;
+                field.parentNode.appendChild(errorMsg);
+            }
+
+            // Validate Author (Name) - if field exists
+            const authorField = document.getElementById('author');
+            if (authorField) {
+                if (authorField.value.trim() === '') {
+                    showError(authorField, 'Vui lòng nhập tên của bạn.');
+                }
+            }
+
+            // Validate Email - if field exists
+            const emailField = document.getElementById('email');
+            if (emailField) {
+                const emailVal = emailField.value.trim();
+                if (emailVal === '') {
+                    showError(emailField, 'Vui lòng nhập email của bạn.');
+                } else {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(emailVal)) {
+                        showError(emailField, 'Địa chỉ email không hợp lệ.');
+                    }
+                }
+            }
+
+            // Validate Comment text
+            const commentField = document.getElementById('comment');
+            if (commentField) {
+                if (commentField.value.trim() === '') {
+                    showError(commentField, 'Vui lòng nhập nội dung bình luận.');
+                }
+            }
+
+            if (hasError) {
+                e.preventDefault();
+                if (firstErrorField) {
+                    firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    setTimeout(() => {
+                        firstErrorField.focus();
+                    }, 400);
+                }
+            }
+        });
+
+        // Clear error styling on input
+        commentForm.addEventListener('input', function(e) {
+            const target = e.target;
+            if (target.classList.contains('border-red-500')) {
+                target.classList.remove('border-red-500');
+                const errorMsg = target.parentNode.querySelector('.comment-error-msg');
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
+            }
+        });
+
+        // Handle reply link click to smoothly scroll to and focus "Tên" (or "Bình luận" if logged in)
+        document.addEventListener('click', function(e) {
+            const replyLink = e.target.closest('.comment-reply-link');
+            if (replyLink) {
+                // Short timeout to wait for WordPress's comment-reply.js to move the respond form
+                setTimeout(() => {
+                    const authorField = document.getElementById('author');
+                    if (authorField) {
+                        authorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        setTimeout(() => {
+                            authorField.focus();
+                        }, 300);
+                    } else {
+                        const commentField = document.getElementById('comment');
+                        if (commentField) {
+                            commentField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(() => {
+                                commentField.focus();
+                            }, 300);
+                        }
+                    }
+                }, 80);
+            }
+        });
+    });
+    </script>
+
 </div>

@@ -99,8 +99,10 @@
     </script>
     <style type="text/tailwindcss">
         @layer base {
-            body {
+            html, body {
                 @apply bg-background text-on-surface font-sans antialiased selection:bg-primary selection:text-white;
+                overflow-x: hidden;
+                width: 100%;
             }
         }
         /* Custom styles to prevent layout shifts */
@@ -195,7 +197,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 <header class="sticky-header" role="banner">
     <div class="max-w-container-max mx-auto px-4 h-16 flex items-center justify-between gap-4">
         <!-- Logo (Đã thay logo techblog-logo.svg vào theo yêu cầu) -->
-        <div class="flex items-center active:scale-95 transition-all shrink-0">
+        <div class="flex items-center transition-all shrink-0">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" class="flex items-center">
                 <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog-header.png' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-8 w-auto block" />
             </a>
@@ -207,9 +209,40 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 Trang chủ
             </a>
             
-            <a href="<?php echo esc_url( $posts_page_url ); ?>" class="text-[12px] font-black uppercase tracking-wider transition-colors py-2 <?php echo (is_home() || is_archive()) ? 'nav-link-active' : 'text-slate-600 hover:text-primary'; ?>">
-                Bài viết
-            </a>
+            <div class="relative group shrink-0">
+                <a href="<?php echo esc_url( $posts_page_url ); ?>" class="text-[12px] font-black uppercase tracking-wider transition-colors flex items-center gap-0.5 cursor-pointer py-2 <?php echo (is_home() || is_archive() || is_category()) ? 'nav-link-active' : 'text-slate-600 hover:text-primary'; ?>">
+                    Bài viết
+                    <span class="material-symbols-outlined text-[14px] font-bold pointer-events-none transition-transform duration-200 group-hover:rotate-180">keyboard_arrow_down</span>
+                </a>
+                <!-- Dropdown Menu of Categories (Zero border-radius premium design) -->
+                <div class="absolute left-0 top-full mt-0 hidden group-hover:block bg-white border border-slate-200/80 shadow-md py-1.5 min-w-[200px] z-50 transform origin-top transition-all duration-200">
+                    <?php
+                    $exclude_ids = array();
+                    $default_cat_id = (int) get_option( 'default_category' );
+                    if ( $default_cat_id ) {
+                        $default_cat = get_category( $default_cat_id );
+                        if ( $default_cat && in_array( $default_cat->slug, array( 'chua-phan-loai', 'uncategorized' ) ) ) {
+                            $exclude_ids[] = $default_cat_id;
+                        }
+                    }
+                    $menu_cats = get_categories( array(
+                        'orderby'    => 'count',
+                        'order'      => 'DESC',
+                        'parent'     => 0,
+                        'hide_empty' => false,
+                        'exclude'    => $exclude_ids
+                    ) );
+                    if ( ! empty( $menu_cats ) ) {
+                        foreach ( $menu_cats as $cat ) {
+                            $cat_link = get_category_link( $cat->term_id );
+                            echo '<a href="' . esc_url( $cat_link ) . '" class="block px-4 py-2.5 text-[11px] font-bold uppercase tracking-wider text-slate-600 hover:bg-slate-50 hover:text-primary transition-all border-l-2 border-transparent hover:border-primary">' . esc_html( $cat->name ) . '</a>';
+                        }
+                    } else {
+                        echo '<span class="block px-4 py-2 text-[10px] text-slate-400 italic">Chưa có chuyên mục</span>';
+                    }
+                    ?>
+                </div>
+            </div>
 
             <?php
             $about_page = get_page_by_path('gioi-thieu');
@@ -279,7 +312,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 
     <!-- ================= CATEGORY QUICK-NAVBAR SUB-HEADER (Red for Active Category only) ================= -->
     <?php if ( is_front_page() || is_home() || is_archive() || is_search() || is_single() ) : ?>
-    <div class="bg-white border-b border-slate-100/80 py-3 hidden lg:block">
+    <div class="bg-white border-b border-slate-100/80 py-3 hidden lg:block max-lg:!hidden">
         <div class="max-w-container-max mx-auto px-4 flex items-center justify-between">
             <div class="flex flex-wrap items-center gap-2 py-1">
                 <a href="<?php echo esc_url( $posts_page_url ); ?>" 
@@ -366,8 +399,8 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         </div>
     </div>
     
-    <!-- Mobile category scroll list -->
-    <div class="bg-white border-b border-slate-100/80 py-2.5 overflow-x-auto scrollbar-hide flex gap-2 px-4 lg:hidden">
+     <!-- Mobile category scroll list (Commented out as requested to use only the mobile menu) -->
+    <!-- <div class="bg-white border-b border-slate-100/80 py-2.5 overflow-x-auto scrollbar-hide flex gap-2 px-4 lg:hidden">
         <a href="<?php echo esc_url( $posts_page_url ); ?>" 
            class="px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-wider shrink-0 transition-all <?php echo (!is_category() && !is_single() && !is_search()) ? 'bg-primary text-white shadow-sm font-black' : 'bg-slate-50 text-slate-600'; ?>">
             Tất Cả
@@ -387,7 +420,8 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 <?php echo esc_html( $cat->name ); ?>
             </a>
         <?php endforeach; ?>
-    </div>
+    </div> -->
+
     <?php endif; ?>
 </header>
 
