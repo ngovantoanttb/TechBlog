@@ -96,15 +96,35 @@ get_header(); ?>
                 <div class="my-10 pt-4">
                     <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight border-b border-slate-100 pb-3 mb-6">Đội ngũ chúng tôi</h3>
                     
-                    <div class="border border-slate-100 p-6 sm:p-8 bg-slate-50/20 hover:border-primary/30 transition-all duration-300 flex flex-col sm:flex-row gap-6 items-center">
-                        <div class="w-24 h-24 sm:w-28 sm:h-28 bg-slate-100 border border-slate-200/50 flex items-center justify-center rounded-none overflow-hidden shrink-0 relative shadow-sm group">
-                            <img src="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/assets/images/IMG_6341.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Ngô Văn Toàn" />
+                    <div class="border border-slate-100 p-6 sm:p-8 bg-slate-50/20 hover:border-primary/30 transition-all duration-300 flex flex-col sm:flex-row gap-6 items-center sm:items-start">
+                        <!-- Premium avatar with ring border -->
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-primary/20 p-1 shrink-0 bg-white shadow-sm group overflow-hidden relative">
+                            <img src="<?php echo esc_url( get_stylesheet_directory_uri() ); ?>/assets/images/IMG_6341.jpg" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500" alt="Ngô Văn Toàn" />
                         </div>
+                        
                         <div class="flex-grow text-center sm:text-left min-w-0">
-                            <h4 class="font-display text-lg font-black text-slate-900 uppercase tracking-wide">Ngô Văn Toàn</h4>
-                            <span class="text-xs font-bold uppercase tracking-wider text-primary block mt-1">Nhà sáng lập</span>
-                            <p class="text-slate-500 text-xs sm:text-[13px] leading-relaxed mt-3">
-                                Hi everyone! My name is Ngo Van Toan. I'm a frontend developer. I really enjoy what I do right now, in my opinion, creating programs is not just a job, but also an art that has aesthetic value.
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div>
+                                    <h4 class="font-display text-lg font-black text-slate-900 uppercase tracking-wide leading-none">Ngô Văn Toàn</h4>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-primary block mt-2">Nhà sáng lập / Frontend Developer</span>
+                                </div>
+                                
+                                <!-- Premium inline SVG social links -->
+                                <div class="flex justify-center sm:justify-start gap-2.5">
+                                    <a href="https://github.com/ngovantoanttb" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-primary text-slate-500 hover:text-white flex items-center justify-center transition-all border border-slate-200/50 active:scale-95 shadow-sm" aria-label="GitHub">
+                                        <?php echo techjournal_get_svg( 'github', 'w-4 h-4' ); ?>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/ngovantoanttb/" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-primary text-slate-500 hover:text-white flex items-center justify-center transition-all border border-slate-200/50 active:scale-95 shadow-sm" aria-label="LinkedIn">
+                                        <?php echo techjournal_get_svg( 'linkedin', 'w-4 h-4' ); ?>
+                                    </a>
+                                    <a href="https://facebook.com/ngovantoanttb" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-primary text-slate-500 hover:text-white flex items-center justify-center transition-all border border-slate-200/50 active:scale-95 shadow-sm" aria-label="Facebook">
+                                        <?php echo techjournal_get_svg( 'facebook', 'w-4 h-4' ); ?>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <p class="text-slate-500 text-xs sm:text-[13px] leading-relaxed mt-4 border-t border-slate-100 pt-3 italic font-sans">
+                                "Hi everyone! My name is Ngo Van Toan. I'm a frontend developer. I really enjoy what I do right now, in my opinion, creating programs is not just a job, but also an art that has aesthetic value."
                             </p>
                         </div>
                     </div>

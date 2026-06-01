@@ -127,3 +127,27 @@ if ( ! function_exists( 'techjournal_has_gravatar' ) ) {
         return 'yes' === $has_gravatar;
     }
 }
+
+// 6. Premium SVG Loader Helper to fetch local theme SVGs and inject classes
+function techjournal_get_svg( $icon, $classes = '' ) {
+    $svg_path = get_template_directory() . '/assets/svg/' . $icon . '.svg';
+    if ( ! file_exists( $svg_path ) ) {
+        // Fallback to the dedicated /svg/ folder
+        $svg_path = get_template_directory() . '/svg/' . $icon . '.svg';
+    }
+    if ( ! file_exists( $svg_path ) ) {
+        // Fallback to assets/images
+        $svg_path = get_template_directory() . '/assets/images/' . $icon . '.svg';
+    }
+    
+    if ( file_exists( $svg_path ) ) {
+        $svg = file_get_contents( $svg_path );
+        if ( ! empty( $classes ) ) {
+            // Strip any existing class attribute to prevent duplicates, then inject new classes
+            $svg = preg_replace( '/\s*class="[^"]*"/i', '', $svg );
+            $svg = preg_replace( '/<svg([^>]*)>/i', '<svg$1 class="' . esc_attr( $classes ) . '">', $svg );
+        }
+        return $svg;
+    }
+    return '';
+}

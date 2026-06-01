@@ -107,16 +107,16 @@ get_header(); ?>
                         <span class="font-display text-[11px] font-black uppercase tracking-wider text-slate-400">CHIA SẺ BÀI VIẾT</span>
                         <div class="flex flex-wrap items-center gap-2">
                             <!-- Facebook -->
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#1877f2] hover:bg-[#166fe5] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 active:scale-95">
-                                <span class="material-symbols-outlined text-[14px]">share</span> Facebook
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#1877f2] hover:bg-[#166fe5] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95">
+                                <?php echo techjournal_get_svg( 'facebook', 'w-3.5 h-3.5' ); ?> Facebook
                             </a>
                             <!-- Zalo -->
-                            <a href="https://sp.zalo.me/share_to_zalo?url=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0068ff] hover:bg-[#0056d6] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 active:scale-95">
-                                <span class="material-symbols-outlined text-[14px]">share</span> Zalo
+                            <a href="https://sp.zalo.me/share_to_zalo?url=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0068ff] hover:bg-[#0056d6] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95">
+                                <?php echo techjournal_get_svg( 'zalo', 'w-3.5 h-3.5' ); ?> Zalo
                             </a>
                             <!-- Telegram -->
-                            <a href="https://t.me/share/url?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0088cc] hover:bg-[#0077b5] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 active:scale-95">
-                                <span class="material-symbols-outlined text-[14px]">send</span> Telegram
+                            <a href="https://t.me/share/url?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0088cc] hover:bg-[#0077b5] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95">
+                                <?php echo techjournal_get_svg( 'telegram', 'w-3.5 h-3.5' ); ?> Telegram
                             </a>
                             <!-- Copy Link -->
                             <button onclick="(function(btn){
@@ -150,8 +150,8 @@ get_header(); ?>
                                     }
                                     document.body.removeChild(textArea);
                                 }
-                            })(this)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 active:scale-95 cursor-pointer border border-slate-200">
-                                <span class="material-symbols-outlined text-[14px]">link</span> Sao Chép Link
+                            })(this)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer border border-slate-200">
+                                <?php echo techjournal_get_svg( 'link', 'w-3.5 h-3.5' ); ?> Sao Chép Link
                             </button>
                         </div>
                     </div>
