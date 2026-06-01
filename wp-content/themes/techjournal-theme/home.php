@@ -36,7 +36,9 @@ get_header();
         }
         
         $hero_query = new WP_Query( $hero_args );
-        $hero_posts = $hero_query->posts;
+        if ( $hero_query->found_posts >= 5 ) {
+            $hero_posts = $hero_query->posts;
+        }
         
         $post_count = count( $hero_posts );
         if ( $post_count > 0 ) :

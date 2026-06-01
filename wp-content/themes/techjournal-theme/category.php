@@ -46,7 +46,10 @@ $category = get_category($cat_id);
             'orderby'             => 'date',
             'order'               => 'DESC'
         ) );
-        $hero_posts = $hero_query->posts;
+        
+        if ( $hero_query->found_posts >= 5 ) {
+            $hero_posts = $hero_query->posts;
+        }
         
         $post_count = count( $hero_posts );
         if ( $post_count > 0 ) :
