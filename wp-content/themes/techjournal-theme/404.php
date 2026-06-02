@@ -12,7 +12,7 @@ get_header(); ?>
     <div class="text-center max-w-lg bg-white p-8 sm:p-16 border border-slate-100/80 premium-shadow">
         
         <div class="w-20 h-20 bg-primary/10 flex items-center justify-center text-primary mx-auto mb-6 border border-primary/20">
-            <span class="material-symbols-outlined text-[40px]">priority_high</span>
+            <?php echo techjournal_get_svg( 'info', 'w-10 h-10 text-primary fill-current' ); ?>
         </div>
         
         <h1 class="font-display text-6xl font-black text-slate-300 tracking-tighter mb-2">404</h1>

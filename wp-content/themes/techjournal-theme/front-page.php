@@ -20,8 +20,8 @@ get_header(); ?>
                 <!-- NEWSFLASH Ticker Bar -->
                 <div class="bg-white border border-slate-100 flex items-center justify-between h-10 px-4 overflow-hidden gap-4 shadow-sm">
                     <div class="flex items-center gap-2 flex-grow min-w-0">
-                        <span class="bg-[#ff0000] text-white text-[10px] font-black uppercase px-2.5 py-1.5 flex items-center gap-1 shrink-0 tracking-wider">
-                            <span class="material-symbols-outlined text-[12px]">bolt</span> NEWSFLASH
+                        <span class="bg-[#ff0000] text-white text-[10px] font-black uppercase px-2.5 flex items-center gap-1 shrink-0 tracking-wider">
+                            <?php echo techjournal_get_svg( 'bolt', 'w-6 h-6 fill-current' ); ?> NEWSFLASH
                         </span>
                         <div class="relative h-6 flex-grow overflow-hidden font-bold text-[12px] text-slate-700 select-none">
                             <div id="homepage-newsflash-track" class="absolute w-full transition-all duration-500 ease-in-out left-0" style="top: 0px;">
@@ -43,93 +43,95 @@ get_header(); ?>
                     </div>
                     <div class="flex items-center gap-1 shrink-0">
                         <button id="nf-prev-btn" class="w-6 h-6 border border-slate-200 text-slate-400 hover:text-slate-700 hover:border-slate-300 flex items-center justify-center cursor-pointer active:scale-95 transition-all">
-                            <span class="material-symbols-outlined text-[16px]">chevron_left</span>
-                        </button>
-                        <button id="nf-next-btn" class="w-6 h-6 border border-slate-200 text-slate-400 hover:text-slate-700 hover:border-slate-300 flex items-center justify-center cursor-pointer active:scale-95 transition-all">
-                            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-                        </button>
+                             <?php echo techjournal_get_svg( 'chevron-left', 'w-4 h-4 fill-current' ); ?>
+                         </button>
+                         <button id="nf-next-btn" class="w-6 h-6 border border-slate-200 text-slate-400 hover:text-slate-700 hover:border-slate-300 flex items-center justify-center cursor-pointer active:scale-95 transition-all">
+                             <?php echo techjournal_get_svg( 'chevron-right', 'w-4 h-4 fill-current' ); ?>
+                         </button>
                     </div>
                 </div>
 
-                <!-- Main Hero Slider -->
-                <?php 
-                $slider_posts = get_posts( array( 'post_type' => 'post', 'posts_per_page' => 7 ) );
-                $slide_count = count( $slider_posts );
-                if ( $slide_count === 0 ) $slide_count = 1;
-                $track_width = $slide_count * 100;
-                $slide_width = 100 / $slide_count;
-                ?>
-                <div class="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-slate-900 overflow-hidden group/hero-slider border border-slate-100 shadow-sm">
-                    <div class="w-full h-full relative overflow-hidden" id="hero-slider-wrapper">
-                        <div class="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" id="hero-slider-track" style="width: <?php echo $track_width; ?>%; transform: translateX(0%);">
-                            <?php 
-                            foreach ( $slider_posts as $idx => $sp ) : 
-                                $sp_img = get_the_post_thumbnail_url($sp->ID, 'large');
-                                if ( !$sp_img ) $sp_img = get_the_post_thumbnail_url($sp->ID, 'medium_large');
-                                if ( !$sp_img ) $sp_img = get_the_post_thumbnail_url($sp->ID, 'full');
-                                if ( !$sp_img ) $sp_img = techblog_get_placeholder_img();
-                                $sp_cats = get_the_category($sp->ID);
-                                $sp_cat_name = !empty($sp_cats) ? $sp_cats[0]->name : 'Tin tức';
-                            ?>
-                                <div class="h-full shrink-0 relative hero-slide" style="width: <?php echo $slide_width; ?>%;" data-slide-index="<?php echo $idx; ?>">
-                                    <a href="<?php echo get_permalink($sp->ID); ?>" class="absolute inset-0 block">
-                                        <img src="<?php echo esc_url($sp_img); ?>" class="w-full h-full object-cover transform scale-100 group-hover/hero-slider:scale-102 transition-transform duration-[6000ms] ease-out" alt="<?php echo esc_attr($sp->post_title); ?>" />
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
-                                        
-                                        <div class="absolute inset-x-0 bottom-0 p-5 sm:p-8 flex flex-col justify-end text-white max-w-[80%] sm:max-w-[80%] space-y-2 pointer-events-none">
-                                            <span class="bg-[#ff0000] text-white text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm">
-                                                <?php echo esc_html($sp_cat_name); ?>
-                                            </span>
-                                            <h2 class="font-display text-base sm:text-xl md:text-2xl font-extrabold tracking-tight leading-snug drop-shadow-sm break-words">
-                                                <?php echo esc_html($sp->post_title); ?>
-                                            </h2>
-                                            <div class="flex items-center gap-2 text-[10px] text-slate-300 font-bold uppercase tracking-wider">
-                                                <span>BY Admin TechBlog</span>
-                                                <span>•</span>
-                                                <span><?php echo get_the_date('d/m/Y', $sp->ID); ?></span>
+                <!-- Main Hero Slider (Only shown if there are more than 8 published posts) -->
+                <?php if ( intval( wp_count_posts()->publish ) > 8 ) : ?>
+                    <?php 
+                    $slider_posts = get_posts( array( 'post_type' => 'post', 'posts_per_page' => 7 ) );
+                    $slide_count = count( $slider_posts );
+                    if ( $slide_count === 0 ) $slide_count = 1;
+                    $track_width = $slide_count * 100;
+                    $slide_width = 100 / $slide_count;
+                    ?>
+                    <div class="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-slate-900 overflow-hidden group/hero-slider border border-slate-100 shadow-sm">
+                        <div class="w-full h-full relative overflow-hidden" id="hero-slider-wrapper">
+                            <div class="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" id="hero-slider-track" style="width: <?php echo $track_width; ?>%; transform: translateX(0%);">
+                                <?php 
+                                foreach ( $slider_posts as $idx => $sp ) : 
+                                    $sp_img = get_the_post_thumbnail_url($sp->ID, 'large');
+                                    if ( !$sp_img ) $sp_img = get_the_post_thumbnail_url($sp->ID, 'medium_large');
+                                    if ( !$sp_img ) $sp_img = get_the_post_thumbnail_url($sp->ID, 'full');
+                                    if ( !$sp_img ) $sp_img = techblog_get_placeholder_img();
+                                    $sp_cats = get_the_category($sp->ID);
+                                    $sp_cat_name = !empty($sp_cats) ? $sp_cats[0]->name : 'Tin tức';
+                                ?>
+                                    <div class="h-full shrink-0 relative hero-slide" style="width: <?php echo $slide_width; ?>%;" data-slide-index="<?php echo $idx; ?>">
+                                        <a href="<?php echo get_permalink($sp->ID); ?>" class="absolute inset-0 block">
+                                            <img src="<?php echo esc_url($sp_img); ?>" class="w-full h-full object-cover transform scale-100 group-hover/hero-slider:scale-102 transition-transform duration-[6000ms] ease-out" alt="<?php echo esc_attr($sp->post_title); ?>" />
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+                                            
+                                            <div class="absolute inset-x-0 bottom-0 p-5 sm:p-8 flex flex-col justify-end text-white max-w-[80%] sm:max-w-[80%] space-y-2 pointer-events-none">
+                                                <span class="bg-[#ff0000] text-white text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm">
+                                                    <?php echo esc_html($sp_cat_name); ?>
+                                                </span>
+                                                <h2 class="font-display text-base sm:text-xl md:text-2xl font-extrabold tracking-tight leading-snug drop-shadow-sm break-words">
+                                                    <?php echo esc_html($sp->post_title); ?>
+                                                </h2>
+                                                <div class="flex items-center gap-2 text-[10px] text-slate-300 font-bold uppercase tracking-wider">
+                                                    <span>BY Admin TechBlog</span>
+                                                    <span>•</span>
+                                                    <span><?php echo get_the_date('d/m/Y', $sp->ID); ?></span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
+                                        </a>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                        
+                        <!-- Controls on the bottom-right of the slider (Xanh chủ đạo thay vì màu đỏ) -->
+                        <div class="absolute bottom-0 right-0 z-20 flex bg-primary h-10 select-none items-center">
+                            <button id="hero-prev-btn" class="w-10 h-full hover:bg-black/20 text-white flex items-center justify-center cursor-pointer transition-colors border-r border-white/10 active:scale-95">
+                                 <?php echo techjournal_get_svg( 'chevron-left', 'w-5 h-5 fill-current' ); ?>
+                             </button>
+                             <button id="hero-next-btn" class="w-10 h-full hover:bg-black/20 text-white flex items-center justify-center cursor-pointer transition-colors active:scale-95">
+                                 <?php echo techjournal_get_svg( 'chevron-right', 'w-5 h-5 fill-current' ); ?>
+                             </button>
                         </div>
                     </div>
-                    
-                    <!-- Controls on the bottom-right of the slider (Xanh chủ đạo thay vì màu đỏ) -->
-                    <div class="absolute bottom-0 right-0 z-20 flex bg-primary h-10 select-none items-center">
-                        <button id="hero-prev-btn" class="w-10 h-full hover:bg-black/20 text-white flex items-center justify-center cursor-pointer transition-colors border-r border-white/10 active:scale-95">
-                            <span class="material-symbols-outlined text-[18px]">chevron_left</span>
-                        </button>
-                        <button id="hero-next-btn" class="w-10 h-full hover:bg-black/20 text-white flex items-center justify-center cursor-pointer transition-colors active:scale-95">
-                            <span class="material-symbols-outlined text-[18px]">chevron_right</span>
-                        </button>
-                    </div>
-                </div>
 
-                <!-- Thumbnail indicators horizontally underneath the slider -->
-                <div class="hidden sm:grid gap-2" style="grid-template-columns: repeat(7, minmax(0, 1fr));">
-                        <?php 
-                        foreach ( $slider_posts as $idx => $sp ) : 
-                            $sp_thumb = get_the_post_thumbnail_url($sp->ID, 'thumbnail');
-                            if ( !$sp_thumb ) $sp_thumb = techblog_get_placeholder_img();
-                        ?>
-                        <div class="hero-thumb-btn aspect-[16/10] cursor-pointer transition-all relative group" data-thumb-index="<?php echo $idx; ?>">
-                                <!-- Small upward triangle indicator placed above the border, visible only when active -->
-                                <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-primary transition-opacity duration-300 pointer-events-none indicator-triangle <?php echo $idx === 0 ? '' : 'opacity-0'; ?>"></div>
-                                <div class="w-full h-full overflow-hidden relative">
-                                    <img src="<?php echo esc_url($sp_thumb); ?>" class="w-full h-full object-cover" alt="" />
-                                    <!-- Dark overlay, active = opacity-100 (make image a bit darker) -->
-                                    <div class="absolute inset-0 bg-black/30 pointer-events-none transition-opacity duration-300 active-overlay <?php echo $idx === 0 ? 'opacity-100' : 'opacity-0'; ?>"></div>
+                    <!-- Thumbnail indicators horizontally underneath the slider -->
+                    <div class="hidden sm:grid gap-2 mt-2" style="grid-template-columns: repeat(7, minmax(0, 1fr));">
+                            <?php 
+                            foreach ( $slider_posts as $idx => $sp ) : 
+                                $sp_thumb = get_the_post_thumbnail_url($sp->ID, 'thumbnail');
+                                if ( !$sp_thumb ) $sp_thumb = techblog_get_placeholder_img();
+                            ?>
+                            <div class="hero-thumb-btn aspect-[16/10] cursor-pointer transition-all relative group" data-thumb-index="<?php echo $idx; ?>">
+                                    <!-- Small upward triangle indicator placed above the border, visible only when active -->
+                                    <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-primary transition-opacity duration-300 pointer-events-none indicator-triangle <?php echo $idx === 0 ? '' : 'opacity-0'; ?>"></div>
+                                    <div class="w-full h-full overflow-hidden relative">
+                                        <img src="<?php echo esc_url($sp_thumb); ?>" class="w-full h-full object-cover" alt="" />
+                                        <!-- Dark overlay, active = opacity-100 (make image a bit darker) -->
+                                        <div class="absolute inset-0 bg-black/30 pointer-events-none transition-opacity duration-300 active-overlay <?php echo $idx === 0 ? 'opacity-100' : 'opacity-0'; ?>"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
                     </div>
+                <?php endif; ?>
 
                 <!-- ================= ARTICLES LIST SECTION ================= -->
                 <div class="space-y-6 pt-4">
                     <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-3 relative">
                         <div class="flex items-center gap-1.5 relative">
-                            <span class="material-symbols-outlined text-[#ff0000] text-[20px] font-bold">local_fire_department</span>
+                             <?php echo techjournal_get_svg( 'local_fire_department', 'w-5 h-5 text-red-600 fill-current' ); ?>
                             <h2 class="font-display text-[16px] font-black text-slate-800 uppercase tracking-tight">
                                 Bài viết mới
                             </h2>
@@ -159,6 +161,7 @@ get_header(); ?>
                     </div>
 
                     <!-- Load More Button Block -->
+                    <?php if ( $latest_query->have_posts() && $latest_query->found_posts > 9 ) : ?>
                     <div class="text-center mt-10">
                         <button id="techblog-load-more-btn" 
                                 data-page="1" 
@@ -167,9 +170,12 @@ get_header(); ?>
                                 data-search=""
                                 class="bg-primary hover:bg-primary/95 text-white font-bold px-8 py-3 text-[11px] uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 cursor-pointer inline-flex items-center gap-2">
                             <span>XEM THÊM BÀI VIẾT</span>
-                            <span class="material-symbols-outlined text-[16px] animate-spin hidden" id="load-more-spinner">sync</span>
+                             <span id="load-more-spinner" class="animate-spin hidden">
+                                 <?php echo techjournal_get_svg( 'sync', 'w-4 h-4 fill-current' ); ?>
+                             </span>
                         </button>
                     </div>
+                    <?php endif; ?>
                 </div>
 
             </div>
@@ -208,10 +214,10 @@ get_header(); ?>
                                                 <h3 class="font-display text-[13px] font-black text-slate-855 group-hover:text-primary transition-colors leading-snug break-words">
                                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                                 </h3>
-                                                <span class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
-                                                    <span class="material-symbols-outlined text-[11px]">calendar_today</span>
-                                                    <?php echo get_the_date(); ?>
-                                                </span>
+                                                 <span class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
+                                                     <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                                     <?php echo get_the_date(); ?>
+                                                 </span>
                                             </div>
                                         </div>
                                     </div>
@@ -224,10 +230,10 @@ get_header(); ?>
                                             <h4 class="font-display text-[12px] font-bold text-slate-700 group-hover:text-primary transition-colors leading-snug break-words">
                                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                             </h4>
-                                            <span class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
-                                                <span class="material-symbols-outlined text-[11px]">calendar_today</span>
-                                                <?php echo get_the_date(); ?>
-                                            </span>
+                                             <span class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
+                                                 <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                                 <?php echo get_the_date(); ?>
+                                             </span>
                                         </div>
                                     </div>
                                 <?php 
@@ -235,68 +241,72 @@ get_header(); ?>
                                 $p_idx++;
                             endwhile;
                             wp_reset_postdata();
+                        else :
+                            echo '<p class="text-slate-500 text-xs py-4 text-center font-medium">Chưa có bài viết nào.</p>';
                         endif;
                         ?>
                     </div>
                 </div>
 
-                <!-- Sidebar Widget 2: BÀI VIẾT NỔI BẬT (Featured/Pinned Posts - Strictly Pinned/Sticky system) -->
-                <?php 
-                $sticky_ids = get_option( 'sticky_posts' );
-                if ( ! empty( $sticky_ids ) ) :
-                    $sidebar_query = new WP_Query( array(
-                        'post_type'           => 'post',
-                        'post__in'            => $sticky_ids,
-                        'posts_per_page'      => 5,
-                        'ignore_sticky_posts' => 1,
-                    ) );
-                    if ( $sidebar_query->have_posts() ) :
-                ?>
-                    <div class="bg-white border border-slate-100 p-6 shadow-sm">
-                        <h4 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h4>
-                        <div class="space-y-4">
-                            <?php
-                            $rank = 1;
-                            while ( $sidebar_query->have_posts() ) : $sidebar_query->the_post();
-                            ?>
-                                <div class="flex gap-4 items-center group/item py-3.5 border-b border-slate-100/50 last:border-0">
-                                    <div class="font-display text-2xl font-black text-slate-200 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
-                                        <?php echo sprintf('%02d', $rank); ?>
-                                    </div>
-                                    
-                                    <?php 
-                                    $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
-                                    if (!$thumb_url) {
-                                        $thumb_url = techblog_get_placeholder_img();
-                                    }
-                                    ?>
-                                    <a href="<?php the_permalink(); ?>" class="w-14 h-14 overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
-                                        <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
-                                    </a>
-                                    
-                                    <div class="flex-grow min-w-0">
-                                        <h5 class="font-display text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
-                                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                        </h5>
-                                        <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
-                                            <span class="flex items-center gap-0.5">
-                                                <span class="material-symbols-outlined text-[11px]">calendar_today</span>
-                                                <?php echo get_the_date(); ?>
-                                            </span>
+                <!-- Sidebar Widget 2: BÀI VIẾT NỔI BẬT (Featured/Pinned Posts - Pinned/Sticky system) -->
+                <div class="bg-white border border-slate-100 p-6 shadow-sm">
+                    <h4 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h4>
+                    <div class="space-y-4">
+                        <?php 
+                        $sticky_ids = get_option( 'sticky_posts' );
+                        $has_featured = false;
+                        if ( ! empty( $sticky_ids ) ) :
+                            $sidebar_query = new WP_Query( array(
+                                'post_type'           => 'post',
+                                'post__in'            => $sticky_ids,
+                                'posts_per_page'      => 5,
+                                'ignore_sticky_posts' => 1,
+                            ) );
+                            if ( $sidebar_query->have_posts() ) :
+                                $has_featured = true;
+                                $rank = 1;
+                                while ( $sidebar_query->have_posts() ) : $sidebar_query->the_post();
+                                ?>
+                                    <div class="flex gap-4 items-center group/item py-3.5 border-b border-slate-100/50 last:border-0">
+                                        <div class="font-display text-2xl font-black text-slate-200 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
+                                            <?php echo sprintf('%02d', $rank); ?>
+                                        </div>
+                                        
+                                        <?php 
+                                        $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
+                                        if (!$thumb_url) {
+                                            $thumb_url = techblog_get_placeholder_img();
+                                        }
+                                        ?>
+                                        <a href="<?php the_permalink(); ?>" class="w-14 h-14 overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                                            <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
+                                        </a>
+                                        
+                                        <div class="flex-grow min-w-0">
+                                            <h5 class="font-display text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                            </h5>
+                                             <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
+                                                 <span class="flex items-center gap-0.5">
+                                                     <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                                     <?php echo get_the_date(); ?>
+                                                 </span>
+                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            <?php
-                                $rank++;
-                            endwhile;
-                            wp_reset_postdata();
-                            ?>
-                        </div>
+                                <?php
+                                    $rank++;
+                                endwhile;
+                                wp_reset_postdata();
+                            endif;
+                        endif; 
+
+                        if ( ! $has_featured ) :
+                            echo '<p class="text-slate-500 text-xs py-4 text-center font-medium">Chưa có bài viết nổi bật.</p>';
+                        endif;
+                        ?>
                     </div>
-                <?php 
-                    endif;
-                endif; 
-                ?>
+                </div>
             </aside>
             
         </div> <!-- End of Unified Premium Layout Grid -->

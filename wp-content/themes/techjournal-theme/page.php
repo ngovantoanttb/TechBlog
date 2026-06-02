@@ -18,7 +18,7 @@ get_header(); ?>
                 <!-- Page Breadcrumbs -->
                 <nav class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
                     <a class="hover:text-primary transition-all" href="<?php echo esc_url( home_url( '/' ) ); ?>">Trang Chủ</a>
-                    <span class="material-symbols-outlined text-[12px]">chevron_right</span>
+                    <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                     <span class="text-slate-600 truncate"><?php the_title(); ?></span>
                 </nav>
                 

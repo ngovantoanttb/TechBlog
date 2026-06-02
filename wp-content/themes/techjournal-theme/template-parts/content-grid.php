@@ -42,7 +42,7 @@ if ( ! empty( $cats ) ) {
         
         <!-- Date and Clock at the bottom -->
         <div class="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium mt-auto">
-            <span class="material-symbols-outlined text-[13px] text-blue-500">schedule</span>
+            <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-400 fill-current' ); ?>
             <span><?php echo get_the_date('d/m/Y'); ?></span>
         </div>
     </div>

@@ -11,7 +11,9 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center active:scale-95 transition-all shrink-0">
                 <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog-header.png' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-6 w-auto block" />
             </a>
-            <button onclick="toggleMobileCategoryDrawer()" aria-label="Close menu drawer" class="material-symbols-outlined text-slate-400 hover:text-primary p-1 bg-slate-50 cursor-pointer">close</button>
+            <button onclick="toggleMobileCategoryDrawer()" aria-label="Close menu drawer" class="text-slate-400 hover:text-primary p-1 bg-slate-50 cursor-pointer flex items-center justify-center">
+                <?php echo techjournal_get_svg( 'close', 'w-5 h-5 fill-current' ); ?>
+            </button>
         </div>
 
         <!-- Search Bar for Mobile -->
@@ -19,7 +21,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
             <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="relative flex items-center bg-slate-50 border border-slate-200 focus-within:border-primary/80 transition-all px-3.5 py-2">
                 <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full text-[12px] text-slate-700 placeholder-slate-400 placeholder:text-[10px] placeholder:font-bold placeholder:tracking-wider focus:outline-none bg-transparent" />
                 <button type="submit" aria-label="Tìm kiếm" class="text-slate-400 hover:text-primary transition-colors cursor-pointer flex items-center">
-                    <span class="material-symbols-outlined text-[16px] font-bold">search</span>
+                    <?php echo techjournal_get_svg( 'search', 'w-5 h-5' ); ?>
                 </button>
             </form>
         </div>
@@ -30,7 +32,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
             <nav class="space-y-1.5" aria-label="Mobile Site Navigation">
                 <!-- Home -->
                 <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
-                    <span class="material-symbols-outlined text-[16px] text-primary group-hover:text-white">home</span>
+                    <?php echo techjournal_get_svg( 'home', 'w-5 h-5 text-primary group-hover:text-white fill-current' ); ?>
                     Trang chủ
                 </a>
                 
@@ -38,10 +40,12 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 <div class="relative">
                     <button onclick="toggleMobileSubmenu()" class="w-full flex items-center justify-between py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all text-left cursor-pointer">
                         <span class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[16px] text-primary group-hover:text-white">article</span>
+                            <?php echo techjournal_get_svg( 'article', 'w-5 h-5 text-primary group-hover:text-white fill-current' ); ?>
                             Bài viết
                         </span>
-                        <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-white transition-transform duration-200" id="submenu-arrow">keyboard_arrow_down</span>
+                        <span class="transition-transform duration-200" id="submenu-arrow">
+                            <?php echo techjournal_get_svg( 'chevron-down', 'w-5 h-5 text-slate-400 group-hover:text-white fill-current' ); ?>
+                        </span>
                     </button>
                     
                     <!-- Child Categories List (Accordion Container) -->
@@ -86,7 +90,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 if ( $about_page ) :
                 ?>
                     <a href="<?php echo esc_url( get_permalink( $about_page->ID ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
-                        <span class="material-symbols-outlined text-[16px] text-primary group-hover:text-white">info</span>
+                        <?php echo techjournal_get_svg( 'info', 'w-5 h-5 text-primary group-hover:text-white fill-current' ); ?>
                         Giới thiệu
                     </a>
                 <?php endif; ?>
@@ -97,7 +101,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 if ( $contact_page ) :
                 ?>
                     <a href="<?php echo esc_url( get_permalink( $contact_page->ID ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
-                        <span class="material-symbols-outlined text-[16px] text-primary group-hover:text-white">mail</span>
+                        <?php echo techjournal_get_svg( 'mail', 'w-5 h-5 text-primary group-hover:text-white fill-current' ); ?>
                         Liên hệ
                     </a>
                 <?php endif; ?>

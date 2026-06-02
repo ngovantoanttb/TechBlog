@@ -36,10 +36,10 @@ get_header(); ?>
                     <!-- Breadcrumbs (TechBlog Editorial style) -->
                     <nav class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
                         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="hover:text-primary transition-all">Trang Chủ</a>
-                        <span class="material-symbols-outlined text-[12px]">chevron_right</span>
+                        <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                         <?php if ( $category_to_show ) : ?>
                             <a href="<?php echo esc_url( get_category_link( $category_to_show->term_id ) ); ?>" class="hover:text-primary transition-all"><?php echo esc_html( $category_to_show->name ); ?></a>
-                            <span class="material-symbols-outlined text-[12px]">chevron_right</span>
+                            <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                         <?php endif; ?>
                         <span class="text-slate-600 truncate max-w-[150px] sm:max-w-[300px] inline-block"><?php the_title(); ?></span>
                     </nav>
@@ -52,16 +52,16 @@ get_header(); ?>
                     <!-- Article Meta -->
                     <div class="flex flex-wrap items-center gap-y-2.5 gap-x-4 pb-5 border-b border-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-6">
                         <span class="flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[13px] text-primary">person</span> <?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?>
+                            <?php echo techjournal_get_svg( 'user', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?>
                         </span>
                         <span class="flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[13px] text-primary">calendar_today</span> <?php echo get_the_date(); ?>
+                            <?php echo techjournal_get_svg( 'calendar', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo get_the_date(); ?>
                         </span>
                         <span class="flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[14px] text-primary">schedule</span> <?php echo $read_time; ?> phút đọc
+                            <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo $read_time; ?> phút đọc
                         </span>
                         <span class="flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[14px] text-primary">visibility</span> <?php echo $views; ?> lượt xem
+                            <?php echo techjournal_get_svg( 'eye', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo $views; ?> lượt xem
                         </span>
                     </div>
 
@@ -109,10 +109,6 @@ get_header(); ?>
                             <!-- Facebook -->
                             <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#1877f2] hover:bg-[#166fe5] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95">
                                 <?php echo techjournal_get_svg( 'facebook', 'w-3.5 h-3.5' ); ?> Facebook
-                            </a>
-                            <!-- Zalo -->
-                            <a href="https://sp.zalo.me/share_to_zalo?url=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0068ff] hover:bg-[#0056d6] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95">
-                                <?php echo techjournal_get_svg( 'zalo', 'w-3.5 h-3.5' ); ?> Zalo
                             </a>
                             <!-- Telegram -->
                             <a href="https://t.me/share/url?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0088cc] hover:bg-[#0077b5] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95">
@@ -253,12 +249,12 @@ get_header(); ?>
                                     </h5>
                                     <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
                                         <span class="flex items-center gap-0.5">
-                                            <span class="material-symbols-outlined text-[11px]">calendar_today</span>
+                                            <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                                             <?php echo get_the_date(); ?>
                                         </span>
                                         <span>•</span>
                                         <span class="flex items-center gap-0.5">
-                                            <span class="material-symbols-outlined text-[12px]">visibility</span>
+                                            <?php echo techjournal_get_svg( 'eye', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                                             <?php echo techjournal_get_post_views( get_the_ID() ); ?> xem
                                         </span>
                                     </div>
@@ -307,7 +303,7 @@ get_header(); ?>
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </h5>
                                     <p class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
-                                        <span class="material-symbols-outlined text-[11px] text-primary">calendar_today</span> <?php echo get_the_date(); ?>
+                                        <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?> <?php echo get_the_date(); ?>
                                     </p>
                                 </div>
                             </div>

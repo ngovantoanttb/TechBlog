@@ -20,7 +20,7 @@ get_header(); ?>
                 <!-- Page Breadcrumbs -->
                 <nav class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
                     <a class="hover:text-primary transition-all" href="<?php echo esc_url( home_url( '/' ) ); ?>">Trang Chủ</a>
-                    <span class="material-symbols-outlined text-[12px]">chevron_right</span>
+                    <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                     <span class="text-slate-600 truncate"><?php the_title(); ?></span>
                 </nav>
                 
@@ -68,7 +68,9 @@ get_header(); ?>
                         <div class="flex justify-end">
                             <button type="submit" id="c_submit_btn" class="bg-primary hover:bg-blue-500 text-white font-bold text-xs py-3 px-8 transition-all active:scale-[0.98] cursor-pointer rounded-none uppercase tracking-wider flex items-center gap-2">
                                 <span>Gửi Liên Hệ</span>
-                                <span class="material-symbols-outlined text-[16px] animate-spin hidden" id="c_submit_spinner">sync</span>
+                                <span id="c_submit_spinner" class="animate-spin hidden">
+                                    <?php echo techjournal_get_svg( 'sync', 'w-4 h-4 fill-current' ); ?>
+                                </span>
                             </button>
                         </div>
                     </form>
@@ -76,7 +78,7 @@ get_header(); ?>
                     <!-- Success Message (Initially Hidden) -->
                     <div id="techblog-contact-success" class="hidden text-center py-10 px-4">
                         <div class="w-16 h-16 bg-green-50 text-green-500 border border-green-200 flex items-center justify-center mx-auto mb-5 rounded-none">
-                            <span class="material-symbols-outlined text-[32px]">done</span>
+                            <?php echo techjournal_get_svg( 'done', 'w-8 h-8 text-green-500 fill-current' ); ?>
                         </div>
                         <h3 class="font-display text-lg font-black text-slate-850 uppercase tracking-tight mb-2">Gửi Liên Hệ Thành Công!</h3>
                         <p class="text-slate-500 text-xs sm:text-[13px] leading-relaxed max-w-md mx-auto">

@@ -47,10 +47,10 @@
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-icon.svg' ); ?>" />
     <link rel="icon" type="image/png" sizes="192x192" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-icon.svg' ); ?>" />
 
-    <!-- Google Fonts & Material Symbols (Premium Font & Icons) -->
+    <!-- Google Fonts (Premium Be Vietnam Pro Font) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS CDN (With console warning suppression) -->
     <script>
@@ -164,7 +164,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         <div class="flex items-center gap-4">
             <!-- Date display -->
             <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                <?php echo techjournal_get_svg( 'calendar', 'w-4 h-4 fill-current text-slate-400' ); ?>
                 <span><?php echo date_i18n('l, d F Y'); ?></span>
             </div>
             
@@ -178,15 +178,11 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         <!-- Right: Social shortcuts -->
         <div class="flex items-center gap-4">
             <div class="flex items-center gap-3 text-slate-400">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors" title="Facebook">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 fill-current" viewBox="0 0 320 512" aria-hidden="true">
-                        <path d="M80 299.3V512H196V299.3h86.5l13.6-103.6H196V129.3c0-30 8.3-50.5 51.4-50.5H302V3.6C292.8 2.4 261.5 0 225.1 0 149 0 97 46.4 97 131.6v64.1H7V299.3H80z"/>
-                    </svg>
+                <a href="https://www.facebook.com/TechBlog.contact/" aria-label="Facebook" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors" title="Facebook">
+                    <?php echo techjournal_get_svg( 'facebook', 'w-5 h-5' ); ?>
                 </a>
-                <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors" title="Telegram">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 fill-current" viewBox="0 0 496 512" aria-hidden="true">
-                        <path d="M248,8C111,8,0,119,0,256S111,504,248,504,496,393,496,256,385,8,248,8ZM363,177.3,322,370.7c-3,13.5-11,16.8-22.3,10.5l-62.5-46.1L207,364c-3.4,3.4-6.3,6.3-12.9,6.3l4.5-63.7L314,195.4c5-4.4-1.1-6.9-7.7-2.5L181.8,304,120,284.7c-13.5-4.2-13.8-13.5,2.8-20L264,166C275.1,161.4,285.8,168.3,363,177.3Z"/>
-                    </svg>
+                <a href="https://t.me/ngovantoanttb" aria-label="Telegram" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors" title="Telegram">
+                    <?php echo techjournal_get_svg( 'telegram', 'w-5 h-5' ); ?>
                 </a>
             </div>
         </div>
@@ -212,7 +208,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
             <div class="relative group shrink-0">
                 <a href="<?php echo esc_url( $posts_page_url ); ?>" class="text-[12px] font-black uppercase tracking-wider transition-colors flex items-center gap-0.5 cursor-pointer py-2 <?php echo (is_home() || is_archive() || is_category()) ? 'nav-link-active' : 'text-slate-600 hover:text-primary'; ?>">
                     Bài viết
-                    <span class="material-symbols-outlined text-[14px] font-bold pointer-events-none transition-transform duration-200 group-hover:rotate-180">keyboard_arrow_down</span>
+                    <?php echo techjournal_get_svg( 'chevron-down', 'w-3.5 h-3.5 pointer-events-none transition-transform duration-200 group-hover:rotate-180 fill-current' ); ?>
                 </a>
                 <!-- Dropdown Menu of Categories (Zero border-radius premium design) -->
                 <div class="absolute left-0 top-full mt-0 hidden group-hover:block bg-white border border-slate-200/80 shadow-md py-1.5 min-w-[200px] z-50 transform origin-top transition-all duration-200">
@@ -266,38 +262,41 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
             <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="relative flex items-center bg-slate-50 border border-slate-200 focus-within:border-primary/80 transition-all px-2.5 py-1.5 w-[160px] lg:w-[220px]">
                 <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full text-[12px] text-slate-700 placeholder-slate-400 placeholder:text-[10px] placeholder:font-bold placeholder:tracking-wider focus:outline-none" />
                 <button type="submit" aria-label="Tìm kiếm" class="text-slate-400 hover:text-primary transition-colors cursor-pointer flex items-center">
-                    <span class="material-symbols-outlined text-[16px] font-bold">search</span>
+                    <?php echo techjournal_get_svg( 'search', 'w-[18px] h-[18px]' ); ?>
                 </button>
             </form>
         </nav>
 
         <!-- Header Actions (Commented search button & contact CTA button as requested, only mobile hamburger kept) -->
         <div class="flex items-center gap-3">
-            <!-- Search trigger button (Commented out as requested)
+            <?php /*
+            <!-- Search trigger button (Commented out as requested) -->
             <button onclick="toggleHeaderSearch()" aria-label="Open Search Box" class="w-9 h-9 border border-slate-200 text-slate-500 hover:text-primary hover:border-primary flex items-center justify-center cursor-pointer active:scale-95 transition-all">
-                <span class="material-symbols-outlined text-[20px]">search</span>
+                <?php echo techjournal_get_svg( 'search', 'w-5 h-5 fill-current' ); ?>
             </button>
-            -->
+            */ ?>
 
-            <!-- Contact CTA button (Commented out as it is merged into the main navbar)
+            <?php /*
+            <!-- Contact CTA button (Commented out as it is merged into the main navbar) -->
             <?php
             $contact_page = get_page_by_path('lien-he');
             if ( $contact_page ) :
             ?>
                 <a href="<?php echo esc_url( get_permalink( $contact_page->ID ) ); ?>" class="hidden sm:flex bg-primary hover:bg-primary/95 text-white text-[10px] font-black uppercase px-4 py-2.5 tracking-wider items-center gap-1.5 transition-colors">
-                    Liên hệ <span class="material-symbols-outlined text-[13px]">arrow_right_alt</span>
+                    Liên hệ <?php echo techjournal_get_svg( 'arrow_right_alt', 'w-3.5 h-3.5 fill-current' ); ?>
                 </a>
             <?php endif; ?>
-            -->
+            */ ?>
 
             <!-- Mobile Hamburger Menu Button -->
             <button onclick="toggleMobileCategoryDrawer()" aria-label="Open mobile categories drawer" class="lg:hidden w-9 h-9 border border-slate-200 text-slate-500 hover:text-primary hover:border-primary flex items-center justify-center cursor-pointer active:scale-95 transition-all">
-                <span class="material-symbols-outlined text-[20px]">menu</span>
+                <?php echo techjournal_get_svg( 'menu', 'w-6 h-6 fill-current' ); ?>
             </button>
         </div>
     </div>
 
-    <!-- Dropdown Search Bar (Commented out as requested for inline input)
+    <?php /*
+    <!-- Dropdown Search Bar (Commented out as requested for inline input) -->
     <div id="header-search-bar" class="absolute left-0 w-full bg-white border-b border-slate-100 shadow-md py-4 px-4 hidden z-50">
         <div class="max-w-container-max mx-auto">
             <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex gap-2">
@@ -308,7 +307,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
             </form>
         </div>
     </div>
-    -->
+    */ ?>
 
     <!-- ================= CATEGORY QUICK-NAVBAR SUB-HEADER (Red for Active Category only) ================= -->
     <?php if ( is_front_page() || is_home() || is_archive() || is_search() || is_single() ) : ?>
@@ -372,7 +371,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                         <div class="relative group shrink-0 z-30">
                             <a href="<?php echo esc_url( $cat_link ); ?>" class="px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1 <?php echo $active_class; ?>">
                                 <?php echo esc_html( $cat->name ); ?>
-                                <span class="material-symbols-outlined text-[13px] font-black pointer-events-none">keyboard_arrow_down</span>
+                                <?php echo techjournal_get_svg( 'chevron-down', 'w-3.5 h-3.5 pointer-events-none fill-current' ); ?>
                             </a>
                             <!-- Dropdown Menu -->
                             <div class="absolute left-0 top-full mt-1.5 hidden group-hover:block bg-white border border-slate-200/80 shadow-md py-1.5 min-w-[180px] z-50 transform origin-top transition-all duration-200">

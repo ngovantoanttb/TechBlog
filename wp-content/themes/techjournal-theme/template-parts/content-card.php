@@ -47,12 +47,12 @@ if ( ! empty( $cats ) ) {
             <span>BY <span class="text-primary font-black"><?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?></span></span>
             <span>•</span>
             <span class="flex items-center gap-1">
-                <span class="material-symbols-outlined text-[13px] text-blue-500">schedule</span>
+                <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-400 fill-current' ); ?>
                 <?php echo get_the_date('d/m/Y'); ?>
             </span>
             <span>•</span>
             <span class="flex items-center gap-1">
-                <span class="material-symbols-outlined text-[13px] text-blue-500">comment</span>
+                <?php echo techjournal_get_svg( 'comment', 'w-4 h-4 text-slate-400 fill-current' ); ?>
                 <?php echo get_comments_number(); ?>
             </span>
         </div>

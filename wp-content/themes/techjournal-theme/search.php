@@ -35,7 +35,7 @@ $search_query = get_search_query();
                 
                 <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-3 relative">
                     <div class="flex items-center gap-1.5 relative">
-                        <span class="material-symbols-outlined text-primary text-[20px] font-bold">search</span>
+                        <?php echo techjournal_get_svg( 'search', 'w-[20px] h-[20px] text-primary' ); ?>
                         <h2 class="font-display text-[16px] font-black text-slate-800 uppercase tracking-tight">
                             Kết quả phù hợp
                         </h2>
@@ -51,7 +51,7 @@ $search_query = get_search_query();
                         endwhile;
                     else :
                         echo '<div class="w-full text-center py-16 bg-white border border-slate-100 shadow-sm col-span-full">
-                            <span class="material-symbols-outlined text-[48px] text-slate-300 mb-3">search_off</span>
+                            ' . techjournal_get_svg( 'search_off', 'w-12 h-12 text-slate-300 mb-3 mx-auto block fill-current' ) . '
                             <p class="text-slate-500 text-sm leading-relaxed">Không tìm thấy bài viết nào phù hợp với từ khóa của bạn.</p>
                         </div>';
                     endif;
@@ -59,6 +59,10 @@ $search_query = get_search_query();
                 </div>
 
                 <!-- Load More Button Block - Flattened -->
+                <?php 
+                global $wp_query;
+                if ( have_posts() && $wp_query->found_posts > 9 ) : 
+                ?>
                 <div class="text-center mt-10">
                     <button id="techblog-load-more-btn" 
                             data-page="1" 
@@ -67,72 +71,77 @@ $search_query = get_search_query();
                             data-search="<?php echo esc_attr($search_query); ?>"
                             class="bg-primary hover:bg-primary/95 text-white font-bold px-8 py-3 text-[11px] uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 cursor-pointer inline-flex items-center gap-2">
                         <span>XEM THÊM BÀI VIẾT</span>
-                        <span class="material-symbols-outlined text-[16px] animate-spin hidden" id="load-more-spinner">sync</span>
+                        <span id="load-more-spinner" class="animate-spin hidden">
+                            <?php echo techjournal_get_svg( 'sync', 'w-4 h-4 fill-current' ); ?>
+                        </span>
                     </button>
                 </div>
+                <?php endif; ?>
 
             </div>
             
             <!-- Right: TechBlog Sidebar (lg:col-span-4 to align with homepage) -->
             <aside class="col-span-12 lg:col-span-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
 
-                <!-- Sidebar: BÀI VIẾT NỔI BẬT (Strictly Pinned/Sticky system) -->
-                <?php 
-                $sticky_ids = get_option( 'sticky_posts' );
-                if ( ! empty( $sticky_ids ) ) :
-                    $sidebar_query = new WP_Query( array(
-                        'post_type'           => 'post',
-                        'post__in'            => $sticky_ids,
-                        'posts_per_page'      => 5,
-                        'ignore_sticky_posts' => 1,
-                    ) );
-                    if ( $sidebar_query->have_posts() ) :
-                ?>
-                    <div class="bg-white border border-slate-100 p-6 shadow-sm">
-                        <h4 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h4>
-                        <div class="space-y-4">
-                            <?php
-                            $rank = 1;
-                            while ( $sidebar_query->have_posts() ) : $sidebar_query->the_post();
-                            ?>
-                                <div class="flex gap-4 items-center group/item py-3.5 border-b border-slate-100/50 last:border-0">
-                                    <div class="font-display text-2xl font-black text-slate-200 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
-                                        <?php echo sprintf('%02d', $rank); ?>
-                                    </div>
-                                    
-                                    <?php 
-                                    $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
-                                    if (!$thumb_url) {
-                                        $thumb_url = techblog_get_placeholder_img();
-                                    }
-                                    ?>
-                                    <a href="<?php the_permalink(); ?>" class="w-14 h-14 overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
-                                        <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
-                                    </a>
-                                    
-                                    <div class="flex-grow min-w-0">
-                                        <h5 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
-                                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                        </h5>
-                                        <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
-                                            <span class="flex items-center gap-0.5">
-                                                <span class="material-symbols-outlined text-[11px]">calendar_today</span>
-                                                <?php echo get_the_date(); ?>
-                                            </span>
+                <!-- Sidebar: BÀI VIẾT NỔI BẬT (Pinned/Sticky system) -->
+                <div class="bg-white border border-slate-100 p-6 shadow-sm">
+                    <h4 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h4>
+                    <div class="space-y-4">
+                        <?php 
+                        $sticky_ids = get_option( 'sticky_posts' );
+                        $has_featured = false;
+                        if ( ! empty( $sticky_ids ) ) :
+                            $sidebar_query = new WP_Query( array(
+                                'post_type'           => 'post',
+                                'post__in'            => $sticky_ids,
+                                'posts_per_page'      => 5,
+                                'ignore_sticky_posts' => 1,
+                            ) );
+                            if ( $sidebar_query->have_posts() ) :
+                                $has_featured = true;
+                                $rank = 1;
+                                while ( $sidebar_query->have_posts() ) : $sidebar_query->the_post();
+                                ?>
+                                    <div class="flex gap-4 items-center group/item py-3.5 border-b border-slate-100/50 last:border-0">
+                                        <div class="font-display text-2xl font-black text-slate-200 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
+                                            <?php echo sprintf('%02d', $rank); ?>
+                                        </div>
+                                        
+                                        <?php 
+                                        $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
+                                        if (!$thumb_url) {
+                                            $thumb_url = techblog_get_placeholder_img();
+                                        }
+                                        ?>
+                                        <a href="<?php the_permalink(); ?>" class="w-14 h-14 overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                                            <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
+                                        </a>
+                                        
+                                        <div class="flex-grow min-w-0">
+                                            <h5 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                            </h5>
+                                            <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
+                                                <span class="flex items-center gap-0.5">
+                                                    <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                                    <?php echo get_the_date(); ?>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            <?php
-                                $rank++;
-                            endwhile;
-                            wp_reset_postdata();
-                            ?>
-                        </div>
+                                <?php
+                                    $rank++;
+                                endwhile;
+                                wp_reset_postdata();
+                            endif;
+                        endif; 
+
+                        if ( ! $has_featured ) :
+                            echo '<p class="text-slate-500 text-xs py-4 text-center font-medium">Chưa có bài viết nổi bật.</p>';
+                        endif;
+                        ?>
                     </div>
-                <?php 
-                    endif;
-                endif; 
-                ?>
+                </div>
             </aside>
             
         </div>

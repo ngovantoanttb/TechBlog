@@ -20,7 +20,7 @@ get_header(); ?>
                 <!-- Page Breadcrumbs -->
                 <nav class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
                     <a class="hover:text-primary transition-all" href="<?php echo esc_url( home_url( '/' ) ); ?>">Trang Chủ</a>
-                    <span class="material-symbols-outlined text-[12px]">chevron_right</span>
+                    <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                     <span class="text-slate-600 truncate"><?php the_title(); ?></span>
                 </nav>
                 
@@ -43,7 +43,7 @@ get_header(); ?>
                     <!-- Mission -->
                     <div class="border border-slate-100 p-6 bg-slate-50/30">
                         <div class="w-10 h-10 bg-primary-container text-primary flex items-center justify-center mb-4 rounded-none">
-                            <span class="material-symbols-outlined text-[20px]">explore</span>
+                            <?php echo techjournal_get_svg( 'explore', 'w-5.5 h-5.5 text-primary fill-current' ); ?>
                         </div>
                         <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-2.5">Sứ Mệnh</h3>
                         <p class="text-slate-500 text-xs sm:text-[13px] leading-relaxed">
@@ -54,7 +54,7 @@ get_header(); ?>
                     <!-- Vision -->
                     <div class="border border-slate-100 p-6 bg-slate-50/30">
                         <div class="w-10 h-10 bg-primary-container text-primary flex items-center justify-center mb-4 rounded-none">
-                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                            <?php echo techjournal_get_svg( 'visibility', 'w-5.5 h-5.5 text-primary fill-current' ); ?>
                         </div>
                         <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-2.5">Tầm Nhìn</h3>
                         <p class="text-slate-500 text-xs sm:text-[13px] leading-relaxed">
@@ -112,13 +112,13 @@ get_header(); ?>
                                 <!-- Premium inline SVG social links -->
                                 <div class="flex justify-center sm:justify-start gap-2.5">
                                     <a href="https://github.com/ngovantoanttb" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-primary text-slate-500 hover:text-white flex items-center justify-center transition-all border border-slate-200/50 active:scale-95 shadow-sm" aria-label="GitHub">
-                                        <?php echo techjournal_get_svg( 'github', 'w-4 h-4' ); ?>
+                                        <?php echo techjournal_get_svg( 'github', 'w-4.5 h-4.5' ); ?>
                                     </a>
                                     <a href="https://www.linkedin.com/in/ngovantoanttb/" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-primary text-slate-500 hover:text-white flex items-center justify-center transition-all border border-slate-200/50 active:scale-95 shadow-sm" aria-label="LinkedIn">
-                                        <?php echo techjournal_get_svg( 'linkedin', 'w-4 h-4' ); ?>
+                                        <?php echo techjournal_get_svg( 'linkedin', 'w-4.5 h-4.5' ); ?>
                                     </a>
                                     <a href="https://facebook.com/ngovantoanttb" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-primary text-slate-500 hover:text-white flex items-center justify-center transition-all border border-slate-200/50 active:scale-95 shadow-sm" aria-label="Facebook">
-                                        <?php echo techjournal_get_svg( 'facebook', 'w-4 h-4' ); ?>
+                                        <?php echo techjournal_get_svg( 'facebook', 'w-4.5 h-4.5' ); ?>
                                     </a>
                                 </div>
                             </div>

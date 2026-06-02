@@ -130,6 +130,35 @@ if ( ! function_exists( 'techjournal_has_gravatar' ) ) {
 
 // 6. Premium SVG Loader Helper to fetch local theme SVGs and inject classes
 function techjournal_get_svg( $icon, $classes = '' ) {
+    // Map Material icon names to local SVG filenames
+    $mapping = array(
+        'schedule'             => 'clock',
+        'comment'              => 'comment',
+        'person'               => 'user',
+        'calendar_today'       => 'calendar',
+        'visibility'           => 'eye',
+        'chevron_right'        => 'chevron-right',
+        'chevron_left'         => 'chevron-left',
+        'keyboard_arrow_down'  => 'chevron-down',
+        'arrow_right_alt'      => 'arrow-right',
+        'explore'              => 'compass-svgrepo-com',
+        'local_fire_department'=> 'fire-svgrepo-com',
+        'bolt'                 => 'lightning-svgrepo-com',
+        'sync'                 => 'sync-svgrepo-com',
+        'search'               => 'search',
+        'mail'                 => 'email',
+        'close'                => 'close',
+        'done'                 => 'done',
+        'home'                 => 'home',
+        'search_off'           => 'info',
+        'article'              => 'article-svgrepo-com',
+        
+    );
+    
+    if ( isset( $mapping[ $icon ] ) ) {
+        $icon = $mapping[ $icon ];
+    }
+
     $svg_path = get_template_directory() . '/assets/svg/' . $icon . '.svg';
     if ( ! file_exists( $svg_path ) ) {
         // Fallback to the dedicated /svg/ folder
@@ -143,8 +172,10 @@ function techjournal_get_svg( $icon, $classes = '' ) {
     if ( file_exists( $svg_path ) ) {
         $svg = file_get_contents( $svg_path );
         if ( ! empty( $classes ) ) {
-            // Strip any existing class attribute to prevent duplicates, then inject new classes
+            // Strip any existing class, width, and height attributes to allow CSS/Tailwind scaling to work perfectly
             $svg = preg_replace( '/\s*class="[^"]*"/i', '', $svg );
+            $svg = preg_replace( '/\s*width="[^"]*"/i', '', $svg );
+            $svg = preg_replace( '/\s*height="[^"]*"/i', '', $svg );
             $svg = preg_replace( '/<svg([^>]*)>/i', '<svg$1 class="' . esc_attr( $classes ) . '">', $svg );
         }
         return $svg;
