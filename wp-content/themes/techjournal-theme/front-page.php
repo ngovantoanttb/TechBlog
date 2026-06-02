@@ -20,7 +20,7 @@ get_header(); ?>
                 <!-- NEWSFLASH Ticker Bar -->
                 <div class="bg-white border border-slate-100 flex items-center justify-between h-10 px-4 overflow-hidden gap-4 shadow-sm">
                     <div class="flex items-center gap-2 flex-grow min-w-0">
-                        <span class="bg-[#ff0000] text-white text-[10px] font-black uppercase px-2.5 flex items-center gap-1 shrink-0 tracking-wider">
+                        <span class="bg-red-600 text-white text-[10px] font-black uppercase px-2.5 flex items-center gap-1 shrink-0 tracking-wider">
                             <?php echo techjournal_get_svg( 'bolt', 'w-6 h-6 fill-current' ); ?> NEWSFLASH
                         </span>
                         <div class="relative h-6 flex-grow overflow-hidden font-bold text-[12px] text-slate-700 select-none">
@@ -42,10 +42,10 @@ get_header(); ?>
                         </div>
                     </div>
                     <div class="flex items-center gap-1 shrink-0">
-                        <button id="nf-prev-btn" class="w-6 h-6 border border-slate-200 text-slate-400 hover:text-slate-700 hover:border-slate-300 flex items-center justify-center cursor-pointer active:scale-95 transition-all">
+                        <button id="nf-prev-btn" aria-label="Tin trước" class="w-8 h-8 border border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300 flex items-center justify-center cursor-pointer active:scale-95 transition-all">
                              <?php echo techjournal_get_svg( 'chevron-left', 'w-4 h-4 fill-current' ); ?>
                          </button>
-                         <button id="nf-next-btn" class="w-6 h-6 border border-slate-200 text-slate-400 hover:text-slate-700 hover:border-slate-300 flex items-center justify-center cursor-pointer active:scale-95 transition-all">
+                         <button id="nf-next-btn" aria-label="Tin tiếp theo" class="w-8 h-8 border border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300 flex items-center justify-center cursor-pointer active:scale-95 transition-all">
                              <?php echo techjournal_get_svg( 'chevron-right', 'w-4 h-4 fill-current' ); ?>
                          </button>
                     </div>
@@ -78,7 +78,7 @@ get_header(); ?>
                                             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
                                             
                                             <div class="absolute inset-x-0 bottom-0 p-5 sm:p-8 flex flex-col justify-end text-white max-w-[80%] sm:max-w-[80%] space-y-2 pointer-events-none">
-                                                <span class="bg-[#ff0000] text-white text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm">
+                                                <span class="bg-red-600 text-white text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm">
                                                     <?php echo esc_html($sp_cat_name); ?>
                                                 </span>
                                                 <h2 class="font-display text-base sm:text-xl md:text-2xl font-extrabold tracking-tight leading-snug drop-shadow-sm break-words">
@@ -97,11 +97,11 @@ get_header(); ?>
                         </div>
                         
                         <!-- Controls on the bottom-right of the slider (Xanh chủ đạo thay vì màu đỏ) -->
-                        <div class="absolute bottom-0 right-0 z-20 flex bg-primary h-10 select-none items-center">
-                            <button id="hero-prev-btn" class="w-10 h-full hover:bg-black/20 text-white flex items-center justify-center cursor-pointer transition-colors border-r border-white/10 active:scale-95">
+                        <div class="absolute bottom-0 right-0 z-20 flex bg-primary h-12 select-none items-center">
+                            <button id="hero-prev-btn" aria-label="Slide trước" class="w-12 h-full hover:bg-black/20 text-white flex items-center justify-center cursor-pointer transition-colors border-r border-white/10 active:scale-95">
                                  <?php echo techjournal_get_svg( 'chevron-left', 'w-5 h-5 fill-current' ); ?>
                              </button>
-                             <button id="hero-next-btn" class="w-10 h-full hover:bg-black/20 text-white flex items-center justify-center cursor-pointer transition-colors active:scale-95">
+                             <button id="hero-next-btn" aria-label="Slide tiếp theo" class="w-12 h-full hover:bg-black/20 text-white flex items-center justify-center cursor-pointer transition-colors active:scale-95">
                                  <?php echo techjournal_get_svg( 'chevron-right', 'w-5 h-5 fill-current' ); ?>
                              </button>
                         </div>
@@ -185,7 +185,7 @@ get_header(); ?>
                 
                 <!-- Sidebar Widget 1: Ranked Popular Posts Widget (Photo 5 Style) -->
                 <div class="bg-white border border-slate-100 p-5 shadow-sm">
-                    <h4 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-4 border-b border-slate-200 pb-2.5 relative anony-section-title">Xem Nhiều Nhất</h4>
+                    <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-4 border-b border-slate-200 pb-2.5 relative anony-section-title">Xem Nhiều Nhất</h3>
                     <div class="space-y-4">
                         <?php
                         $popular_posts = new WP_Query( array(
@@ -211,9 +211,9 @@ get_header(); ?>
                                         <div class="flex gap-3 items-start">
                                             <span class="font-display text-4xl font-extrabold italic text-slate-200 group-hover:text-primary transition-colors shrink-0 tracking-tighter leading-none">01</span>
                                             <div class="flex-grow min-w-0">
-                                                <h3 class="font-display text-[13px] font-black text-slate-855 group-hover:text-primary transition-colors leading-snug break-words">
+                                                <h4 class="font-display text-[13px] font-black text-slate-855 group-hover:text-primary transition-colors leading-snug break-words">
                                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                                </h3>
+                                                </h4>
                                                  <span class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
                                                      <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                                                      <?php echo get_the_date(); ?>
@@ -250,7 +250,7 @@ get_header(); ?>
 
                 <!-- Sidebar Widget 2: BÀI VIẾT NỔI BẬT (Featured/Pinned Posts - Pinned/Sticky system) -->
                 <div class="bg-white border border-slate-100 p-6 shadow-sm">
-                    <h4 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h4>
+                    <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h3>
                     <div class="space-y-4">
                         <?php 
                         $sticky_ids = get_option( 'sticky_posts' );
@@ -283,9 +283,9 @@ get_header(); ?>
                                         </a>
                                         
                                         <div class="flex-grow min-w-0">
-                                            <h5 class="font-display text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                            <h4 class="font-display text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
                                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                            </h5>
+                                            </h4>
                                              <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
                                                  <span class="flex items-center gap-0.5">
                                                      <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>

@@ -154,7 +154,7 @@ get_header(); ?>
 
                     <!-- ================= RELATED ARTICLES SECTION (Compact Cards Grid - Flattened) ================= -->
                     <section class="mt-12 pt-8 border-t border-slate-100" aria-label="Related Articles">
-                        <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-6 anony-section-title">Bài Viết Cùng Chủ Đề</h3>
+                        <h2 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-6 anony-section-title">Bài Viết Cùng Chủ Đề</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                             <?php
                             // Fetch related posts from the SAME category
@@ -220,7 +220,7 @@ get_header(); ?>
                     if ( $sidebar_query->have_posts() ) :
             ?>
                 <div class="bg-white border border-slate-100 p-6 shadow-sm">
-                    <h4 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h4>
+                    <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h3>
                     <div class="space-y-4">
                         <?php
                         $rank = 1;
@@ -244,9 +244,9 @@ get_header(); ?>
                                 </a>
                                 
                                 <div class="flex-grow min-w-0">
-                                    <h5 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                    <h4 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                    </h5>
+                                    </h4>
                                     <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
                                         <span class="flex items-center gap-0.5">
                                             <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
@@ -275,7 +275,7 @@ get_header(); ?>
             
             <!-- Sidebar: BÀI VIẾT MỚI (Latest posts - Max 7 - Flattened) -->
             <div class="bg-white border border-slate-100 p-6 shadow-sm">
-                <h4 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Mới</h4>
+                <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Mới</h3>
                 <div class="space-y-4">
                     <?php
                     $sidebar_latest = new WP_Query( array(
@@ -299,9 +299,9 @@ get_header(); ?>
                                     <img src="<?php echo esc_url($sidebar_thumb); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
                                 </a>
                                 <div class="flex-grow min-w-0">
-                                    <h5 class="font-display text-[12px] font-bold text-slate-700 hover:text-primary transition-colors leading-snug break-words">
+                                    <h4 class="font-display text-[12px] font-bold text-slate-700 hover:text-primary transition-colors leading-snug break-words">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                    </h5>
+                                    </h4>
                                     <p class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
                                         <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?> <?php echo get_the_date(); ?>
                                     </p>

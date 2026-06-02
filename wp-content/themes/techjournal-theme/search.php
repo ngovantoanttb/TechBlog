@@ -85,7 +85,7 @@ $search_query = get_search_query();
 
                 <!-- Sidebar: BÀI VIẾT NỔI BẬT (Pinned/Sticky system) -->
                 <div class="bg-white border border-slate-100 p-6 shadow-sm">
-                    <h4 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h4>
+                    <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h3>
                     <div class="space-y-4">
                         <?php 
                         $sticky_ids = get_option( 'sticky_posts' );
@@ -118,9 +118,9 @@ $search_query = get_search_query();
                                         </a>
                                         
                                         <div class="flex-grow min-w-0">
-                                            <h5 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                            <h4 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
                                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                            </h5>
+                                            </h4>
                                             <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
                                                 <span class="flex items-center gap-0.5">
                                                     <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>

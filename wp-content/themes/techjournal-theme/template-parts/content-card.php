@@ -30,7 +30,7 @@ if ( ! empty( $cats ) ) {
     <a href="<?php the_permalink(); ?>" class="w-full sm:w-[280px] md:w-[320px] aspect-[16/10] sm:aspect-[16/9] md:aspect-[1.5/1] overflow-hidden block relative bg-slate-950 shrink-0 shadow-sm">
         <img class="w-full h-full object-cover transition-transform duration-750 group-hover:scale-102 opacity-95 group-hover:opacity-100" src="<?php echo esc_url($post_image); ?>" alt="<?php the_title_attribute(); ?>" />
         <?php if ($category_to_show) : ?>
-            <span class="absolute top-3 left-3 bg-[#ff0000] text-white text-[9px] font-black uppercase px-2.5 py-1 tracking-widest shadow-sm">
+            <span class="absolute top-3 left-3 bg-red-600 text-white text-[9px] font-black uppercase px-2.5 py-1 tracking-widest shadow-sm">
                 <?php echo esc_html($category_to_show->name); ?>
             </span>
         <?php endif; ?>
@@ -43,27 +43,27 @@ if ( ! empty( $cats ) ) {
         </h3>
         
         <!-- Meta Info Line -->
-        <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10px] sm:text-[11px] text-slate-400 font-bold uppercase tracking-wider mb-4">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10px] sm:text-[11px] text-slate-500 font-bold uppercase tracking-wider mb-4">
             <span>BY <span class="text-primary font-black"><?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?></span></span>
             <span>•</span>
             <span class="flex items-center gap-1">
-                <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-400 fill-current' ); ?>
+                <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-500 fill-current' ); ?>
                 <?php echo get_the_date('d/m/Y'); ?>
             </span>
             <span>•</span>
             <span class="flex items-center gap-1">
-                <?php echo techjournal_get_svg( 'comment', 'w-4 h-4 text-slate-400 fill-current' ); ?>
+                <?php echo techjournal_get_svg( 'comment', 'w-4 h-4 text-slate-500 fill-current' ); ?>
                 <?php echo get_comments_number(); ?>
             </span>
         </div>
         
         <!-- Excerpt -->
-        <p class="text-slate-505 text-xs sm:text-sm leading-relaxed mb-5">
+        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-5">
             <?php echo wp_trim_words( get_the_excerpt(), 25, '...' ); ?>
         </p>
         
         <!-- READ MORE Button -->
-        <a href="<?php the_permalink(); ?>" class="border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-[10px] font-bold uppercase tracking-wider text-slate-650 px-5 py-2 w-fit active:scale-95 transition-all mt-1 shadow-sm">
+        <a href="<?php the_permalink(); ?>" class="border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-[10px] font-bold uppercase tracking-wider text-slate-700 px-6 py-3 w-fit active:scale-95 transition-all mt-1 shadow-sm inline-flex items-center justify-center min-h-[48px]">
             READ MORE
         </a>
     </div>

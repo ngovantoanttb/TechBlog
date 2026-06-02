@@ -79,7 +79,7 @@ $category = get_category($cat_id);
                     </a>
                     
                     <div class="absolute inset-0 p-5 sm:p-7 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
-                        <span class="bg-[#ff0000] text-white text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm mb-3">
+                        <span class="bg-red-600 text-white text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm mb-3">
                             <?php single_cat_title(); ?>
                         </span>
                         <h2 class="font-display text-base sm:text-lg md:text-xl text-white font-extrabold tracking-tight leading-snug pointer-events-auto mb-2 break-words">
@@ -116,7 +116,7 @@ $category = get_category($cat_id);
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                             </a>
                             <div class="absolute inset-0 p-5 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
-                                <span class="bg-[#ff0000] text-white text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
+                                <span class="bg-red-600 text-white text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
                                     <?php single_cat_title(); ?>
                                 </span>
                                 <h3 class="font-display text-sm md:text-base text-white font-extrabold tracking-tight leading-snug pointer-events-auto break-words">
@@ -151,7 +151,7 @@ $category = get_category($cat_id);
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                                 </a>
                                 <div class="absolute inset-0 p-4 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
-                                    <span class="bg-[#ff0000] text-white text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
+                                    <span class="bg-red-600 text-white text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
                                         <?php single_cat_title(); ?>
                                     </span>
                                     <h3 class="font-display text-[12px] sm:text-[13px] md:text-[14px] text-white font-extrabold tracking-tight leading-snug pointer-events-auto break-words">
@@ -183,7 +183,7 @@ $category = get_category($cat_id);
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                                 </a>
                                 <div class="absolute inset-0 p-4 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
-                                    <span class="bg-[#ff0000] text-white text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
+                                    <span class="bg-red-600 text-white text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
                                         <?php single_cat_title(); ?>
                                     </span>
                                     <h3 class="font-display text-[12px] sm:text-[13px] md:text-[14px] text-white font-extrabold tracking-tight leading-snug pointer-events-auto">
@@ -271,7 +271,7 @@ $category = get_category($cat_id);
 
                 <!-- Sidebar: BÀI VIẾT NỔI BẬT (Pinned/Sticky system) -->
                 <div class="bg-white border border-slate-100 p-6 shadow-sm">
-                    <h4 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h4>
+                    <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h3>
                     <div class="space-y-4">
                         <?php 
                         $sticky_ids = get_option( 'sticky_posts' );
@@ -304,9 +304,9 @@ $category = get_category($cat_id);
                                         </a>
                                         
                                         <div class="flex-grow min-w-0">
-                                            <h5 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                            <h4 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
                                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                            </h5>
+                                            </h4>
                                             <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
                                                 <span class="flex items-center gap-0.5">
                                                     <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>

@@ -11,16 +11,16 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center active:scale-95 transition-all shrink-0">
                 <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog-header.png' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-6 w-auto block" />
             </a>
-            <button onclick="toggleMobileCategoryDrawer()" aria-label="Close menu drawer" class="text-slate-400 hover:text-primary p-1 bg-slate-50 cursor-pointer flex items-center justify-center">
+            <button onclick="toggleMobileCategoryDrawer()" aria-label="Close menu drawer" class="text-slate-500 hover:text-primary w-12 h-12 bg-slate-50 cursor-pointer flex items-center justify-center">
                 <?php echo techjournal_get_svg( 'close', 'w-5 h-5 fill-current' ); ?>
             </button>
         </div>
 
         <!-- Search Bar for Mobile -->
         <div class="mb-6">
-            <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="relative flex items-center bg-slate-50 border border-slate-200 focus-within:border-primary/80 transition-all px-3.5 py-2">
-                <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full text-[12px] text-slate-700 placeholder-slate-400 placeholder:text-[10px] placeholder:font-bold placeholder:tracking-wider focus:outline-none bg-transparent" />
-                <button type="submit" aria-label="Tìm kiếm" class="text-slate-400 hover:text-primary transition-colors cursor-pointer flex items-center">
+            <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="relative flex items-center bg-slate-50 border border-slate-200 focus-within:border-primary/80 transition-all pl-3.5 pr-0.5 h-12">
+                <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full h-full text-[12px] text-slate-700 placeholder-slate-400 placeholder:text-[10px] placeholder:font-bold placeholder:tracking-wider focus:outline-none bg-transparent" />
+                <button type="submit" aria-label="Tìm kiếm" class="w-12 h-12 text-slate-500 hover:text-primary transition-colors cursor-pointer flex items-center justify-center shrink-0">
                     <?php echo techjournal_get_svg( 'search', 'w-5 h-5' ); ?>
                 </button>
             </form>
@@ -111,7 +111,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 </div>
 
 <!-- Footer -->
-<footer class="w-full mt-section-gap bg-slate-900 border-t border-slate-800 text-slate-400" role="contentinfo">
+<footer class="w-full mt-section-gap bg-slate-900 border-t border-slate-800 text-slate-300" role="contentinfo">
     <div class="max-w-container-max mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-12 gap-12">
         <!-- Brand Info (Chuẩn SEO) -->
         <div class="col-span-full md:col-span-4 lg:col-span-5 space-y-5">
@@ -122,7 +122,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 <span class="sr-only"><?php bloginfo( 'name' ); ?></span> -->
                 <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog-footer.png' ); ?>" alt="<?php bloginfo( 'name' ); ?> Logo" class="h-12 w-auto block" style="clip-path: inset(1px);" />
             </a>
-            <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
+            <p class="text-slate-300 text-sm leading-relaxed max-w-sm">
                 Nơi mà bạn có thể tìm thấy những kiến thức, thủ thuật hữu ích về công nghệ mà nhà trường không giảng dạy cho bạn biết.
                 <!-- <?php 
                 $site_desc = get_bloginfo( 'description' );
@@ -168,7 +168,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 ) );
                 if ( ! empty( $footer_cats ) ) {
                     foreach ( $footer_cats as $cat ) {
-                        echo '<a class="text-slate-400 hover:text-primary transition-colors flex items-center gap-1.5" href="' . esc_url( get_category_link( $cat->term_id ) ) . '">
+                        echo '<a class="text-slate-300 hover:text-primary transition-colors flex items-center gap-1.5" href="' . esc_url( get_category_link( $cat->term_id ) ) . '">
                             <span class="w-1.5 h-1.5 bg-slate-850"></span>' . esc_html( $cat->name ) . '
                         </a>';
                     }
@@ -188,13 +188,13 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 
                 if ( $about_page ) :  
                 ?>
-                    <a class="text-slate-400 hover:text-primary transition-colors flex items-center gap-1.5" href="<?php echo esc_url( get_permalink( $about_page->ID ) ); ?>">
+                    <a class="text-slate-300 hover:text-primary transition-colors flex items-center gap-1.5" href="<?php echo esc_url( get_permalink( $about_page->ID ) ); ?>">
                         <span class="w-1.5 h-1.5 bg-slate-850"></span>Giới thiệu
                     </a>
                 <?php endif; ?>
                 
                 <?php if ( $contact_page ) : ?>
-                    <a class="text-slate-400 hover:text-primary transition-colors flex items-center gap-1.5" href="<?php echo esc_url( get_permalink( $contact_page->ID ) ); ?>">
+                    <a class="text-slate-300 hover:text-primary transition-colors flex items-center gap-1.5" href="<?php echo esc_url( get_permalink( $contact_page->ID ) ); ?>">
                         <span class="w-1.5 h-1.5 bg-slate-850"></span>Liên hệ
                     </a>
                 <?php endif; ?>
@@ -203,11 +203,11 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 $privacy_url = get_privacy_policy_url();
                 if ( ! empty( $privacy_url ) ) : 
                 ?>
-                    <a class="text-slate-400 hover:text-primary transition-colors flex items-center gap-1.5" href="<?php echo esc_url( $privacy_url ); ?>">
+                    <a class="text-slate-300 hover:text-primary transition-colors flex items-center gap-1.5" href="<?php echo esc_url( $privacy_url ); ?>">
                         <span class="w-1.5 h-1.5 bg-slate-850"></span>Chính sách bảo mật
                     </a>
                 <?php elseif ( $privacy_page ) : ?>
-                    <a class="text-slate-400 hover:text-primary transition-colors flex items-center gap-1.5" href="<?php echo esc_url( get_permalink( $privacy_page->ID ) ); ?>">
+                    <a class="text-slate-300 hover:text-primary transition-colors flex items-center gap-1.5" href="<?php echo esc_url( get_permalink( $privacy_page->ID ) ); ?>">
                         <span class="w-1.5 h-1.5 bg-slate-850"></span>Chính sách bảo mật
                     </a>
                 <?php endif; ?>
@@ -216,7 +216,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
     </div>
     
     <!-- Bottom line -->
-    <div class="max-w-container-max mx-auto px-6 py-8 border-t border-slate-800/60 flex justify-center items-center text-slate-500 text-xs">
+    <div class="max-w-container-max mx-auto px-6 py-8 border-t border-slate-800/60 flex justify-center items-center text-slate-300 text-xs">
         <span class="flex items-center gap-1.5">&copy; <?php echo date( 'Y' ); ?> <?php bloginfo( 'name' ); ?>. Thiết kế bởi <span class="hover:text-primary transition-colors">Admin TechBlog</span></span>
     </div>
 </footer>
@@ -280,7 +280,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 </script>
 
 <!-- Back to Top Button (Floating Zero Border-Radius Red Theme with Font Awesome SVG) -->
-<button class="back-to-top fixed bottom-20 lg:bottom-8 right-6 z-50 bg-primary text-white w-10 h-10 flex items-center justify-center rounded-none shadow-md hover:bg-primary/80 transition-all cursor-pointer duration-300 active:scale-95" id="backToTop" style="display: none;" aria-label="Quay lại đầu trang">
+<button class="back-to-top fixed bottom-20 lg:bottom-8 right-6 z-50 bg-primary text-white w-12 h-12 flex items-center justify-center rounded-none shadow-md hover:bg-primary/80 transition-all cursor-pointer duration-300 active:scale-95" id="backToTop" style="display: none;" aria-label="Quay lại đầu trang">
     <?php echo techjournal_get_svg( 'back-to-top', 'w-5 h-5 fill-white' ); ?>
 </button>
 
