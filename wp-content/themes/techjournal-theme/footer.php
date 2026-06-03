@@ -134,10 +134,10 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
             </p>
             <!-- Social profiles - Flattened -->
             <div class="flex gap-3 pt-2">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-slate-800 border border-slate-700/60 hover:bg-primary hover:border-primary text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 active:scale-95" title="Facebook">
+                <a href="https://www.facebook.com/TechBlog.contact/" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-slate-800 border border-slate-700/60 hover:bg-primary hover:border-primary text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 active:scale-95" title="Facebook">
                     <?php echo techjournal_get_svg( 'facebook', 'w-[15px] h-[15px]' ); ?>
                 </a>
-                <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-slate-800 border border-slate-700/60 hover:bg-primary hover:border-primary text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 active:scale-95" title="Telegram">
+                <a href="https://t.me/ngovantoanttb" target="_blank" rel="noopener noreferrer" class="w-9 h-9 bg-slate-800 border border-slate-700/60 hover:bg-primary hover:border-primary text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 active:scale-95" title="Telegram">
                     <?php echo techjournal_get_svg( 'telegram', 'w-[16px] h-[16px]' ); ?>
                 </a>
                 <a href="mailto:<?php echo antispambot( get_option( 'admin_email' ) ); ?>" class="w-9 h-9 bg-slate-800 border border-slate-700/60 hover:bg-primary hover:border-primary text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 active:scale-95" title="Email liên hệ">
