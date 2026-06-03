@@ -41,11 +41,31 @@
     ?>
     <meta name="description" content="<?php echo esc_attr( $meta_desc ); ?>" />
     
+    <!-- Facebook Open Graph & Developer Meta (Tối ưu chia sẻ Facebook và khai báo App ID) -->
+    <meta property="fb:app_id" content="<?php echo esc_attr( get_option( 'fb_app_id', 'YOUR_FACEBOOK_APP_ID' ) ); ?>" />
+    <meta property="og:site_name" content="<?php bloginfo( 'name' ); ?>" />
+    <meta property="og:type" content="<?php echo is_single() ? 'article' : 'website'; ?>" />
+    <meta property="og:title" content="<?php echo esc_attr( wp_get_document_title() ); ?>" />
+    <meta property="og:description" content="<?php echo esc_attr( $meta_desc ); ?>" />
+    <meta property="og:url" content="<?php echo esc_url( is_single() || is_page() ? get_permalink() : home_url( '/' ) ); ?>" />
+    <?php
+    $og_image = '';
+    if ( is_single() || is_page() ) {
+        if ( has_post_thumbnail() ) {
+            $og_image = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+        }
+    }
+    if ( empty( $og_image ) ) {
+        $og_image = get_template_directory_uri() . '/assets/images/E0A2F353-771A-4907-AF89-9A34B03AFD42.png';
+    }
+    ?>
+    <meta property="og:image" content="<?php echo esc_url( $og_image ); ?>" />
+    
     <!-- Favicon & Icons (Chuẩn SEO & Retina) -->
     <link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/favicon.svg' ); ?>" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-icon.svg' ); ?>" />
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-icon.svg' ); ?>" />
-    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/techblog-icon.svg' ); ?>" />
+    <link rel="apple-touch-icon" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog.png' ); ?>" />
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog.png' ); ?>" />
+    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/Logo-TechBlog.png' ); ?>" />
 
     <!-- Google Fonts (Premium Be Vietnam Pro Font) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
