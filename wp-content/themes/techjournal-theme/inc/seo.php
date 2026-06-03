@@ -104,7 +104,7 @@ function techjournal_inject_schema_json_ld() {
             'url' => $site_url,
             'logo' => $logo_url,
             'sameAs' => array(
-                'https://www.facebook.com/techblog',
+                'https://www.facebook.com/TechBlog.contact',
                 'https://twitter.com/techblog'
             )
         );
