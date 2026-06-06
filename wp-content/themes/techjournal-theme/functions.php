@@ -59,3 +59,6 @@ function techjournal_fb_app_id_callback() {
     echo '<input type="text" id="fb_app_id" name="fb_app_id" value="' . esc_attr($value) . '" class="regular-text" />';
     echo '<p class="description">Điền App ID từ trang Facebook Developer để tối ưu hóa crawler và chia sẻ liên kết.</p>';
 }
+
+// 8. Site maintenance and suspension management controls
+require_once TECHJOURNAL_THEME_INC . '/maintenance.php';
