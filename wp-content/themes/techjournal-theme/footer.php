@@ -217,7 +217,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
     
     <!-- Bottom line -->
     <div class="max-w-container-max mx-auto px-6 py-8 border-t border-slate-800/60 flex justify-center items-center text-slate-300 text-xs">
-        <span class="flex items-center gap-1.5">&copy; <?php echo date( 'Y' ); ?> <?php bloginfo( 'name' ); ?>. Thiết kế bởi <span class="hover:text-primary transition-colors">Admin TechBlog</span></span>
+        <span class="flex items-center gap-1.5">&copy; <?php echo date( 'Y' ); ?> <?php bloginfo( 'name' ); ?>. Thiết kế bởi <span class="hover:text-primary transition-colors">Ngo Van Toan</span></span>
     </div>
 </footer>
 
