@@ -1,34 +1,88 @@
 <?php
 /**
- * The template for displaying 404 pages (Not Found) - TechBlog Style
+ * The template for displaying standalone 404 pages (Not Found) - TechBlog Style
  *
  * @package TechJournal
  * @since 1.0.0
  */
+?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?> class="scroll-smooth">
+<head>
+    <meta charset="<?php bloginfo( 'charset' ); ?>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><?php esc_html_e( 'Ủa? Đi lạc rồi bạn ơi! - 404 TechBlog', 'techjournal' ); ?></title>
+    
+    <!-- Google Fonts (Premium Be Vietnam Pro Font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-get_header(); ?>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb', // Royal Blue
+                        background: '#f8fafc',
+                        surface: '#ffffff',
+                        'on-surface': '#0f172a',
+                        'on-surface-variant': '#475569'
+                    },
+                    fontFamily: {
+                        sans: ['"Be Vietnam Pro"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            html, body {
+                @apply bg-background text-on-surface font-sans antialiased selection:bg-primary selection:text-white;
+                overflow-x: hidden;
+                width: 100%;
+            }
+        }
+    </style>
+    
+    <?php wp_head(); ?>
+</head>
+<body <?php body_class( 'min-h-screen flex items-center justify-center bg-white' ); ?>>
+<?php wp_body_open(); ?>
 
-<main class="pt-6 sm:pt-8 pb-section-gap bg-background min-h-[70vh] flex items-center justify-center">
-    <div class="text-center max-w-lg bg-white p-8 sm:p-16 border border-slate-100/80 premium-shadow">
-        
-        <div class="w-20 h-20 bg-primary/10 flex items-center justify-center text-primary mx-auto mb-6 border border-primary/20">
-            <?php echo techjournal_get_svg( 'info', 'w-10 h-10 text-primary fill-current' ); ?>
+<!-- Main Standalone Content (Custom Layout with translations & humor) -->
+<main class="w-full flex justify-center">
+    <div class="lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 items-center flex justify-center flex-col-reverse lg:flex-row md:gap-28 gap-16">
+        <div class="xl:pt-24 w-full lg:w-1/2 relative pb-12 lg:pb-0">
+            <div class="relative">
+                <div class="absolute z-10">
+                    <div class="max-w-md">
+                        <h1 class="my-2 text-slate-800 font-extrabold text-2xl leading-snug">
+                            Ối giời ơi! Bạn vừa lạc vào vùng đất "Không Có Gì" của vũ trụ rồi!
+                        </h1>
+                        <p class="my-3 text-slate-600 text-[13px] leading-relaxed">
+                            Đường link này đã bốc hơi nhanh hơn cả tiền lương của bạn! Đừng hoang mang, hố đen này tuy sâu nhưng không hút mất người yêu cũ của bạn đâu. Nhấp nút thần kỳ dưới đây để lên phi thuyền về lại bờ an toàn nhé!
+                        </p>
+                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="inline-block sm:w-full lg:w-auto my-3 border rounded-none py-4 px-8 text-center bg-primary text-white font-bold text-[11px] uppercase tracking-wider hover:bg-blue-700 transition-colors shadow-lg">
+                            Lên phi thuyền về Trái Đất gấp!
+                        </a>
+                    </div>
+                </div>
+                <!-- Faint background layout lines -->
+                <div class="pt-32 opacity-20 sm:opacity-100">
+                    <img src="https://i.ibb.co/G9DC8S0/404-2.png" alt="Decoration Grid" />
+                </div>
+            </div>
         </div>
-        
-        <h1 class="font-display text-6xl font-black text-slate-300 tracking-tighter mb-2">404</h1>
-        <h2 class="font-display text-xl font-extrabold text-slate-800 uppercase tracking-tight mb-4">Không Tìm Thấy Trang</h2>
-        
-        <p class="text-slate-500 text-[13px] leading-relaxed mb-8">
-            Trang bạn đang tìm kiếm có thể đã bị xóa, thay đổi tên hoặc tạm thời không khả dụng. Hãy quay lại trang chủ của hệ thống.
-        </p>
-        
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="bg-primary hover:bg-[#cc0000] text-white font-bold py-2.5 px-6 text-xs uppercase tracking-wider transition-all duration-300 active:scale-95 shadow-[0_4px_12px_rgba(255,0,0,0.15)] text-center">
-                Về Trang Chủ
-            </a>
-            
+        <div class="w-full lg:w-1/2 flex justify-center">
+            <img src="https://i.ibb.co/ck1SGFJ/Group.png" alt="404 Illustration" class="max-w-full h-auto" />
         </div>
     </div>
 </main>
 
-<?php get_footer(); ?>
+<?php wp_footer(); ?>
+</body>
+</html>

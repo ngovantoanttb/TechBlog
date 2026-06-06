@@ -101,3 +101,7 @@ function techjournal_customize_search_query( $query ) {
 }
 add_action( 'pre_get_posts', 'techjournal_customize_search_query' );
 
+// 5. Disable native WordPress sitemaps to prevent conflict with custom sitemap.php
+add_filter( 'wp_sitemaps_enabled', '__return_false' );
+
+
