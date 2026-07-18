@@ -14,11 +14,13 @@ function techjournal_seo_meta_tags() {
     $description = get_bloginfo( 'description' );
     $url = home_url( '/' );
     $image = get_template_directory_uri() . '/assets/images/techblog-banne.svg';
-    $title = get_bloginfo( 'name' );
+    $title = wp_get_document_title();
+    $image_alt = get_bloginfo( 'description' );
     
-    if ( is_single() || is_page() ) {
+    if ( is_front_page() || is_home() ) {
+        // Keep title as wp_get_document_title()
+    } elseif ( is_single() || is_page() ) {
         setup_postdata( $post );
-        $title = get_the_title() . ' - ' . $site_name;
         $url = get_permalink();
         
         // Excerpt as description
@@ -30,27 +32,35 @@ function techjournal_seo_meta_tags() {
         }
         
         // Thumbnail as image
+        $image_alt = get_the_title();
         if ( has_post_thumbnail() ) {
             $image = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+            $thumbnail_id = get_post_thumbnail_id( get_the_ID() );
+            $alt = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
+            if ( ! empty( $alt ) ) {
+                $image_alt = $alt;
+            }
         }
     } elseif ( is_category() ) {
         $cat = get_queried_object();
-        $title = single_cat_title( '', false ) . ' - ' . $site_name;
         $url = get_category_link( $cat->term_id );
         if ( ! empty( $cat->description ) ) {
             $description = wp_strip_all_tags( $cat->description );
         }
+        $image_alt = single_cat_title( '', false );
     }
     
     ?>
     <!-- SEO & Open Graph Meta Tags (TechBlog Premium SEO Integration) -->
     <meta name="description" content="<?php echo esc_attr( $description ); ?>" />
+    <meta property="fb:app_id" content="<?php echo esc_attr( get_option( 'fb_app_id', 'YOUR_FACEBOOK_APP_ID' ) ); ?>" />
     <meta property="og:site_name" content="<?php echo esc_attr( $site_name ); ?>" />
     <meta property="og:type" content="<?php echo ( is_single() ) ? 'article' : 'website'; ?>" />
     <meta property="og:title" content="<?php echo esc_attr( $title ); ?>" />
     <meta property="og:description" content="<?php echo esc_attr( $description ); ?>" />
     <meta property="og:url" content="<?php echo esc_url( $url ); ?>" />
     <meta property="og:image" content="<?php echo esc_url( $image ); ?>" />
+    <meta property="og:image:alt" content="<?php echo esc_attr( $image_alt ); ?>" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     

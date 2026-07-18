@@ -50,9 +50,16 @@
     <meta property="og:url" content="<?php echo esc_url( is_single() || is_page() ? get_permalink() : home_url( '/' ) ); ?>" />
     <?php
     $og_image = '';
+    $og_image_alt = get_bloginfo( 'description' );
     if ( is_single() || is_page() ) {
+        $og_image_alt = get_bloginfo( 'description' );
         if ( has_post_thumbnail() ) {
             $og_image = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+            $thumbnail_id = get_post_thumbnail_id( get_the_ID() );
+            $alt = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
+            if ( ! empty( $alt ) ) {
+                $og_image_alt = $alt;
+            }
         }
     }
     if ( empty( $og_image ) ) {
@@ -60,6 +67,7 @@
     }
     ?>
     <meta property="og:image" content="<?php echo esc_url( $og_image ); ?>" />
+    <meta property="og:image:alt" content="<?php echo esc_attr( $og_image_alt ); ?>" />
     
     <!-- Favicon & Icons (Chuẩn SEO & Retina) -->
     <link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/favicon.svg' ); ?>" type="image/svg+xml" />
