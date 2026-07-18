@@ -67,7 +67,7 @@ get_header(); ?>
 
                     <!-- Featured Thumbnail - Flattened -->
                     <?php if ( has_post_thumbnail() ) : ?>
-                        <div class="border border-slate-100/50 mb-8 bg-slate-950 aspect-[16/10] overflow-hidden">
+                        <div class="mb-8 bg-slate-950 aspect-[16/10] overflow-hidden">
                             <img class="w-full h-full object-cover opacity-95" src="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'large' ) ); ?>" alt="<?php the_title_attribute(); ?>" />
                         </div>
                     <?php endif; ?>
