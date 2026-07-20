@@ -161,6 +161,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 }
 
                 $footer_cats = get_categories( array(
+                    'parent'     => 0,          // Chỉ lấy chuyên mục cha
                     'orderby' => 'count',
                     'order'   => 'DESC',
                     'exclude' => $exclude_ids,
