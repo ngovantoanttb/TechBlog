@@ -360,7 +360,7 @@ get_header();
                                 while ( $sidebar_query->have_posts() ) : $sidebar_query->the_post();
                                 ?>
                                     <div class="flex gap-4 items-center group/item py-3.5 border-b border-slate-100/50 last:border-0">
-                                        <div class="font-display text-2xl font-black text-slate-200 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
+                                        <div class="font-display text-2xl font-black text-slate-700 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
                                             <?php echo sprintf('%02d', $rank); ?>
                                         </div>
                                         
@@ -370,7 +370,7 @@ get_header();
                                             $thumb_url = techblog_get_placeholder_img();
                                         }
                                         ?>
-                                        <a href="<?php the_permalink(); ?>" class="w-14 h-14 overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                                        <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
                                             <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
                                         </a>
                                         

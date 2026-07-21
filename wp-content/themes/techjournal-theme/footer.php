@@ -161,7 +161,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 }
 
                 $footer_cats = get_categories( array(
-                    'parent'     => 0,          // Chỉ lấy chuyên mục cha
+                    'parent'  => 0, // chỉ lấy danh mục cha
                     'orderby' => 'count',
                     'order'   => 'DESC',
                     'exclude' => $exclude_ids,
@@ -218,7 +218,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
     
     <!-- Bottom line -->
     <div class="max-w-container-max mx-auto px-6 py-8 border-t border-slate-800/60 flex justify-center items-center text-slate-300 text-xs">
-        <span class="flex items-center gap-1.5">&copy; <?php echo date( 'Y' ); ?> <?php bloginfo( 'name' ); ?>. Thiết kế bởi <span class="hover:text-primary transition-colors">Ngo Van Toan</span></span>
+        <span class="flex items-center gap-1.5">&copy; <?php echo date( 'Y' ); ?> <?php bloginfo( 'name' ); ?> by <span class="hover:text-primary transition-colors">ngovantoanttb</span></span>
     </div>
 </footer>
 
@@ -281,7 +281,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 </script>
 
 <!-- Back to Top Button (Floating Zero Border-Radius Red Theme with Font Awesome SVG) -->
-<button class="back-to-top fixed bottom-20 lg:bottom-8 right-6 z-50 bg-primary text-white w-12 h-12 flex items-center justify-center rounded-none shadow-md hover:bg-primary/80 transition-all cursor-pointer duration-300 active:scale-95" id="backToTop" style="display: none;" aria-label="Quay lại đầu trang">
+<button class="back-to-top fixed bottom-10 lg:bottom-4 right-6 z-50 bg-primary text-white w-12 h-12 flex items-center justify-center rounded-none shadow-md hover:bg-primary/80 transition-all cursor-pointer duration-300 active:scale-95" id="backToTop" style="display: none;" aria-label="Quay lại đầu trang">
     <?php echo techjournal_get_svg( 'back-to-top', 'w-5 h-5 fill-white' ); ?>
 </button>
 

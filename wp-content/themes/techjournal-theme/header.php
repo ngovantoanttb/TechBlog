@@ -4,70 +4,7 @@
     <meta charset="<?php bloginfo( 'charset' ); ?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Meta Description (Tối ưu SEO chuẩn Lighthouse) -->
-    <?php
-    $meta_desc = '';
-    if ( is_single() || is_page() ) {
-        global $post;
-        if ( ! empty( $post->post_excerpt ) ) {
-            $meta_desc = wp_strip_all_tags( $post->post_excerpt );
-        } else {
-            $meta_desc = wp_strip_all_tags( get_the_excerpt() );
-        }
-        if ( empty( $meta_desc ) ) {
-            $meta_desc = wp_strip_all_tags( strip_shortcodes( $post->post_content ) );
-        }
-    } elseif ( is_category() ) {
-        $meta_desc = category_description();
-    } elseif ( is_tag() ) {
-        $meta_desc = tag_description();
-    }
-    
-    if ( empty( $meta_desc ) ) {
-        $meta_desc = get_bloginfo( 'description' );
-    }
-    
-    if ( empty( $meta_desc ) ) {
-        $meta_desc = 'TechBlog - Trang tin tức công nghệ, tạp chí trực tuyến chia sẻ kiến thức chuyên sâu về lập trình, thiết kế web và xu hướng công nghệ mới nhất.';
-    }
-    
-    $meta_desc = html_entity_decode( $meta_desc, ENT_QUOTES, 'UTF-8' );
-    $meta_desc = wp_strip_all_tags( $meta_desc );
-    $meta_desc = preg_replace( '/\s+/', ' ', $meta_desc );
-    $meta_desc = trim( $meta_desc );
-    if ( mb_strlen( $meta_desc ) > 160 ) {
-        $meta_desc = mb_substr( $meta_desc, 0, 157 ) . '...';
-    }
-    ?>
-    <meta name="description" content="<?php echo esc_attr( $meta_desc ); ?>" />
-    
-    <!-- Facebook Open Graph & Developer Meta (Tối ưu chia sẻ Facebook và khai báo App ID) -->
-    <meta property="fb:app_id" content="<?php echo esc_attr( get_option( 'fb_app_id', 'YOUR_FACEBOOK_APP_ID' ) ); ?>" />
-    <meta property="og:site_name" content="<?php bloginfo( 'name' ); ?>" />
-    <meta property="og:type" content="<?php echo is_single() ? 'article' : 'website'; ?>" />
-    <meta property="og:title" content="<?php echo esc_attr( wp_get_document_title() ); ?>" />
-    <meta property="og:description" content="<?php echo esc_attr( $meta_desc ); ?>" />
-    <meta property="og:url" content="<?php echo esc_url( is_single() || is_page() ? get_permalink() : home_url( '/' ) ); ?>" />
-    <?php
-    $og_image = '';
-    $og_image_alt = get_bloginfo( 'description' );
-    if ( is_single() || is_page() ) {
-        $og_image_alt = get_bloginfo( 'description' );
-        if ( has_post_thumbnail() ) {
-            $og_image = get_the_post_thumbnail_url( get_the_ID(), 'full' );
-            $thumbnail_id = get_post_thumbnail_id( get_the_ID() );
-            $alt = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
-            if ( ! empty( $alt ) ) {
-                $og_image_alt = $alt;
-            }
-        }
-    }
-    if ( empty( $og_image ) ) {
-        $og_image = get_template_directory_uri() . '/assets/images/E0A2F353-771A-4907-AF89-9A34B03AFD42.png';
-    }
-    ?>
-    <meta property="og:image" content="<?php echo esc_url( $og_image ); ?>" />
-    <meta property="og:image:alt" content="<?php echo esc_attr( $og_image_alt ); ?>" />
+    <!-- All Dynamic SEO & Open Graph Meta Tags are managed in inc/seo.php and injected via wp_head() -->
     
     <!-- Favicon & Icons (Chuẩn SEO & Retina) -->
     <link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/assets/images/favicon.svg' ); ?>" type="image/svg+xml" />
@@ -357,7 +294,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 }
 
                 $all_cats = get_categories( array(
-                    'orderby'    => 'count',
+                    'orderby'    => 'term_id',
                     'order'      => 'DESC',
                     'parent'     => 0,
                     'hide_empty' => false,
@@ -402,7 +339,15 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                                 <?php echo techjournal_get_svg( 'chevron-down', 'w-3.5 h-3.5 pointer-events-none fill-current' ); ?>
                             </a>
                             <!-- Dropdown Menu -->
-                            <div class="absolute left-0 top-full mt-1.5 hidden group-hover:block bg-white border border-slate-200/80 shadow-md py-1.5 min-w-[180px] z-50 transform origin-top transition-all duration-200">
+                            <div class="absolute left-0 top-full
+               opacity-0 invisible
+               pointer-events-none
+               group-hover:opacity-100
+               group-hover:visible
+               group-hover:pointer-events-auto
+               transition-all duration-200
+               bg-white border border-slate-200
+               shadow-lg min-w-[180px] z-50">
                                 <?php foreach ( $sub_cats as $sub_cat ) : 
                                     $sub_active = is_category( $sub_cat->term_id ) || (is_single() && $current_cat_id === $sub_cat->term_id);
                                 ?>

@@ -66,11 +66,11 @@ get_header(); ?>
                     </div>
 
                     <!-- Featured Thumbnail - Flattened -->
-                    <?php if ( has_post_thumbnail() ) : ?>
+                    <!-- <?php if ( has_post_thumbnail() ) : ?>
                         <div class="mb-8 bg-slate-950 aspect-[16/10] overflow-hidden">
                             <img class="w-full h-full object-cover opacity-95" src="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'large' ) ); ?>" alt="<?php the_title_attribute(); ?>" />
                         </div>
-                    <?php endif; ?>
+                    <?php endif; ?> -->
 
                     <!-- Rich Post Body -->
                     <div class="prose max-w-none text-slate-600 text-[14.5px] leading-relaxed space-y-6">
@@ -228,7 +228,7 @@ get_header(); ?>
                         ?>
                             <div class="flex gap-4 items-center group/item py-3.5 border-b border-slate-100/50 last:border-0">
                                 <!-- Rank Number with high-end serif style and safe margin spacing -->
-                                <div class="font-display text-2xl font-black text-slate-200 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
+                                <div class="font-display text-2xl font-black text-slate-700 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
                                     <?php echo sprintf('%02d', $rank); ?>
                                 </div>
                                 
@@ -239,7 +239,7 @@ get_header(); ?>
                                     $thumb_url = techblog_get_placeholder_img();
                                 }
                                 ?>
-                                <a href="<?php the_permalink(); ?>" class="w-14 h-14 overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                                <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
                                     <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
                                 </a>
                                 
@@ -295,7 +295,7 @@ get_header(); ?>
                             }
                             ?>
                             <div class="flex gap-3 items-center group py-2.5 border-b border-slate-100/50 last:border-0">
-                                <a href="<?php the_permalink(); ?>" class="w-12 h-12 overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                                <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
                                     <img src="<?php echo esc_url($sidebar_thumb); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
                                 </a>
                                 <div class="flex-grow min-w-0">

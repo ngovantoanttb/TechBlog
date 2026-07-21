@@ -13,6 +13,7 @@ get_header();
 
 $cat_id = get_queried_object_id();
 $category = get_category($cat_id);
+$paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
 ?>
 
 <main class="py-8 bg-slate-50/50 min-h-screen">
@@ -52,7 +53,7 @@ $category = get_category($cat_id);
         }
         
         $post_count = count( $hero_posts );
-        if ( $post_count > 0 ) :
+        if ( $paged === 1 && $post_count > 0 ) :
             ?>
             <style>
             #bento-hero-grid::-webkit-scrollbar {
@@ -231,6 +232,7 @@ $category = get_category($cat_id);
                         'post_type'      => 'post',
                         'cat'            => $cat_id,
                         'posts_per_page' => 9,
+                        'paged'          => $paged,
                         'post__not_in'   => $exclude_ids,
                         'ignore_sticky_posts' => 1,
                         'order'          => 'DESC'
@@ -289,7 +291,7 @@ $category = get_category($cat_id);
                                 while ( $sidebar_query->have_posts() ) : $sidebar_query->the_post();
                                 ?>
                                     <div class="flex gap-4 items-center group/item py-3.5 border-b border-slate-100/50 last:border-0">
-                                        <div class="font-display text-2xl font-black text-slate-200 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
+                                        <div class="font-display text-2xl font-black text-slate-700 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
                                             <?php echo sprintf('%02d', $rank); ?>
                                         </div>
                                         
@@ -299,7 +301,7 @@ $category = get_category($cat_id);
                                             $thumb_url = techblog_get_placeholder_img();
                                         }
                                         ?>
-                                        <a href="<?php the_permalink(); ?>" class="w-14 h-14 overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                                        <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
                                             <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
                                         </a>
                                         

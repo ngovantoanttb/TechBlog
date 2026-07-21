@@ -17,23 +17,28 @@ get_header(); ?>
             <!-- Left Column: Content Section (Newsflash, Hero Slider, Thumbnails, and Article List) -->
             <div class="col-span-12 lg:col-span-8 space-y-8">
                 
-                <!-- NEWSFLASH Ticker Bar -->
-                <div class="bg-white border border-slate-100 flex items-center justify-between h-10 px-4 overflow-hidden gap-4 shadow-sm">
-                    <div class="flex items-center gap-2 flex-grow min-w-0">
-                        <span class="bg-red-600 text-white text-[10px] font-black uppercase px-2.5 flex items-center gap-1 shrink-0 tracking-wider">
-                            <?php echo techjournal_get_svg( 'bolt', 'w-6 h-6 fill-current' ); ?> NEWSFLASH
+                <div class="bg-white border border-slate-100 flex items-center justify-between h-10 px-0 sm:px-4 overflow-hidden gap-2 sm:gap-4 shadow-sm">
+                    <div class="flex items-center gap-1.5 sm:gap-2 flex-grow min-w-0">
+                        <span class="bg-red-600 text-white text-[10px] font-black uppercase px-0 sm:px-2.5 flex items-center gap-1 shrink-0 tracking-wider">
+                            <?php echo techjournal_get_svg( 'bolt', 'w-6 h-6 fill-current' ); ?><span class="hidden sm:inline">NEWSFLASH</span>
                         </span>
                         <div class="relative h-6 flex-grow overflow-hidden font-bold text-[12px] text-slate-700 select-none">
                             <div id="homepage-newsflash-track" class="absolute w-full transition-all duration-500 ease-in-out left-0" style="top: 0px;">
                                 <?php 
-                                $nf_posts = get_posts( array( 'post_type' => 'post', 'posts_per_page' => 5 ) );
+                                $nf_posts = get_posts( array( 
+                                    'post_type'   => 'post', 
+                                    'numberposts' => 5,
+                                    'post_status' => 'publish',
+                                    'orderby'     => 'date',
+                                    'order'       => 'DESC'
+                                ) );
                                 foreach ( $nf_posts as $idx => $nf_post ) : 
                                 ?>
                                     <div class="h-6 flex items-center justify-between gap-4 w-full" data-index="<?php echo $idx; ?>">
                                         <a href="<?php echo get_permalink($nf_post->ID); ?>" class="hover:text-primary transition-colors truncate min-w-0 flex-grow">
                                             <?php echo esc_html($nf_post->post_title); ?>
                                         </a>
-                                        <span class="text-[10px] text-slate-400 shrink-0 font-medium ml-auto">
+                                        <span class="hidden sm:inline-block text-[10px] text-slate-400 shrink-0 font-medium ml-auto">
                                             <?php echo human_time_diff( get_post_time('U', false, $nf_post), current_time('timestamp') ) . ' trước'; ?>
                                         </span>
                                     </div>
@@ -74,7 +79,27 @@ get_header(); ?>
                                 ?>
                                     <div class="h-full shrink-0 relative hero-slide" style="width: <?php echo $slide_width; ?>%;" data-slide-index="<?php echo $idx; ?>">
                                         <a href="<?php echo get_permalink($sp->ID); ?>" class="absolute inset-0 block">
-                                            <img src="<?php echo esc_url($sp_img); ?>" class="w-full h-full object-cover transform scale-100 group-hover/hero-slider:scale-102 transition-transform duration-[6000ms] ease-out" alt="<?php echo esc_attr($sp->post_title); ?>" />
+                                            <?php 
+                                            $img_attrs = array(
+                                                'class' => 'w-full h-full object-cover transform scale-100 group-hover/hero-slider:scale-102 transition-transform duration-[6000ms] ease-out',
+                                                'alt'   => $sp->post_title,
+                                                'decoding' => 'async',
+                                            );
+                                            if ($idx === 0) {
+                                                $img_attrs['loading'] = 'eager';
+                                                $img_attrs['fetchpriority'] = 'high';
+                                            } else {
+                                                $img_attrs['loading'] = 'lazy';
+                                            }
+                                            if ( has_post_thumbnail($sp->ID) ) {
+                                                echo get_the_post_thumbnail( $sp->ID, 'large', $img_attrs );
+                                            } else {
+                                                $lazy_attr = ($idx === 0) ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
+                                                ?>
+                                                <img class="w-full h-full object-cover transform scale-100 group-hover/hero-slider:scale-102 transition-transform duration-[6000ms] ease-out" src="<?php echo esc_url( techblog_get_placeholder_img() ); ?>" alt="<?php echo esc_attr($sp->post_title); ?>" <?php echo $lazy_attr; ?> decoding="async" />
+                                                <?php
+                                            }
+                                            ?>
                                             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
                                             
                                             <div class="absolute inset-x-0 bottom-0 p-5 sm:p-8 flex flex-col justify-end text-white max-w-[80%] sm:max-w-[80%] space-y-2 pointer-events-none">
@@ -118,7 +143,20 @@ get_header(); ?>
                                     <!-- Small upward triangle indicator placed above the border, visible only when active -->
                                     <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-primary transition-opacity duration-300 pointer-events-none indicator-triangle <?php echo $idx === 0 ? '' : 'opacity-0'; ?>"></div>
                                     <div class="w-full h-full overflow-hidden relative">
-                                        <img src="<?php echo esc_url($sp_thumb); ?>" class="w-full h-full object-cover" alt="" />
+                                        <?php 
+                                        if ( has_post_thumbnail($sp->ID) ) {
+                                            echo get_the_post_thumbnail( $sp->ID, 'thumbnail', array(
+                                                'class' => 'w-full h-full object-cover',
+                                                'alt' => '',
+                                                'loading' => 'lazy',
+                                                'decoding' => 'async',
+                                            ) );
+                                        } else {
+                                            ?>
+                                            <img src="<?php echo esc_url( techblog_get_placeholder_img() ); ?>" class="w-full h-full object-cover" alt="" loading="lazy" decoding="async" />
+                                            <?php
+                                        }
+                                        ?>
                                         <!-- Dark overlay, active = opacity-100 (make image a bit darker) -->
                                         <div class="absolute inset-0 bg-black/30 pointer-events-none transition-opacity duration-300 active-overlay <?php echo $idx === 0 ? 'opacity-100' : 'opacity-0'; ?>"></div>
                                     </div>
@@ -201,17 +239,28 @@ get_header(); ?>
                         if ( $popular_posts->have_posts() ) :
                             while ( $popular_posts->have_posts() ) : $popular_posts->the_post();
                                 if ($p_idx === 1) : 
-                                    $large_img = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
-                                    if ( !$large_img ) $large_img = techblog_get_placeholder_img();
                                 ?>
                                     <div class="group relative flex flex-col cursor-pointer pb-4 border-b border-slate-100">
                                         <a href="<?php the_permalink(); ?>" class="aspect-[16/10] overflow-hidden block relative bg-slate-900 mb-3">
-                                            <img src="<?php echo esc_url($large_img); ?>" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-750" alt="<?php the_title_attribute(); ?>" />
+                                            <?php 
+                                            if ( has_post_thumbnail() ) {
+                                                the_post_thumbnail( 'medium_large', array(
+                                                    'class' => 'w-full h-full object-cover group-hover:scale-102 transition-transform duration-750',
+                                                    'alt' => the_title_attribute( array( 'echo' => false ) ),
+                                                    'loading' => 'lazy',
+                                                    'decoding' => 'async',
+                                                ) );
+                                            } else {
+                                                ?>
+                                                <img src="<?php echo esc_url( techblog_get_placeholder_img() ); ?>" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-750" alt="<?php the_title_attribute(); ?>" loading="lazy" decoding="async" />
+                                                <?php
+                                            }
+                                            ?>
                                         </a>
                                         <div class="flex gap-3 items-start">
-                                            <span class="font-display text-4xl font-extrabold italic text-slate-200 group-hover:text-primary transition-colors shrink-0 tracking-tighter leading-none">01</span>
+                                            <span class="font-display text-4xl font-extrabold italic text-slate-700 group-hover:text-primary transition-colors shrink-0 tracking-tighter leading-none">01</span>
                                             <div class="flex-grow min-w-0">
-                                                <h4 class="font-display text-[13px] font-black text-slate-855 group-hover:text-primary transition-colors leading-snug break-words">
+                                                <h4 class="font-display text-[13px] font-black text-slate-700 group-hover:text-primary transition-colors leading-snug break-words">
                                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                                 </h4>
                                                  <span class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
@@ -223,7 +272,7 @@ get_header(); ?>
                                     </div>
                                 <?php else : ?>
                                     <div class="group flex gap-3 items-start py-2.5 border-b border-slate-100/50 last:border-0">
-                                        <span class="font-display text-3xl font-extrabold italic text-slate-200 group-hover:text-primary transition-colors shrink-0 tracking-tighter leading-none w-10 text-center">
+                                        <span class="font-display text-3xl font-extrabold italic text-slate-700 group-hover:text-primary transition-colors shrink-0 tracking-tighter leading-none w-10 text-center">
                                             <?php echo sprintf('%02d', $p_idx); ?>
                                         </span>
                                         <div class="flex-grow min-w-0">
@@ -268,18 +317,25 @@ get_header(); ?>
                                 while ( $sidebar_query->have_posts() ) : $sidebar_query->the_post();
                                 ?>
                                     <div class="flex gap-4 items-center group/item py-3.5 border-b border-slate-100/50 last:border-0">
-                                        <div class="font-display text-2xl font-black text-slate-200 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
+                                        <div class="font-display text-2xl font-black text-slate-700 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
                                             <?php echo sprintf('%02d', $rank); ?>
                                         </div>
                                         
-                                        <?php 
-                                        $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
-                                        if (!$thumb_url) {
-                                            $thumb_url = techblog_get_placeholder_img();
-                                        }
-                                        ?>
-                                        <a href="<?php the_permalink(); ?>" class="w-14 h-14 overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
-                                            <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
+                                        <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                                            <?php 
+                                            if ( has_post_thumbnail() ) {
+                                                the_post_thumbnail( 'thumbnail', array(
+                                                    'class' => 'w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500',
+                                                    'alt' => the_title_attribute( array( 'echo' => false ) ),
+                                                    'loading' => 'lazy',
+                                                    'decoding' => 'async',
+                                                ) );
+                                            } else {
+                                                ?>
+                                                <img src="<?php echo esc_url( techblog_get_placeholder_img() ); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" loading="lazy" decoding="async" />
+                                                <?php
+                                            }
+                                            ?>
                                         </a>
                                         
                                         <div class="flex-grow min-w-0">
@@ -322,7 +378,7 @@ get_header(); ?>
         const nextBtn = document.getElementById('hero-next-btn');
         const track = document.getElementById('hero-slider-track');
         
-        if (slides.length <= 1) return;
+        if (slides.length > 1) {
         
         const totalOriginal = slides.length;
         
@@ -570,6 +626,7 @@ get_header(); ?>
                 }
             }, true);
         }
+    }
 
         // Newsflash Ticker Logic (Rolling Vertical Slide-Up Track)
         const nfTrack = document.getElementById('homepage-newsflash-track');
