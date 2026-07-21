@@ -58,25 +58,13 @@ $search_query = get_search_query();
                     ?>
                 </div>
 
-                <!-- Load More Button Block - Flattened -->
-                <?php 
-                global $wp_query;
-                if ( have_posts() && $wp_query->found_posts > 9 ) : 
+                <!-- Custom Pagination -->
+                <?php
+                if ( function_exists( 'techjournal_pagination' ) ) {
+                    techjournal_pagination();
+                }
                 ?>
-                <div class="text-center mt-10">
-                    <button id="techblog-load-more-btn" 
-                            data-page="1" 
-                            data-post-type="post" 
-                            data-cat-id="0"
-                            data-search="<?php echo esc_attr($search_query); ?>"
-                            class="bg-primary hover:bg-primary/95 text-white font-bold px-8 py-3 text-[11px] uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 cursor-pointer inline-flex items-center gap-2">
-                        <span>XEM THÊM BÀI VIẾT</span>
-                        <span id="load-more-spinner" class="animate-spin hidden">
-                            <?php echo techjournal_get_svg( 'sync', 'w-4 h-4 fill-current' ); ?>
-                        </span>
-                    </button>
-                </div>
-                <?php endif; ?>
+
 
             </div>
             

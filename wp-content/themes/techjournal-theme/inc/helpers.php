@@ -182,3 +182,74 @@ function techjournal_get_svg( $icon, $classes = '' ) {
     }
     return '';
 }
+
+// 7. Custom Pagination Helper with beautiful tailwind styles matching the user's design request
+function techjournal_pagination( $query = null ) {
+    if ( ! $query ) {
+        global $wp_query;
+        $query = $wp_query;
+    }
+    
+    $max_page = $query->max_num_pages;
+    if ( $max_page <= 1 ) {
+        return;
+    }
+    
+    $paged = max( 1, intval( get_query_var( 'paged' ) ) );
+    
+    echo '<div class="flex items-center justify-center gap-2 mt-10" role="navigation" aria-label="Phân trang">';
+    
+    // Prev Button
+    if ( $paged > 1 ) {
+        echo '<a href="' . esc_url( get_pagenum_link( $paged - 1 ) ) . '" aria-label="Tin trước" class="w-8 h-8 bg-white border border-slate-200 text-slate-600 hover:text-red-600 hover:border-red-600 hover:bg-slate-50 flex items-center justify-center cursor-pointer active:scale-95 transition-all shadow-sm">';
+        echo techjournal_get_svg( 'chevron-left', 'w-4 h-4 fill-current' );
+        echo '</a>';
+    } else {
+        echo '<span aria-label="Tin trước" class="w-8 h-8 bg-slate-100/70 border border-slate-200/80 text-slate-300 flex items-center justify-center cursor-not-allowed select-none">';
+        echo techjournal_get_svg( 'chevron-left', 'w-4 h-4 fill-current' );
+        echo '</span>';
+    }
+    
+    // Pages range calculation
+    $pages_to_show = array();
+    for ( $i = 1; $i <= $max_page; $i++ ) {
+        if ( $i == 1 || $i == $max_page || ( $i >= $paged - 1 && $i <= $paged + 1 ) ) {
+            $pages_to_show[] = $i;
+        }
+    }
+    
+    $last_page = 0;
+    foreach ( $pages_to_show as $page ) {
+        if ( $last_page > 0 ) {
+            if ( $page - $last_page > 1 ) {
+                echo '<span class="w-8 h-8 hidden sm:flex items-center justify-center text-slate-400 font-bold select-none">...</span>';
+            }
+        }
+        
+        $is_outer = ($page == 1 || $page == $max_page);
+        $is_adjacent = (abs($page - $paged) <= 1);
+        $responsive_class = ($is_outer && !$is_adjacent) ? 'hidden sm:flex' : 'flex';
+
+        if ( $page == $paged ) {
+            echo '<span class="w-8 h-8 bg-red-600 border border-red-600 text-white flex items-center justify-center font-bold text-sm select-none transition-all shadow-sm">' . $page . '</span>';
+        } else {
+            echo '<a href="' . esc_url( get_pagenum_link( $page ) ) . '" class="w-8 h-8 ' . $responsive_class . ' bg-white border border-slate-200 text-slate-700 hover:text-red-600 hover:border-red-600 hover:bg-slate-50 items-center justify-center font-bold text-sm cursor-pointer active:scale-95 transition-all shadow-sm">' . $page . '</a>';
+        }
+        
+        $last_page = $page;
+    }
+    
+    // Next Button
+    if ( $paged < $max_page ) {
+        echo '<a href="' . esc_url( get_pagenum_link( $paged + 1 ) ) . '" aria-label="Tin tiếp theo" class="w-8 h-8 bg-white border border-slate-200 text-slate-600 hover:text-red-600 hover:border-red-600 hover:bg-slate-50 flex items-center justify-center cursor-pointer active:scale-95 transition-all shadow-sm">';
+        echo techjournal_get_svg( 'chevron-right', 'w-4 h-4 fill-current' );
+        echo '</a>';
+    } else {
+        echo '<span aria-label="Tin tiếp theo" class="w-8 h-8 bg-slate-100/70 border border-slate-200/80 text-slate-300 flex items-center justify-center cursor-not-allowed select-none">';
+        echo techjournal_get_svg( 'chevron-right', 'w-4 h-4 fill-current' );
+        echo '</span>';
+    }
+    
+    echo '</div>';
+}
+
