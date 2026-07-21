@@ -62,3 +62,7 @@ function techjournal_fb_app_id_callback() {
 
 // 8. Site maintenance and suspension management controls
 require_once TECHJOURNAL_THEME_INC . '/maintenance.php';
+
+// 9. Welcome Greeting / Splash screen system
+require_once TECHJOURNAL_THEME_INC . '/splash-screen.php';
+
