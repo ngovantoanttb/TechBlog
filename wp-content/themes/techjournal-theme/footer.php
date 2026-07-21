@@ -74,10 +74,44 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                         ) );
                         if ( ! empty( $drawer_cats ) ) {
                             foreach ( $drawer_cats as $cat ) {
-                                echo '<a class="flex items-center gap-2 py-2 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all" href="' . esc_url( get_category_link( $cat->term_id ) ) . '">
-                                    <span class="w-1.5 h-1.5 bg-primary/60"></span>
-                                    ' . esc_html( $cat->name ) . '
-                                </a>';
+                                $sub_cats = get_categories( array(
+                                    'orderby'    => 'count',
+                                    'order'      => 'DESC',
+                                    'parent'     => $cat->term_id,
+                                    'hide_empty' => false
+                                ) );
+
+                                if ( ! empty( $sub_cats ) ) {
+                                    ?>
+                                    <div class="relative">
+                                        <div class="flex items-center justify-between w-full pr-3 hover:bg-slate-50 group/item transition-all">
+                                            <a class="flex items-center gap-2 py-2 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all flex-grow" href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
+                                                <span class="w-1.5 h-1.5 bg-primary/60"></span>
+                                                <?php echo esc_html( $cat->name ); ?>
+                                            </a>
+                                            <button onclick="event.stopPropagation(); toggleMobileSubCatSubmenu(<?php echo $cat->term_id; ?>);" class="p-2 text-slate-400 hover:text-primary transition-transform duration-200 cursor-pointer" id="subcat-arrow-btn-<?php echo $cat->term_id; ?>" aria-label="Toggle subcategories">
+                                                <?php echo techjournal_get_svg( 'chevron-down', 'w-4 h-4 fill-current' ); ?>
+                                            </button>
+                                        </div>
+                                        <!-- Child Categories List -->
+                                        <div id="mobile-subcat-cats-<?php echo $cat->term_id; ?>" class="hidden pl-6 bg-slate-50/20 border-l border-slate-200 py-1 transition-all duration-300">
+                                            <?php foreach ( $sub_cats as $sub_cat ) : ?>
+                                                <a href="<?php echo esc_url( get_category_link( $sub_cat->term_id ) ); ?>" class="flex items-center gap-2 py-2 px-3 text-[9.5px] font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all">
+                                                    <span class="w-1 h-1 bg-slate-400"></span>
+                                                    <?php echo esc_html( $sub_cat->name ); ?>
+                                                </a>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <a class="flex items-center gap-2 py-2 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all" href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
+                                        <span class="w-1.5 h-1.5 bg-primary/60"></span>
+                                        <?php echo esc_html( $cat->name ); ?>
+                                    </a>
+                                    <?php
+                                }
                             }
                         }
                         ?>
@@ -270,6 +304,21 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         } else {
             submenu.classList.add('hidden');
             arrow.classList.remove('rotate-180');
+        }
+    }
+
+    // Toggle Mobile Sub-category Submenu
+    function toggleMobileSubCatSubmenu(catId) {
+        const submenu = document.getElementById('mobile-subcat-cats-' + catId);
+        const btn = document.getElementById('subcat-arrow-btn-' + catId);
+        if (submenu && btn) {
+            if (submenu.classList.contains('hidden')) {
+                submenu.classList.remove('hidden');
+                btn.classList.add('rotate-180');
+            } else {
+                submenu.classList.add('hidden');
+                btn.classList.remove('rotate-180');
+            }
         }
     }
 
