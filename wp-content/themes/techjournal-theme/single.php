@@ -9,7 +9,7 @@
 get_header(); ?>
 
 <main class="pt-6 sm:pt-8 pb-section-gap bg-background min-h-screen">
-    <div class="max-w-container-max mx-auto px-4 grid grid-cols-12 gap-6 items-start">
+    <div class="max-w-container-max mx-auto px-0 sm:px-4 grid grid-cols-12 gap-6 items-start">
         
         <!-- Left: Main Post Reading Area -->
         <div class="col-span-12 lg:col-span-8 bg-white border border-slate-100/80 p-5 sm:p-8 premium-shadow">

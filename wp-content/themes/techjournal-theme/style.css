@@ -12,28 +12,152 @@ Tags: one-column, two-columns, right-sidebar, custom-menu, featured-images, tran
 */
 
 /* Global resets and standard WordPress class alignments if needed */
-.aligncenter {
-    display: block;
-    margin: 24px auto;
+
+/* 1. Clearfix to prevent floated elements (alignright/alignleft) from leaking into sections below */
+.prose::after,
+.entry-content::after,
+.wp-caption::after,
+figure::after {
+    content: "";
+    display: table;
+    clear: both;
 }
-.alignleft {
-    float: left;
-    margin: 0 24px 24px 0;
+
+/* 2. Center Alignment (aligncenter) */
+.prose .aligncenter,
+.prose figure.aligncenter,
+.prose .wp-block-image.aligncenter,
+.prose .wp-block-image.has-text-align-center,
+.aligncenter,
+div.aligncenter,
+figure.aligncenter,
+.wp-block-image.aligncenter {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    clear: both !important;
+    text-align: center !important;
+    width: 100% !important;
 }
-.alignright {
-    float: right;
-    margin: 0 0 24px 24px;
+
+.prose .aligncenter img,
+.prose figure.aligncenter img,
+.prose .wp-block-image.aligncenter img,
+img.aligncenter,
+.aligncenter img,
+figure.aligncenter img,
+.wp-block-image.aligncenter img {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none !important;
 }
-.wp-caption {
+
+.aligncenter figcaption,
+.aligncenter .wp-element-caption,
+.aligncenter .wp-caption-text {
+    text-align: center !important;
+}
+
+/* 3. Left Alignment (alignleft) */
+.alignleft,
+div.alignleft,
+figure.alignleft,
+.wp-block-image.alignleft,
+img.alignleft {
+    float: left !important;
+    margin-top: 0.5rem;
+    margin-right: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    margin-left: 0 !important;
     max-width: 100%;
-    margin-bottom: 24px;
 }
+
+.alignleft img,
+figure.alignleft img,
+.wp-block-image.alignleft img {
+    float: left !important;
+}
+
+.alignleft figcaption,
+.alignleft .wp-element-caption,
+.alignleft .wp-caption-text {
+    text-align: left !important;
+}
+
+/* 4. Right Alignment (alignright) */
+.alignright,
+div.alignright,
+figure.alignright,
+.wp-block-image.alignright,
+img.alignright {
+    float: right !important;
+    margin-top: 0.5rem;
+    margin-right: 0 !important;
+    margin-bottom: 1.5rem !important;
+    margin-left: 1.5rem !important;
+    max-width: 100%;
+}
+
+.alignright img,
+figure.alignright img,
+.wp-block-image.alignright img {
+    float: right !important;
+}
+
+.alignright figcaption,
+.alignright .wp-element-caption,
+.alignright .wp-caption-text {
+    text-align: right !important;
+}
+
+/* 5. Custom / Flexible Caption alignments */
+.wp-caption,
+figcaption,
+.wp-element-caption,
 .wp-caption-text {
+    max-width: 100%;
+    margin-top: 8px;
+    margin-bottom: 16px;
     font-size: 14px;
     color: #464554;
-    text-align: center;
-    margin-top: 8px;
     font-style: italic;
+    display: block;
+}
+
+/* 6. Explicit Text Alignment utilities from Gutenberg */
+.has-text-align-center,
+.has-text-align-center figcaption,
+.has-text-align-center .wp-element-caption {
+    text-align: center !important;
+}
+
+.has-text-align-left,
+.has-text-align-left figcaption,
+.has-text-align-left .wp-element-caption {
+    text-align: left !important;
+}
+
+.has-text-align-right,
+.has-text-align-right figcaption,
+.has-text-align-right .wp-element-caption {
+    text-align: right !important;
+}
+
+/* 7. Clear float for sections following post content */
+.prose + div,
+.prose + section,
+.prose + hr,
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+    clear: both;
 }
 
 .back-to-top{
