@@ -79,7 +79,8 @@ get_header(); ?>
                         
                         // Render styled Terminal window codeblocks dynamically (TechBlog code theme - Flattened)
                         $content = preg_replace_callback(
-                            '/`<pre><code[^>]*>(.*?)<\/code><\/pre>`/is',
+                            // '/`<pre><code[^>]*>(.*?)<\/code><\/pre>`/is',
+                            '/<pre><code[^>]*>(.*?)<\/code><\/pre>/is',
                             function ( $matches ) {
                                 $code = html_entity_decode( $matches[1] );
                                 return '<div class="my-6 border border-slate-700/60 overflow-hidden bg-slate-900 shadow-sm font-code text-xs">
