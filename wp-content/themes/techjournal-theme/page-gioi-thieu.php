@@ -110,15 +110,32 @@ get_header(); ?>
                                 </div>
                                 
                                 <!-- Premium inline SVG social links -->
-                                <div class="flex justify-center sm:justify-start gap-2.5">
-                                    <a href="https://github.com/ngovantoanttb" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-primary text-slate-500 hover:text-white flex items-center justify-center transition-all border border-slate-200/50 active:scale-95 shadow-sm" aria-label="GitHub">
-                                        <?php echo techjournal_get_svg( 'github', 'w-4.5 h-4.5' ); ?>
+                                <div class="flex items-center justify-center sm:justify-start gap-3">
+                                    <a href="https://github.com/ngovantoanttb"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="GitHub"
+                                    class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 bg-slate-100 text-slate-600 hover:bg-primary hover:text-white transition-all duration-200 active:scale-95 shadow-sm">
+
+                                        <?php echo techjournal_get_svg( 'github', 'w-5 h-5 shrink-0' ); ?>
                                     </a>
-                                    <a href="https://www.linkedin.com/in/ngovantoanttb/" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-primary text-slate-500 hover:text-white flex items-center justify-center transition-all border border-slate-200/50 active:scale-95 shadow-sm" aria-label="LinkedIn">
-                                        <?php echo techjournal_get_svg( 'linkedin', 'w-4.5 h-4.5' ); ?>
+
+                                    <a href="https://www.linkedin.com/in/ngovantoanttb/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="LinkedIn"
+                                    class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 bg-slate-100 text-slate-600 hover:bg-primary hover:text-white transition-all duration-200 active:scale-95 shadow-sm">
+
+                                        <?php echo techjournal_get_svg( 'linkedin', 'w-5 h-5 shrink-0' ); ?>
                                     </a>
-                                    <a href="https://facebook.com/ngovantoanttb" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-primary text-slate-500 hover:text-white flex items-center justify-center transition-all border border-slate-200/50 active:scale-95 shadow-sm" aria-label="Facebook">
-                                        <?php echo techjournal_get_svg( 'facebook', 'w-4.5 h-4.5' ); ?>
+
+                                    <a href="https://facebook.com/ngovantoanttb"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Facebook"
+                                    class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 bg-slate-100 text-slate-600 hover:bg-primary hover:text-white transition-all duration-200 active:scale-95 shadow-sm">
+
+                                        <?php echo techjournal_get_svg( 'facebook', 'w-5 h-5 shrink-0' ); ?>
                                     </a>
                                 </div>
                             </div>
