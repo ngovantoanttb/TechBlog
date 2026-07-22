@@ -19,10 +19,10 @@ get_header(); ?>
                 
                 <div class="bg-white border border-slate-100 flex items-center justify-between h-10 px-0 sm:px-4 overflow-hidden gap-2 sm:gap-4 shadow-sm">
                     <div class="flex items-center gap-1.5 sm:gap-2 flex-grow min-w-0">
-                        <span class="bg-red-600 text-white text-[10px] font-black uppercase px-0 sm:px-2.5 flex items-center gap-1 shrink-0 tracking-wider">
+                        <span class="bg-red-600 text-white text-xs font-black uppercase px-0 sm:px-2.5 flex items-center gap-1 shrink-0 tracking-wider">
                             <?php echo techjournal_get_svg( 'bolt', 'w-6 h-6 fill-current' ); ?><span class="hidden sm:inline">NEWSFLASH</span>
                         </span>
-                        <div class="relative h-6 flex-grow overflow-hidden font-bold text-[12px] text-slate-700 select-none">
+                        <div class="relative h-6 flex-grow overflow-hidden font-bold text-xs sm:text-[12px] text-slate-700 select-none">
                             <div id="homepage-newsflash-track" class="absolute w-full transition-all duration-500 ease-in-out left-0" style="top: 0px;">
                                 <?php 
                                 $nf_posts = get_posts( array( 
@@ -103,13 +103,13 @@ get_header(); ?>
                                             <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
                                             
                                             <div class="absolute inset-x-0 bottom-0 p-5 sm:p-8 flex flex-col justify-end text-white max-w-[80%] sm:max-w-[80%] space-y-2 pointer-events-none">
-                                                <span class="bg-red-600 text-white text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm">
+                                                <span class="bg-red-600 text-white text-[10px] sm:text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm">
                                                     <?php echo esc_html($sp_cat_name); ?>
                                                 </span>
                                                 <h2 class="font-display text-base sm:text-xl md:text-2xl font-extrabold tracking-tight leading-snug drop-shadow-sm break-words">
                                                     <?php echo esc_html($sp->post_title); ?>
                                                 </h2>
-                                                <div class="flex items-center gap-2 text-[10px] text-slate-300 font-bold uppercase tracking-wider">
+                                                <div class="flex items-center gap-2 text-xs sm:text-[10px] text-slate-300 font-bold uppercase tracking-wider">
                                                     <span>BY Admin TechBlog</span>
                                                     <span>•</span>
                                                     <span><?php echo get_the_date('d/m/Y', $sp->ID); ?></span>
@@ -206,7 +206,7 @@ get_header(); ?>
                                 data-post-type="post" 
                                 data-cat-id="0"
                                 data-search=""
-                                class="bg-primary hover:bg-primary/95 text-white font-bold px-8 py-3 text-[11px] uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 cursor-pointer inline-flex items-center gap-2">
+                                class="bg-primary hover:bg-primary/95 text-white font-bold px-8 py-3 text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 cursor-pointer inline-flex items-center gap-2">
                             <span>XEM THÊM BÀI VIẾT</span>
                              <span id="load-more-spinner" class="animate-spin hidden">
                                  <?php echo techjournal_get_svg( 'sync', 'w-4 h-4 fill-current' ); ?>
@@ -260,10 +260,10 @@ get_header(); ?>
                                         <div class="flex gap-3 items-start">
                                             <span class="font-display text-4xl font-extrabold italic text-slate-700 group-hover:text-primary transition-colors shrink-0 tracking-tighter leading-none">01</span>
                                             <div class="flex-grow min-w-0">
-                                                <h4 class="font-display text-[13px] font-black text-slate-700 group-hover:text-primary transition-colors leading-snug break-words">
+                                                <h4 class="font-display text-sm sm:text-[13px] font-black text-slate-700 group-hover:text-primary transition-colors leading-snug break-words">
                                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                                 </h4>
-                                                 <span class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
+                                                 <span class="text-[11px] sm:text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
                                                      <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                                                      <?php echo get_the_date(); ?>
                                                  </span>
@@ -276,10 +276,10 @@ get_header(); ?>
                                             <?php echo sprintf('%02d', $p_idx); ?>
                                         </span>
                                         <div class="flex-grow min-w-0">
-                                            <h4 class="font-display text-[12px] font-bold text-slate-700 group-hover:text-primary transition-colors leading-snug break-words">
+                                            <h4 class="font-display text-xs sm:text-[12px] font-bold text-slate-700 group-hover:text-primary transition-colors leading-snug break-words">
                                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                             </h4>
-                                             <span class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
+                                             <span class="text-[11px] sm:text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
                                                  <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                                                  <?php echo get_the_date(); ?>
                                              </span>
@@ -339,10 +339,10 @@ get_header(); ?>
                                         </a>
                                         
                                         <div class="flex-grow min-w-0">
-                                            <h4 class="font-display text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                            <h4 class="font-display text-xs sm:text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
                                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                             </h4>
-                                             <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
+                                             <div class="flex items-center gap-3 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
                                                  <span class="flex items-center gap-0.5">
                                                      <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                                                      <?php echo get_the_date(); ?>

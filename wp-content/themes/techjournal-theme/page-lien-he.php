@@ -18,7 +18,7 @@ get_header(); ?>
             while ( have_posts() ) : the_post();
                 ?>
                 <!-- Page Breadcrumbs -->
-                <nav class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
+                <nav class="flex items-center gap-1.5 text-xs sm:text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
                     <a class="hover:text-primary transition-all" href="<?php echo esc_url( home_url( '/' ) ); ?>">Trang Chủ</a>
                     <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                     <span class="text-slate-600 truncate"><?php the_title(); ?></span>
@@ -30,7 +30,7 @@ get_header(); ?>
                 </h1>
                 
                 <!-- Page Content Body -->
-                <div class="prose max-w-none text-slate-600 text-[14.5px] leading-relaxed mb-8 wp-entry-content">
+                <div class="prose max-w-none text-slate-600 text-base sm:text-[14.5px] leading-relaxed mb-8 wp-entry-content">
                     <?php the_content(); ?>
                 </div>
 
@@ -41,32 +41,32 @@ get_header(); ?>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <!-- Full Name -->
                             <div>
-                                <label for="c_name" class="block font-display text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Họ và Tên <span class="text-red-500">*</span></label>
-                                <input id="c_name" name="c_name" type="text" required class="w-full bg-white border border-slate-200 px-4 py-3 text-xs text-slate-800 focus:outline-none focus:border-primary transition-colors rounded-none placeholder-slate-400" placeholder="Nguyễn Văn A" />
+                                <label for="c_name" class="block font-display text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Họ và Tên <span class="text-red-500">*</span></label>
+                                <input id="c_name" name="c_name" type="text" required class="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-primary transition-colors rounded-none placeholder-slate-400" placeholder="Nguyễn Văn A" />
                             </div>
                             
                             <!-- Email -->
                             <div>
-                                <label for="c_email" class="block font-display text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Địa chỉ Email <span class="text-red-500">*</span></label>
-                                <input id="c_email" name="c_email" type="email" required class="w-full bg-white border border-slate-200 px-4 py-3 text-xs text-slate-800 focus:outline-none focus:border-primary transition-colors rounded-none placeholder-slate-400" placeholder="name@example.com" />
+                                <label for="c_email" class="block font-display text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Địa chỉ Email <span class="text-red-500">*</span></label>
+                                <input id="c_email" name="c_email" type="email" required class="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-primary transition-colors rounded-none placeholder-slate-400" placeholder="name@example.com" />
                             </div>
                         </div>
 
                         <!-- Subject -->
                         <div>
-                            <label for="c_subject" class="block font-display text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Tiêu đề liên hệ</label>
-                            <input id="c_subject" name="c_subject" type="text" class="w-full bg-white border border-slate-200 px-4 py-3 text-xs text-slate-800 focus:outline-none focus:border-primary transition-colors rounded-none placeholder-slate-400" placeholder="Tôi muốn hợp tác quảng cáo..." />
+                            <label for="c_subject" class="block font-display text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Tiêu đề liên hệ</label>
+                            <input id="c_subject" name="c_subject" type="text" class="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-primary transition-colors rounded-none placeholder-slate-400" placeholder="Tôi muốn hợp tác quảng cáo..." />
                         </div>
 
                         <!-- Message -->
                         <div>
-                            <label for="c_message" class="block font-display text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Nội dung liên hệ <span class="text-red-500">*</span></label>
-                            <textarea id="c_message" name="c_message" rows="5" required class="w-full bg-white border border-slate-200 px-4 py-3 text-xs text-slate-800 focus:outline-none focus:border-primary transition-colors rounded-none placeholder-slate-400" placeholder="Nhập nội dung liên hệ của bạn tại đây..."></textarea>
+                            <label for="c_message" class="block font-display text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nội dung liên hệ <span class="text-red-500">*</span></label>
+                            <textarea id="c_message" name="c_message" rows="5" required class="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-primary transition-colors rounded-none placeholder-slate-400" placeholder="Nhập nội dung liên hệ của bạn tại đây..."></textarea>
                         </div>
 
                         <!-- Submit Button -->
                         <div class="flex justify-end">
-                            <button type="submit" id="c_submit_btn" class="bg-primary hover:bg-blue-500 text-white font-bold text-xs py-3 px-8 transition-all active:scale-[0.98] cursor-pointer rounded-none uppercase tracking-wider flex items-center gap-2">
+                            <button type="submit" id="c_submit_btn" class="bg-primary hover:bg-blue-500 text-white font-bold text-sm sm:text-xs py-3 px-8 transition-all active:scale-[0.98] cursor-pointer rounded-none uppercase tracking-wider flex items-center gap-2">
                                 <span>Gửi Liên Hệ</span>
                                 <span id="c_submit_spinner" class="animate-spin hidden">
                                     <?php echo techjournal_get_svg( 'sync', 'w-4 h-4 fill-current' ); ?>
@@ -82,7 +82,7 @@ get_header(); ?>
                         </div>
                         <h3 class="font-display text-lg font-black text-slate-850 uppercase tracking-tight mb-2">Gửi Liên Hệ Thành Công!</h3>
                         <p class="text-slate-500 text-xs sm:text-[13px] leading-relaxed max-w-md mx-auto">
-                            Cảm ơn bạn đã liên hệ với **TechBlog**. Chúng tôi đã nhận được thông tin và sẽ phản hồi lại bạn qua email trong thời gian sớm nhất.
+                            Cảm ơn bạn đã liên hệ với <strong><?php bloginfo( 'name' ); ?></strong>. Chúng tôi đã nhận được thông tin và sẽ phản hồi lại bạn qua email trong thời gian sớm nhất.
                         </p>
                     </div>
 

@@ -49,8 +49,8 @@ if ( ! function_exists( 'techjournal_custom_comment_callback' ) ) {
                 </div>
                 <div class="flex-grow">
                     <div class="flex items-center justify-between gap-2 mb-2">
-                        <span class="font-bold text-[12.5px] text-slate-805"><?php comment_author_link(); ?></span>
-                        <span class="text-[10.5px] text-slate-400 font-bold">
+                        <span class="font-bold text-sm sm:text-[12.5px] text-slate-805"><?php comment_author_link(); ?></span>
+                        <span class="text-xs sm:text-[10.5px] text-slate-400 font-bold">
                             <?php 
                             $comment_timestamp = get_comment_time( 'U', true );
                             $current_timestamp = time();
@@ -69,10 +69,10 @@ if ( ! function_exists( 'techjournal_custom_comment_callback' ) ) {
                             ?>
                         </span>
                     </div>
-                    <div class="text-[13px] leading-relaxed text-slate-650 prose max-w-none">
+                    <div class="text-sm sm:text-[13px] leading-relaxed text-slate-650 prose max-w-none">
                         <?php comment_text(); ?>
                     </div>
-                    <div class="mt-3 flex items-center gap-4 text-[10px] font-bold uppercase tracking-wider">
+                    <div class="mt-3 flex items-center gap-4 text-xs font-bold uppercase tracking-wider">
                         <?php
                         comment_reply_link( array_merge( $args, array(
                             'reply_text' => esc_html__( 'Phản hồi', 'techjournal' ),

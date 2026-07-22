@@ -25,7 +25,7 @@ if ( ! empty( $cats ) ) {
     }
 }
 ?>
-<article class="group bg-white flex flex-col sm:flex-row gap-6 cursor-pointer transition-all duration-300 border-b border-slate-100/80 last:border-0 last:mb-0">
+<article class="group flex flex-col sm:flex-row gap-6 cursor-pointer transition-all duration-300">
     <!-- Image container on Left -->
     <a href="<?php the_permalink(); ?>" class="w-full sm:w-[280px] md:w-[320px] aspect-[16/10] sm:aspect-[16/9] md:aspect-[1.5/1] overflow-hidden block relative bg-slate-950 shrink-0 shadow-sm">
         <img class="w-full h-full object-cover transition-transform duration-750 group-hover:scale-102 opacity-95 group-hover:opacity-100" src="<?php echo esc_url($post_image); ?>" alt="<?php the_title_attribute(); ?>" />

@@ -81,28 +81,28 @@ if ( post_password_required() ) {
 
         $fields = array(
             'author' => '<div class="comment-form-author mb-4">
-                <label for="author" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">' . esc_html__( 'Tên *', 'techjournal' ) . '</label>
-                <input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30"' . $aria_req . ' class="w-full bg-slate-50 border border-slate-200/80 px-4 py-2.5 text-[12.5px] text-slate-700 focus:outline-none focus:border-primary/80 focus:bg-white transition-all duration-300" />
+                <label for="author" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">' . esc_html__( 'Tên *', 'techjournal' ) . '</label>
+                <input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30"' . $aria_req . ' class="w-full bg-slate-50 border border-slate-200/80 px-4 py-2.5 text-sm sm:text-[12.5px] text-slate-700 focus:outline-none focus:border-primary/80 focus:bg-white transition-all duration-300" />
             </div>',
             'email'  => '<div class="comment-form-email mb-4">
-                <label for="email" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">' . esc_html__( 'Email *', 'techjournal' ) . '</label>
-                <input id="email" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30"' . $aria_req . ' class="w-full bg-slate-50 border border-slate-200/80 px-4 py-2.5 text-[12.5px] text-slate-700 focus:outline-none focus:border-primary/80 focus:bg-white transition-all duration-300" />
+                <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">' . esc_html__( 'Email *', 'techjournal' ) . '</label>
+                <input id="email" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30"' . $aria_req . ' class="w-full bg-slate-50 border border-slate-200/80 px-4 py-2.5 text-sm sm:text-[12.5px] text-slate-700 focus:outline-none focus:border-primary/80 focus:bg-white transition-all duration-300" />
             </div>',
         );
 
         $comments_args = array(
             'fields'               => $fields,
             'comment_field'        => '<div class="comment-form-comment mb-5">
-                <label for="comment" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">' . esc_html__( 'Bình luận *', 'techjournal' ) . '</label>
-                <textarea id="comment" name="comment" cols="45" rows="5" aria-required="true" class="w-full bg-slate-50 border border-slate-200/80 px-4 py-3 text-[12.5px] text-slate-700 focus:outline-none focus:border-primary/80 focus:bg-white transition-all duration-300 resize-none h-32"></textarea>
+                <label for="comment" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">' . esc_html__( 'Bình luận *', 'techjournal' ) . '</label>
+                <textarea id="comment" name="comment" cols="45" rows="5" aria-required="true" class="w-full bg-slate-50 border border-slate-200/80 px-4 py-3 text-sm sm:text-[12.5px] text-slate-700 focus:outline-none focus:border-primary/80 focus:bg-white transition-all duration-300 resize-none h-32"></textarea>
             </div>',
-            'submit_button'        => '<button name="%1$s" type="submit" id="%2$s" class="bg-primary hover:bg-primary/95 text-white font-bold px-8 py-3 text-[11px] uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 cursor-pointer inline-flex items-center gap-2">%4$s</button>',
+            'submit_button'        => '<button name="%1$s" type="submit" id="%2$s" class="bg-primary hover:bg-primary/95 text-white font-bold px-8 py-3 text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 cursor-pointer inline-flex items-center gap-2">%4$s</button>',
             'submit_field'         => '<div class="form-submit mt-6">%1$s %2$s</div>',
             'title_reply'          => esc_html__( 'Gửi bình luận', 'techjournal' ),
             'title_reply_to'       => esc_html__( 'Trả lời %s', 'techjournal' ),
             'cancel_reply_link'    => esc_html__( 'Hủy phản hồi', 'techjournal' ),
             'title_reply_class'    => 'font-display text-sm font-black text-slate-800 uppercase tracking-tight pb-3 mb-5 relative anony-section-title',
-            'comment_notes_before' => '<p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-6">' . esc_html__( 'Email của bạn sẽ không được hiển thị công khai. Các trường bắt buộc được đánh dấu *', 'techjournal' ) . '</p>',
+            'comment_notes_before' => '<p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-6">' . esc_html__( 'Email của bạn sẽ không được hiển thị công khai. Các trường bắt buộc được đánh dấu *', 'techjournal' ) . '</p>',
         );
 
         comment_form( $comments_args );

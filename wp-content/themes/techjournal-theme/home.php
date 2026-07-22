@@ -80,17 +80,16 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                         <img class="absolute inset-y-0 -left-[30px] w-[calc(100%+60px)] max-w-none h-full object-cover opacity-90 group-hover:translate-x-[30px] transition-transform duration-700" src="<?php echo esc_url($img_1); ?>" alt="<?php the_title_attribute(); ?>" />
                         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                     </a>
-                    
                     <div class="absolute inset-0 p-5 sm:p-7 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
-                        <span class="bg-red-600 text-white text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm mb-3">
-                            <?php echo esc_html($display_cat_name); ?>
+                        <span class="bg-red-600 text-white text-[10px] sm:text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm mb-3">
+                            Tất cả bài viết
                         </span>
                         <h2 class="font-display text-base sm:text-lg md:text-xl text-white font-extrabold tracking-tight leading-snug pointer-events-auto mb-2 break-words">
                             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                         </h2>
                         
                         <div class="max-h-0 opacity-0 overflow-hidden group-hover:max-h-12 group-hover:opacity-100 transition-all duration-300 ease-in-out pointer-events-auto">
-                            <div class="flex items-center gap-2 text-[10px] text-slate-300 font-bold uppercase tracking-wider mt-2">
+                            <div class="flex items-center gap-2 text-xs sm:text-[10px] text-slate-300 font-bold uppercase tracking-wider mt-2">
                                 <span>BY <?php the_author(); ?></span>
                                 <span>•</span>
                                 <span class="flex items-center gap-1">
@@ -112,19 +111,6 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                         setup_postdata($post);
                         $img_2 = get_the_post_thumbnail_url( get_the_ID(), 'large' );
                         if ( !$img_2 ) $img_2 = techblog_get_placeholder_img();
-                        
-                        $cats = get_the_category();
-                        $category_to_show = null;
-                        foreach($cats as $c) {
-                            if($c->term_id != get_option('default_category')) {
-                                $category_to_show = $c;
-                                break;
-                            }
-                        }
-                        if (!$category_to_show && !empty($cats)) {
-                            $category_to_show = $cats[0];
-                        }
-                        $display_cat_name = $category_to_show ? $category_to_show->name : 'Tin tức';
                         ?>
                         <article class="relative h-[320px] sm:h-[192px] md:h-[210px] overflow-hidden group cursor-pointer bg-slate-950 shrink-0 w-[80vw] md:w-auto">
                             <a href="<?php the_permalink(); ?>" class="absolute inset-0 block z-0">
@@ -132,15 +118,15 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                             </a>
                             <div class="absolute inset-0 p-5 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
-                                <span class="bg-red-600 text-white text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
-                                    <?php echo esc_html($display_cat_name); ?>
+                                <span class="bg-red-600 text-white text-[10px] sm:text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
+                                    Tất cả bài viết
                                 </span>
                                 <h3 class="font-display text-sm md:text-base text-white font-extrabold tracking-tight leading-snug pointer-events-auto break-words">
                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                 </h3>
                                 
                                 <div class="max-h-0 opacity-0 overflow-hidden group-hover:max-h-12 group-hover:opacity-100 transition-all duration-300 ease-in-out pointer-events-auto">
-                                    <div class="flex items-center gap-1.5 text-[10px] text-slate-300 font-bold uppercase tracking-wider mt-2">
+                                    <div class="flex items-center gap-1.5 text-xs sm:text-[10px] text-slate-300 font-bold uppercase tracking-wider mt-2">
                                         <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 fill-current' ); ?>
                                         <span><?php echo get_the_date(); ?></span>
                                     </div>
@@ -160,19 +146,6 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                             setup_postdata($post);
                             $img_3 = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
                             if ( !$img_3 ) $img_3 = techblog_get_placeholder_img();
-                            
-                            $cats = get_the_category();
-                            $category_to_show = null;
-                            foreach($cats as $c) {
-                                if($c->term_id != get_option('default_category')) {
-                                    $category_to_show = $c;
-                                    break;
-                                }
-                            }
-                            if (!$category_to_show && !empty($cats)) {
-                                $category_to_show = $cats[0];
-                            }
-                            $display_cat_name = $category_to_show ? $category_to_show->name : 'Tin tức';
                             ?>
                             <article class="relative h-[320px] sm:h-[192px] md:h-[210px] overflow-hidden group cursor-pointer bg-slate-950 shrink-0 w-[80vw] md:w-auto">
                                 <a href="<?php the_permalink(); ?>" class="absolute inset-0 block z-0">
@@ -180,15 +153,15 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                                 </a>
                                 <div class="absolute inset-0 p-4 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
-                                    <span class="bg-red-600 text-white text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
-                                        <?php echo esc_html($display_cat_name); ?>
+                                    <span class="bg-red-600 text-white text-[10px] sm:text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
+                                        Tất cả bài viết
                                     </span>
-                                    <h3 class="font-display text-[12px] sm:text-[13px] md:text-[14px] text-white font-extrabold tracking-tight leading-snug pointer-events-auto break-words">
+                                    <h3 class="font-display text-sm sm:text-[13px] md:text-[14px] text-white font-extrabold tracking-tight leading-snug pointer-events-auto break-words">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </h3>
                                     
                                     <div class="max-h-0 opacity-0 overflow-hidden group-hover:max-h-12 group-hover:opacity-100 transition-all duration-300 ease-in-out pointer-events-auto">
-                                        <div class="flex items-center gap-1.5 text-[10px] text-slate-300 font-bold uppercase tracking-wider mt-2">
+                                        <div class="flex items-center gap-1.5 text-xs sm:text-[10px] text-slate-300 font-bold uppercase tracking-wider mt-2">
                                             <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 fill-current' ); ?>
                                             <span><?php echo get_the_date(); ?></span>
                                         </div>
@@ -205,19 +178,6 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                             setup_postdata($post);
                             $img_4 = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
                             if ( !$img_4 ) $img_4 = techblog_get_placeholder_img();
-                            
-                            $cats = get_the_category();
-                            $category_to_show = null;
-                            foreach($cats as $c) {
-                                if($c->term_id != get_option('default_category')) {
-                                    $category_to_show = $c;
-                                    break;
-                                }
-                            }
-                            if (!$category_to_show && !empty($cats)) {
-                                $category_to_show = $cats[0];
-                            }
-                            $display_cat_name = $category_to_show ? $category_to_show->name : 'Tin tức';
                             ?>
                             <article class="relative h-[320px] sm:h-[192px] md:h-[210px] overflow-hidden group cursor-pointer bg-slate-950 shrink-0 w-[80vw] md:w-auto">
                                 <a href="<?php the_permalink(); ?>" class="absolute inset-0 block z-0">
@@ -225,15 +185,15 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                                 </a>
                                 <div class="absolute inset-0 p-4 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
-                                    <span class="bg-red-600 text-white text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
-                                        <?php echo esc_html($display_cat_name); ?>
+                                    <span class="bg-red-600 text-white text-[10px] sm:text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
+                                        Tất cả bài viết
                                     </span>
-                                    <h3 class="font-display text-[12px] sm:text-[13px] md:text-[14px] text-white font-extrabold tracking-tight leading-snug pointer-events-auto">
+                                    <h3 class="font-display text-sm sm:text-[13px] md:text-[14px] text-white font-extrabold tracking-tight leading-snug pointer-events-auto">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </h3>
                                     
                                     <div class="max-h-0 opacity-0 overflow-hidden group-hover:max-h-12 group-hover:opacity-100 transition-all duration-300 ease-in-out pointer-events-auto">
-                                        <div class="flex items-center gap-1.5 text-[10px] text-slate-300 font-bold uppercase tracking-wider mt-2">
+                                        <div class="flex items-center gap-1.5 text-xs sm:text-[10px] text-slate-300 font-bold uppercase tracking-wider mt-2">
                                             <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 fill-current' ); ?>
                                             <span><?php echo get_the_date(); ?></span>
                                         </div>
@@ -368,10 +328,10 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                                         </a>
                                         
                                         <div class="flex-grow min-w-0">
-                                            <h4 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                            <h4 class="font-display text-xs sm:text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
                                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                             </h4>
-                                            <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
+                                            <div class="flex items-center gap-3 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
                                                 <span class="flex items-center gap-0.5">
                                                     <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                                                     <?php echo get_the_date(); ?>

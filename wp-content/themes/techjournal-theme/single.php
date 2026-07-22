@@ -34,7 +34,7 @@ get_header(); ?>
                     ?>
                     
                     <!-- Breadcrumbs (TechBlog Editorial style) -->
-                    <nav class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
+                    <nav class="flex items-center gap-1.5 text-xs sm:text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
                         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="hover:text-primary transition-all">Trang Chủ</a>
                         <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                         <?php if ( $category_to_show ) : ?>
@@ -50,7 +50,7 @@ get_header(); ?>
                     </h1>
 
                     <!-- Article Meta -->
-                    <div class="flex flex-wrap items-center gap-y-2.5 gap-x-4 pb-5 border-b border-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-6">
+                    <div class="flex flex-wrap items-center gap-y-2.5 gap-x-4 pb-5 border-b border-slate-100 text-xs sm:text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-6">
                         <span class="flex items-center gap-1">
                             <?php echo techjournal_get_svg( 'user', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?>
                         </span>
@@ -73,7 +73,7 @@ get_header(); ?>
                     <?php endif; ?> -->
 
                     <!-- Rich Post Body -->
-                    <div class="prose max-w-none text-slate-600 text-[14.5px] leading-relaxed space-y-6">
+                    <div class="prose max-w-none text-slate-600 text-base sm:text-[14.5px] leading-relaxed space-y-6">
                         <?php
                         $content = get_the_content();
                         
@@ -104,14 +104,14 @@ get_header(); ?>
 
                     <!-- Social Share CTA (Minimalistic TechBlog style - Left Aligned) -->
                     <div class="mt-10 py-5 border-y border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                        <span class="font-display text-[11px] font-black uppercase tracking-wider text-slate-400">CHIA SẺ BÀI VIẾT</span>
+                        <span class="font-display text-xs font-black uppercase tracking-wider text-slate-400">CHIA SẺ BÀI VIẾT</span>
                         <div class="flex flex-wrap items-center gap-2">
                             <!-- Facebook -->
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#1877f2] hover:bg-[#166fe5] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#1877f2] hover:bg-[#166fe5] text-white px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95">
                                 <?php echo techjournal_get_svg( 'facebook', 'w-3.5 h-3.5' ); ?> Facebook
                             </a>
                             <!-- Telegram -->
-                            <a href="https://t.me/share/url?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0088cc] hover:bg-[#0077b5] text-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95">
+                            <a href="https://t.me/share/url?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0088cc] hover:bg-[#0077b5] text-white px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95">
                                 <?php echo techjournal_get_svg( 'telegram', 'w-3.5 h-3.5' ); ?> Telegram
                             </a>
                             <!-- Copy Link -->
@@ -146,7 +146,7 @@ get_header(); ?>
                                     }
                                     document.body.removeChild(textArea);
                                 }
-                            })(this)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer border border-slate-200">
+                            })(this)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer border border-slate-200">
                                 <?php echo techjournal_get_svg( 'link', 'w-3.5 h-3.5' ); ?> Sao Chép Link
                             </button>
                         </div>
@@ -244,10 +244,10 @@ get_header(); ?>
                                 </a>
                                 
                                 <div class="flex-grow min-w-0">
-                                    <h4 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                    <h4 class="font-display text-xs sm:text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </h4>
-                                    <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
+                                    <div class="flex items-center gap-3 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
                                         <span class="flex items-center gap-0.5">
                                             <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                                             <?php echo get_the_date(); ?>
@@ -299,10 +299,10 @@ get_header(); ?>
                                     <img src="<?php echo esc_url($sidebar_thumb); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
                                 </a>
                                 <div class="flex-grow min-w-0">
-                                    <h4 class="font-display text-[12px] font-bold text-slate-700 hover:text-primary transition-colors leading-snug break-words">
+                                    <h4 class="font-display text-xs sm:text-[12px] font-bold text-slate-700 hover:text-primary transition-colors leading-snug break-words">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </h4>
-                                    <p class="text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
+                                    <p class="text-[11px] sm:text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
                                         <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?> <?php echo get_the_date(); ?>
                                     </p>
                                 </div>

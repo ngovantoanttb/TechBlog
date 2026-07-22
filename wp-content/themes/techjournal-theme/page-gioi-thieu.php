@@ -18,7 +18,7 @@ get_header(); ?>
             while ( have_posts() ) : the_post();
                 ?>
                 <!-- Page Breadcrumbs -->
-                <nav class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
+                <nav class="flex items-center gap-1.5 text-xs sm:text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-5" aria-label="Breadcrumb">
                     <a class="hover:text-primary transition-all" href="<?php echo esc_url( home_url( '/' ) ); ?>">Trang Chủ</a>
                     <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                     <span class="text-slate-600 truncate"><?php the_title(); ?></span>
@@ -34,7 +34,7 @@ get_header(); ?>
                 </div>
 
                 <!-- Page Content Body (Dynamic from Admin) -->
-                <div class="prose max-w-none text-slate-600 text-[14.5px] leading-relaxed mb-8 wp-entry-content">
+                <div class="prose max-w-none text-slate-600 text-base sm:text-[14.5px] leading-relaxed mb-8 wp-entry-content">
                     <?php the_content(); ?>
                 </div>
 

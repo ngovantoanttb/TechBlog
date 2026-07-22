@@ -106,10 +106,10 @@ $search_query = get_search_query();
                                         </a>
                                         
                                         <div class="flex-grow min-w-0">
-                                            <h4 class="font-display text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                            <h4 class="font-display text-xs sm:text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
                                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                             </h4>
-                                            <div class="flex items-center gap-3 text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
+                                            <div class="flex items-center gap-3 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
                                                 <span class="flex items-center gap-0.5">
                                                     <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                                                     <?php echo get_the_date(); ?>

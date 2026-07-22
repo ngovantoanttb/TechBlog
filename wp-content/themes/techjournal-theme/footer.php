@@ -19,7 +19,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         <!-- Search Bar for Mobile -->
         <div class="mb-6">
             <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="relative flex items-center bg-slate-50 border border-slate-200 focus-within:border-primary/80 transition-all pl-3.5 pr-0.5 h-12">
-                <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full h-full text-[12px] text-slate-700 placeholder-slate-400 placeholder:text-[10px] placeholder:font-bold placeholder:tracking-wider focus:outline-none bg-transparent" />
+                <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full h-full text-sm text-slate-700 placeholder-slate-400 placeholder:text-xs placeholder:font-bold placeholder:tracking-wider focus:outline-none bg-transparent" />
                 <button type="submit" aria-label="Tìm kiếm" class="w-12 h-12 text-slate-500 hover:text-primary transition-colors cursor-pointer flex items-center justify-center shrink-0">
                     <?php echo techjournal_get_svg( 'search', 'w-5 h-5' ); ?>
                 </button>
@@ -28,17 +28,17 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 
         <!-- Hierarchical Site Navigation for Mobile -->
         <div class="space-y-4 mb-8">
-            <span class="font-display text-[10px] font-bold uppercase tracking-wider text-slate-400 block border-b border-slate-100 pb-1.5">Danh mục</span>
+            <span class="font-display text-xs font-bold uppercase tracking-wider text-slate-400 block border-b border-slate-100 pb-1.5">Danh mục</span>
             <nav class="space-y-1.5" aria-label="Mobile Site Navigation">
                 <!-- Home -->
-                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-sm sm:text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
                     <?php echo techjournal_get_svg( 'home', 'w-5 h-5 text-primary group-hover:text-white fill-current' ); ?>
                     Trang chủ
                 </a>
                 
                 <!-- Parent: Articles (with toggleable child category list) -->
                 <div class="relative">
-                    <button onclick="toggleMobileSubmenu()" class="w-full flex items-center justify-between py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all text-left cursor-pointer">
+                    <button onclick="toggleMobileSubmenu()" class="w-full flex items-center justify-between py-2.5 px-3 font-bold text-sm sm:text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all text-left cursor-pointer">
                         <span class="flex items-center gap-3">
                             <?php echo techjournal_get_svg( 'article', 'w-5 h-5 text-primary group-hover:text-white fill-current' ); ?>
                             Bài viết
@@ -51,7 +51,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                     <!-- Child Categories List (Accordion Container) -->
                     <div id="mobile-submenu-cats" class="hidden pl-4 bg-slate-50/50 border-x border-b border-slate-100 py-1.5 transition-all duration-300">
                         <!-- Link to All Articles -->
-                        <a href="<?php echo esc_url( $posts_page_url ); ?>" class="flex items-center gap-2 py-2 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all">
+                        <a href="<?php echo esc_url( $posts_page_url ); ?>" class="flex items-center gap-2 py-2 px-3 text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all">
                             <span class="w-1.5 h-1.5 bg-slate-400"></span>
                             Tất cả bài viết
                         </a>
@@ -85,7 +85,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                                     ?>
                                     <div class="relative">
                                         <div class="flex items-center justify-between w-full pr-3 hover:bg-slate-50 group/item transition-all">
-                                            <a class="flex items-center gap-2 py-2 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all flex-grow" href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
+                                            <a class="flex items-center gap-2 py-2 px-3 text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all flex-grow" href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
                                                 <span class="w-1.5 h-1.5 bg-primary/60"></span>
                                                 <?php echo esc_html( $cat->name ); ?>
                                             </a>
@@ -96,7 +96,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                                         <!-- Child Categories List -->
                                         <div id="mobile-subcat-cats-<?php echo $cat->term_id; ?>" class="hidden pl-6 bg-slate-50/20 border-l border-slate-200 py-1 transition-all duration-300">
                                             <?php foreach ( $sub_cats as $sub_cat ) : ?>
-                                                <a href="<?php echo esc_url( get_category_link( $sub_cat->term_id ) ); ?>" class="flex items-center gap-2 py-2 px-3 text-[9.5px] font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all">
+                                                <a href="<?php echo esc_url( get_category_link( $sub_cat->term_id ) ); ?>" class="flex items-center gap-2 py-2 px-3 text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all">
                                                     <span class="w-1 h-1 bg-slate-400"></span>
                                                     <?php echo esc_html( $sub_cat->name ); ?>
                                                 </a>
@@ -106,7 +106,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                                     <?php
                                 } else {
                                     ?>
-                                    <a class="flex items-center gap-2 py-2 px-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all" href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
+                                    <a class="flex items-center gap-2 py-2 px-3 text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-primary transition-all" href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
                                         <span class="w-1.5 h-1.5 bg-primary/60"></span>
                                         <?php echo esc_html( $cat->name ); ?>
                                     </a>
@@ -123,7 +123,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 $about_page = get_page_by_path('gioi-thieu');
                 if ( $about_page ) :
                 ?>
-                    <a href="<?php echo esc_url( get_permalink( $about_page->ID ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
+                    <a href="<?php echo esc_url( get_permalink( $about_page->ID ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-sm sm:text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
                         <?php echo techjournal_get_svg( 'info', 'w-5 h-5 text-primary group-hover:text-white fill-current' ); ?>
                         Giới thiệu
                     </a>
@@ -134,7 +134,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 $contact_page = get_page_by_path('lien-he');
                 if ( $contact_page ) :
                 ?>
-                    <a href="<?php echo esc_url( get_permalink( $contact_page->ID ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
+                    <a href="<?php echo esc_url( get_permalink( $contact_page->ID ) ); ?>" class="flex items-center gap-3 py-2.5 px-3 font-bold text-sm sm:text-[11px] uppercase tracking-wider text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-primary hover:text-white group transition-all">
                         <?php echo techjournal_get_svg( 'mail', 'w-5 h-5 text-primary group-hover:text-white fill-current' ); ?>
                         Liên hệ
                     </a>
@@ -182,8 +182,8 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         
         <!-- Top categories - Flattened -->
         <div class="col-span-full md:col-span-4 lg:col-span-4 space-y-4">
-            <span class="font-display text-xs font-black uppercase tracking-wider text-slate-200 block border-b border-slate-800 pb-2.5">Chủ đề chính</span>
-            <nav class="grid grid-cols-2 gap-x-4 gap-y-2.5 text-[13px]" aria-label="Footer Categories Links">
+            <span class="font-display text-sm sm:text-xs font-black uppercase tracking-wider text-slate-200 block border-b border-slate-800 pb-2.5">Chủ đề chính</span>
+            <nav class="grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm sm:text-[13px]" aria-label="Footer Categories Links">
                 <?php
                 $exclude_ids = array();
                 $default_cat_id = (int) get_option( 'default_category' );
@@ -214,8 +214,8 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 
         <!-- Resources / Quick Links -->
         <div class="col-span-full md:col-span-4 lg:col-span-3 space-y-4">
-            <span class="font-display text-xs font-black uppercase tracking-wider text-slate-200 block border-b border-slate-800 pb-2.5">Các trang khác</span>
-            <nav class="flex flex-col gap-2.5 text-[13px]" aria-label="Footer Company Links">
+            <span class="font-display text-sm sm:text-xs font-black uppercase tracking-wider text-slate-200 block border-b border-slate-800 pb-2.5">Các trang khác</span>
+            <nav class="flex flex-col gap-2.5 text-sm sm:text-[13px]" aria-label="Footer Company Links">
                 <?php
                 $about_page = get_page_by_path('gioi-thieu');
                 $contact_page = get_page_by_path('lien-he');
@@ -251,7 +251,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
     </div>
     
     <!-- Bottom line -->
-    <div class="max-w-container-max mx-auto px-6 py-8 border-t border-slate-800/60 flex justify-center items-center text-slate-300 text-xs">
+    <div class="max-w-container-max mx-auto px-6 py-8 border-t border-slate-800/60 flex justify-center items-center text-slate-300 text-xs sm:text-[11px]">
         <span class="flex items-center gap-1.5">&copy; <?php echo date( 'Y' ); ?> <?php bloginfo( 'name' ); ?> by <span class="hover:text-primary transition-colors">ngovantoanttb</span></span>
     </div>
 </footer>

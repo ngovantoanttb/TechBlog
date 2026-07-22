@@ -225,7 +225,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 
             <!-- Inline Search Form (Cho gõ nhập tìm kiếm luôn trực tiếp) -->
             <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="relative flex items-center bg-slate-50 border border-slate-200 focus-within:border-primary/80 transition-all pl-3.5 pr-0.5 w-[160px] lg:w-[220px] h-12">
-                <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full h-full text-[12px] text-slate-700 placeholder-slate-400 placeholder:text-[10px] placeholder:font-bold placeholder:tracking-wider focus:outline-none bg-transparent" />
+                <input type="search" placeholder="TÌM KIẾM..." name="s" value="<?php echo get_search_query(); ?>" class="w-full h-full text-sm text-slate-700 placeholder-slate-400 placeholder:text-xs placeholder:font-bold placeholder:tracking-wider focus:outline-none bg-transparent" />
                 <button type="submit" aria-label="Tìm kiếm" class="w-12 h-12 text-slate-500 hover:text-primary transition-colors cursor-pointer flex items-center justify-center shrink-0">
                     <?php echo techjournal_get_svg( 'search', 'w-[18px] h-[18px]' ); ?>
                 </button>

@@ -30,18 +30,18 @@ if ( ! empty( $cats ) ) {
     <a href="<?php the_permalink(); ?>" class="aspect-[16/10] overflow-hidden block relative bg-slate-950 shrink-0">
         <img class="w-full h-full object-cover transition-transform duration-750 group-hover:scale-102 opacity-95 group-hover:opacity-100" src="<?php echo esc_url($post_image); ?>" alt="<?php the_title_attribute(); ?>" />
         <?php if ($category_to_show) : ?>
-            <span class="absolute bottom-3 left-3 bg-red-600 text-white text-[9px] font-black uppercase px-2.5 py-1 tracking-widest shadow-sm">
+            <span class="absolute bottom-3 left-3 bg-red-600 text-white text-[10px] sm:text-[9px] font-black uppercase px-2.5 py-1 tracking-widest shadow-sm">
                 <?php echo esc_html($category_to_show->name); ?>
             </span>
         <?php endif; ?>
     </a>
     <div class="pt-4 flex flex-col flex-grow">
-        <h3 class="font-display text-[14px] sm:text-base text-slate-805 group-hover:text-primary transition-colors font-bold leading-snug mb-3.5 break-words">
+        <h3 class="font-display text-base text-slate-805 group-hover:text-primary transition-colors font-bold leading-snug mb-3.5 break-words">
             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
         </h3>
         
         <!-- Date and Clock at the bottom -->
-        <div class="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium mt-auto">
+        <div class="flex items-center gap-1.5 text-xs text-slate-500 font-medium mt-auto">
             <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-500 fill-current' ); ?>
             <span><?php echo get_the_date('d/m/Y'); ?></span>
         </div>
