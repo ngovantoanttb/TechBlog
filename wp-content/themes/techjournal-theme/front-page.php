@@ -17,13 +17,14 @@ get_header(); ?>
             <!-- Left Column: Content Section (Newsflash, Hero Slider, Thumbnails, and Article List) -->
             <div class="col-span-12 lg:col-span-8 space-y-8">
                 
-                <div class="bg-white border border-slate-100 flex items-center justify-between h-10 px-0 sm:px-4 overflow-hidden gap-2 sm:gap-4 shadow-sm">
-                    <div class="flex items-center gap-1.5 sm:gap-2 flex-grow min-w-0">
-                        <span class="bg-red-600 text-white text-xs font-black uppercase px-0 sm:px-2.5 flex items-center gap-1 shrink-0 tracking-wider">
-                            <?php echo techjournal_get_svg( 'bolt', 'w-6 h-6 fill-current' ); ?><span class="hidden sm:inline">NEWSFLASH</span>
-                        </span>
-                        <div class="relative h-6 flex-grow overflow-hidden font-bold text-xs sm:text-[12px] text-slate-700 select-none">
-                            <div id="homepage-newsflash-track" class="absolute w-full transition-all duration-500 ease-in-out left-0" style="top: 0px;">
+                <div class="bg-white border border-slate-200 flex items-stretch justify-between h-10 overflow-hidden shadow-sm">
+                    <div class="flex items-center flex-grow min-w-0 h-full">
+                        <div class="bg-red-600 text-white text-xs font-black uppercase px-2.5 sm:px-4 h-full flex items-center gap-1.5 shrink-0 tracking-wider">
+                            <?php echo techjournal_get_svg( 'bolt', 'w-6 h-6 fill-current' ); ?>
+                            <span class="hidden sm:inline">NEWSFLASH</span>
+                        </div>
+                        <div class="relative h-6 my-auto flex-grow overflow-hidden font-bold text-xs sm:text-[13px] text-slate-700 select-none mx-3 sm:mx-4">
+                            <div id="homepage-newsflash-track" class="absolute inset-x-0 transition-all duration-500 ease-in-out" style="top: 0px;">
                                 <?php 
                                 $nf_posts = get_posts( array( 
                                     'post_type'   => 'post', 
@@ -35,10 +36,10 @@ get_header(); ?>
                                 foreach ( $nf_posts as $idx => $nf_post ) : 
                                 ?>
                                     <div class="h-6 flex items-center justify-between gap-4 w-full" data-index="<?php echo $idx; ?>">
-                                        <a href="<?php echo get_permalink($nf_post->ID); ?>" class="hover:text-primary transition-colors truncate min-w-0 flex-grow">
+                                        <a href="<?php echo get_permalink($nf_post->ID); ?>" class="hover:text-primary transition-colors truncate min-w-0 flex-grow text-slate-800 font-medium">
                                             <?php echo esc_html($nf_post->post_title); ?>
                                         </a>
-                                        <span class="hidden sm:inline-block text-[10px] text-slate-400 shrink-0 font-medium ml-auto">
+                                        <span class="hidden sm:inline-block text-xs text-slate-400 shrink-0 font-normal ml-auto">
                                             <?php echo human_time_diff( get_post_time('U', false, $nf_post), current_time('timestamp') ) . ' trước'; ?>
                                         </span>
                                     </div>
@@ -46,11 +47,11 @@ get_header(); ?>
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-1 shrink-0">
-                        <button id="nf-prev-btn" aria-label="Tin trước" class="w-8 h-8 border border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300 flex items-center justify-center cursor-pointer active:scale-95 transition-all">
+                    <div class="flex items-center shrink-0 h-full">
+                        <button id="nf-prev-btn" aria-label="Tin trước" class="w-10 h-full border-l border-slate-200 text-slate-600 hover:text-primary hover:bg-slate-50 flex items-center justify-center cursor-pointer transition-colors active:bg-slate-100">
                              <?php echo techjournal_get_svg( 'chevron-left', 'w-4 h-4 fill-current' ); ?>
                          </button>
-                         <button id="nf-next-btn" aria-label="Tin tiếp theo" class="w-8 h-8 border border-slate-200 text-slate-500 hover:text-slate-700 hover:border-slate-300 flex items-center justify-center cursor-pointer active:scale-95 transition-all">
+                         <button id="nf-next-btn" aria-label="Tin tiếp theo" class="w-10 h-full border-l border-slate-200 text-slate-600 hover:text-primary hover:bg-slate-50 flex items-center justify-center cursor-pointer transition-colors active:bg-slate-100">
                              <?php echo techjournal_get_svg( 'chevron-right', 'w-4 h-4 fill-current' ); ?>
                          </button>
                     </div>
