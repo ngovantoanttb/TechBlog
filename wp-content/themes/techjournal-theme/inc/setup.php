@@ -17,6 +17,11 @@ function techjournal_setup() {
     // Enable support for Post Thumbnails on posts and pages.
     add_theme_support( 'post-thumbnails' );
 
+    // Add custom optimized image sizes for fast loading & responsive srcset
+    add_image_size( 'techjournal-hero', 1200, 675, true );  // 16:9 Hero LCP Banner
+    add_image_size( 'techjournal-card', 640, 360, true );   // 16:9 Standard Post Cards & Grid
+    add_image_size( 'techjournal-thumb', 240, 135, true );  // 16:9 Sidebar & Small Thumbnails
+
     // Switch default core markup for search form, comment form, and comments to output valid HTML5.
     add_theme_support( 'html5', array(
         'search-form',

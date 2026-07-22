@@ -95,14 +95,8 @@ $search_query = get_search_query();
                                             <?php echo sprintf('%02d', $rank); ?>
                                         </div>
                                         
-                                        <?php 
-                                        $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
-                                        if (!$thumb_url) {
-                                            $thumb_url = techblog_get_placeholder_img();
-                                        }
-                                        ?>
                                         <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
-                                            <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
+                                            <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-thumb', 'w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500' ); ?>
                                         </a>
                                         
                                         <div class="flex-grow min-w-0">

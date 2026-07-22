@@ -6,11 +6,6 @@
  * @since 1.0.0
  */
 
-$post_image = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
-if ( ! $post_image ) {
-    $post_image = techblog_get_placeholder_img();
-}
-
 $cats = get_the_category();
 $category_to_show = null;
 if ( ! empty( $cats ) ) {
@@ -28,7 +23,7 @@ if ( ! empty( $cats ) ) {
 <article class="group flex flex-col cursor-pointer transition-all duration-300">
     <!-- Image container with absolute Category Badge overlay -->
     <a href="<?php the_permalink(); ?>" class="aspect-[16/10] overflow-hidden block relative bg-slate-950 shrink-0">
-        <img class="w-full h-full object-cover transition-transform duration-750 group-hover:scale-102 opacity-95 group-hover:opacity-100" src="<?php echo esc_url($post_image); ?>" alt="<?php the_title_attribute(); ?>" />
+        <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-card', 'w-full h-full object-cover transition-transform duration-750 group-hover:scale-102 opacity-95 group-hover:opacity-100' ); ?>
         <?php if ($category_to_show) : ?>
             <span class="absolute bottom-3 left-3 bg-red-600 text-white text-[10px] sm:text-[9px] font-black uppercase px-2.5 py-1 tracking-widest shadow-sm">
                 <?php echo esc_html($category_to_show->name); ?>

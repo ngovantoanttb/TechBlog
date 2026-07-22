@@ -253,3 +253,64 @@ function techjournal_pagination( $query = null ) {
     echo '</div>';
 }
 
+/**
+ * 8. Optimized Post Thumbnail Rendering Helper
+ *
+ * Generates an <img> tag with full WP responsive attributes (srcset, sizes),
+ * explicit width/height to avoid CLS, loading="lazy" or "eager", decoding="async",
+ * and fetchpriority="high" for LCP elements.
+ *
+ * @param int|WP_Post|null $post        Post ID or object.
+ * @param string           $size        Registered image size ('techjournal-card', 'techjournal-hero', 'techjournal-thumb', etc.).
+ * @param string           $class       CSS class names for the img tag.
+ * @param array            $custom_args Additional custom options (loading, fetchpriority, alt, etc.).
+ * @return string HTML img element output.
+ */
+function techblog_render_post_thumbnail( $post = null, $size = 'techjournal-card', $class = '', $custom_args = array() ) {
+    $post_id = $post ? ( is_object( $post ) ? $post->ID : intval( $post ) ) : get_the_ID();
+    
+    $default_args = array(
+        'loading'       => 'lazy',
+        'decoding'      => 'async',
+        'class'         => $class,
+    );
+
+    $args = wp_parse_args( $custom_args, $default_args );
+
+    // If title attribute isn't set, use post title
+    if ( empty( $args['alt'] ) ) {
+        $args['alt'] = get_the_title( $post_id );
+    }
+
+    // If eager loading or high fetchpriority is requested
+    if ( isset( $args['loading'] ) && 'eager' === $args['loading'] ) {
+        $args['loading'] = 'eager';
+    }
+
+    if ( has_post_thumbnail( $post_id ) ) {
+        $thumbnail_id = get_post_thumbnail_id( $post_id );
+        $img_html = wp_get_attachment_image( $thumbnail_id, $size, false, $args );
+        if ( $img_html ) {
+            return $img_html;
+        }
+    }
+
+    // Fallback placeholder image if post thumbnail does not exist
+    $placeholder_url = techblog_get_placeholder_img();
+    $alt_text        = esc_attr( $args['alt'] );
+    $class_attr      = ! empty( $args['class'] ) ? ' class="' . esc_attr( $args['class'] ) . '"' : '';
+    $loading_attr    = ! empty( $args['loading'] ) ? ' loading="' . esc_attr( $args['loading'] ) . '"' : '';
+    $decoding_attr   = ! empty( $args['decoding'] ) ? ' decoding="' . esc_attr( $args['decoding'] ) . '"' : '';
+    $fetch_attr      = ! empty( $args['fetchpriority'] ) ? ' fetchpriority="' . esc_attr( $args['fetchpriority'] ) . '"' : '';
+
+    return sprintf(
+        '<img src="%s" alt="%s"%s%s%s%s width="640" height="360" />',
+        esc_url( $placeholder_url ),
+        $alt_text,
+        $class_attr,
+        $loading_attr,
+        $decoding_attr,
+        $fetch_attr
+    );
+}
+

@@ -30,7 +30,7 @@ get_header(); ?>
                 <!-- Page Featured Image - Flattened -->
                 <?php if ( has_post_thumbnail() ) : ?>
                     <div class="mb-8 border border-slate-100/50 aspect-[21/9] overflow-hidden">
-                        <img alt="<?php the_title_attribute(); ?>" class="w-full h-full object-cover opacity-95" src="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'large' ) ); ?>" />
+                        <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-hero', 'w-full h-full object-cover opacity-95', array('loading' => 'eager', 'fetchpriority' => 'high') ); ?>
                     </div>
                 <?php endif; ?>
                 

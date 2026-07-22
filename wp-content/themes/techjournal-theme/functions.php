@@ -66,3 +66,6 @@ require_once TECHJOURNAL_THEME_INC . '/maintenance.php';
 // 9. Welcome Greeting / Splash screen system
 require_once TECHJOURNAL_THEME_INC . '/splash-screen.php';
 
+// 10. Image Load & WebP Media Performance Optimization System
+require_once TECHJOURNAL_THEME_INC . '/media-optimization.php';
+

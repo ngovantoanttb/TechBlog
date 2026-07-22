@@ -70,12 +70,10 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                 <?php 
                 $post = $hero_posts[0];
                 setup_postdata($post);
-                $img_1 = get_the_post_thumbnail_url( get_the_ID(), 'large' );
-                if ( !$img_1 ) $img_1 = techblog_get_placeholder_img();
                 ?>
                 <article class="relative h-[320px] sm:h-[400px] md:h-[436px] overflow-hidden group cursor-pointer bg-slate-950 shrink-0 w-[80vw] md:w-auto">
                     <a href="<?php the_permalink(); ?>" class="absolute inset-0 block z-0">
-                        <img class="absolute inset-y-0 -left-[30px] w-[calc(100%+60px)] max-w-none h-full object-cover opacity-90 group-hover:translate-x-[30px] transition-transform duration-700" src="<?php echo esc_url($img_1); ?>" alt="<?php the_title_attribute(); ?>" />
+                        <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-hero', 'absolute inset-y-0 -left-[30px] w-[calc(100%+60px)] max-w-none h-full object-cover opacity-90 group-hover:translate-x-[30px] transition-transform duration-700', array( 'loading' => 'eager', 'fetchpriority' => 'high' ) ); ?>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                     </a>
                     
@@ -108,12 +106,10 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                     if ($post_count >= 2) :
                         $post = $hero_posts[1];
                         setup_postdata($post);
-                        $img_2 = get_the_post_thumbnail_url( get_the_ID(), 'large' );
-                        if ( !$img_2 ) $img_2 = techblog_get_placeholder_img();
                         ?>
                         <article class="relative h-[320px] sm:h-[192px] md:h-[210px] overflow-hidden group cursor-pointer bg-slate-950 shrink-0 w-[80vw] md:w-auto">
                             <a href="<?php the_permalink(); ?>" class="absolute inset-0 block z-0">
-                                <img class="absolute inset-y-0 -left-[30px] w-[calc(100%+60px)] max-w-none h-full object-cover opacity-90 group-hover:translate-x-[30px] transition-transform duration-700" src="<?php echo esc_url($img_2); ?>" alt="<?php the_title_attribute(); ?>" />
+                                <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-card', 'absolute inset-y-0 -left-[30px] w-[calc(100%+60px)] max-w-none h-full object-cover opacity-90 group-hover:translate-x-[30px] transition-transform duration-700' ); ?>
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                             </a>
                             <div class="absolute inset-0 p-5 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
@@ -143,12 +139,10 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                         if ($post_count >= 3) :
                             $post = $hero_posts[2];
                             setup_postdata($post);
-                            $img_3 = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
-                            if ( !$img_3 ) $img_3 = techblog_get_placeholder_img();
                             ?>
                             <article class="relative h-[320px] sm:h-[192px] md:h-[210px] overflow-hidden group cursor-pointer bg-slate-950 shrink-0 w-[80vw] md:w-auto">
                                 <a href="<?php the_permalink(); ?>" class="absolute inset-0 block z-0">
-                                    <img class="absolute inset-y-0 -left-[30px] w-[calc(100%+60px)] max-w-none h-full object-cover opacity-90 group-hover:translate-x-[30px] transition-transform duration-700" src="<?php echo esc_url($img_3); ?>" alt="<?php the_title_attribute(); ?>" />
+                                    <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-card', 'absolute inset-y-0 -left-[30px] w-[calc(100%+60px)] max-w-none h-full object-cover opacity-90 group-hover:translate-x-[30px] transition-transform duration-700' ); ?>
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                                 </a>
                                 <div class="absolute inset-0 p-4 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
@@ -175,12 +169,10 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                         if ($post_count >= 4) :
                             $post = $hero_posts[3];
                             setup_postdata($post);
-                            $img_4 = get_the_post_thumbnail_url( get_the_ID(), 'medium_large' );
-                            if ( !$img_4 ) $img_4 = techblog_get_placeholder_img();
                             ?>
                             <article class="relative h-[320px] sm:h-[192px] md:h-[210px] overflow-hidden group cursor-pointer bg-slate-950 shrink-0 w-[80vw] md:w-auto">
                                 <a href="<?php the_permalink(); ?>" class="absolute inset-0 block z-0">
-                                    <img class="absolute inset-y-0 -left-[30px] w-[calc(100%+60px)] max-w-none h-full object-cover opacity-90 group-hover:translate-x-[30px] transition-transform duration-700" src="<?php echo esc_url($img_4); ?>" alt="<?php the_title_attribute(); ?>" />
+                                    <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-card', 'absolute inset-y-0 -left-[30px] w-[calc(100%+60px)] max-w-none h-full object-cover opacity-90 group-hover:translate-x-[30px] transition-transform duration-700' ); ?>
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent z-10"></div>
                                 </a>
                                 <div class="absolute inset-0 p-4 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
@@ -286,14 +278,8 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                                             <?php echo sprintf('%02d', $rank); ?>
                                         </div>
                                         
-                                        <?php 
-                                        $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
-                                        if (!$thumb_url) {
-                                            $thumb_url = techblog_get_placeholder_img();
-                                        }
-                                        ?>
                                         <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
-                                            <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
+                                            <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-thumb', 'w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500' ); ?>
                                         </a>
                                         
                                         <div class="flex-grow min-w-0">

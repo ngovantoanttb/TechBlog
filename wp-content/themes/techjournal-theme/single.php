@@ -65,10 +65,10 @@ get_header(); ?>
                         </span>
                     </div>
 
-                    <!-- Featured Thumbnail - Flattened -->
+                    <!-- Featured Thumbnail - Flattened & Optimized -->
                     <!-- <?php if ( has_post_thumbnail() ) : ?>
                         <div class="mb-8 bg-slate-950 aspect-[16/10] overflow-hidden">
-                            <img class="w-full h-full object-cover opacity-95" src="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'large' ) ); ?>" alt="<?php the_title_attribute(); ?>" />
+                            <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-hero', 'w-full h-full object-cover opacity-95', array( 'loading' => 'eager', 'fetchpriority' => 'high' ) ); ?>
                         </div>
                     <?php endif; ?> -->
 
@@ -233,15 +233,8 @@ get_header(); ?>
                                     <?php echo sprintf('%02d', $rank); ?>
                                 </div>
                                 
-                                <!-- Thumbnail Image - Flattened -->
-                                <?php 
-                                $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
-                                if (!$thumb_url) {
-                                    $thumb_url = techblog_get_placeholder_img();
-                                }
-                                ?>
                                 <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
-                                    <img src="<?php echo esc_url($thumb_url); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
+                                    <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-thumb', 'w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500' ); ?>
                                 </a>
                                 
                                 <div class="flex-grow min-w-0">
@@ -290,14 +283,10 @@ get_header(); ?>
                     
                     if ( $sidebar_latest->have_posts() ) :
                         while ( $sidebar_latest->have_posts() ) : $sidebar_latest->the_post();
-                            $sidebar_thumb = get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' );
-                            if ( ! $sidebar_thumb ) {
-                                $sidebar_thumb = techblog_get_placeholder_img();
-                            }
                             ?>
                             <div class="flex gap-3 items-center group py-2.5 border-b border-slate-100/50 last:border-0">
                                 <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
-                                    <img src="<?php echo esc_url($sidebar_thumb); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" />
+                                    <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-thumb', 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500' ); ?>
                                 </a>
                                 <div class="flex-grow min-w-0">
                                     <h4 class="font-display text-xs sm:text-[12px] font-bold text-slate-700 hover:text-primary transition-colors leading-snug break-words">

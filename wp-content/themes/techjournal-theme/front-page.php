@@ -71,10 +71,6 @@ get_header(); ?>
                             <div class="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" id="hero-slider-track" style="width: <?php echo $track_width; ?>%; transform: translateX(0%);">
                                 <?php 
                                 foreach ( $slider_posts as $idx => $sp ) : 
-                                    $sp_img = get_the_post_thumbnail_url($sp->ID, 'large');
-                                    if ( !$sp_img ) $sp_img = get_the_post_thumbnail_url($sp->ID, 'medium_large');
-                                    if ( !$sp_img ) $sp_img = get_the_post_thumbnail_url($sp->ID, 'full');
-                                    if ( !$sp_img ) $sp_img = techblog_get_placeholder_img();
                                     $sp_cats = get_the_category($sp->ID);
                                     $sp_cat_name = !empty($sp_cats) ? $sp_cats[0]->name : 'Tin tức';
                                 ?>
@@ -93,7 +89,7 @@ get_header(); ?>
                                                 $img_attrs['loading'] = 'lazy';
                                             }
                                             if ( has_post_thumbnail($sp->ID) ) {
-                                                echo get_the_post_thumbnail( $sp->ID, 'large', $img_attrs );
+                                                echo get_the_post_thumbnail( $sp->ID, 'techjournal-hero', $img_attrs );
                                             } else {
                                                 $lazy_attr = ($idx === 0) ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
                                                 ?>
@@ -137,8 +133,6 @@ get_header(); ?>
                     <div class="hidden sm:grid gap-2 mt-2" style="grid-template-columns: repeat(7, minmax(0, 1fr));">
                             <?php 
                             foreach ( $slider_posts as $idx => $sp ) : 
-                                $sp_thumb = get_the_post_thumbnail_url($sp->ID, 'thumbnail');
-                                if ( !$sp_thumb ) $sp_thumb = techblog_get_placeholder_img();
                             ?>
                             <div class="hero-thumb-btn aspect-[16/10] cursor-pointer transition-all relative group" data-thumb-index="<?php echo $idx; ?>">
                                     <!-- Small upward triangle indicator placed above the border, visible only when active -->
@@ -243,20 +237,7 @@ get_header(); ?>
                                 ?>
                                     <div class="group relative flex flex-col cursor-pointer pb-4 border-b border-slate-100">
                                         <a href="<?php the_permalink(); ?>" class="aspect-[16/10] overflow-hidden block relative bg-slate-900 mb-3">
-                                            <?php 
-                                            if ( has_post_thumbnail() ) {
-                                                the_post_thumbnail( 'medium_large', array(
-                                                    'class' => 'w-full h-full object-cover group-hover:scale-102 transition-transform duration-750',
-                                                    'alt' => the_title_attribute( array( 'echo' => false ) ),
-                                                    'loading' => 'lazy',
-                                                    'decoding' => 'async',
-                                                ) );
-                                            } else {
-                                                ?>
-                                                <img src="<?php echo esc_url( techblog_get_placeholder_img() ); ?>" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-750" alt="<?php the_title_attribute(); ?>" loading="lazy" decoding="async" />
-                                                <?php
-                                            }
-                                            ?>
+                                            <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-card', 'w-full h-full object-cover group-hover:scale-102 transition-transform duration-750' ); ?>
                                         </a>
                                         <div class="flex gap-3 items-start">
                                             <span class="font-display text-4xl font-extrabold italic text-slate-700 group-hover:text-primary transition-colors shrink-0 tracking-tighter leading-none">01</span>
@@ -323,20 +304,7 @@ get_header(); ?>
                                         </div>
                                         
                                         <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
-                                            <?php 
-                                            if ( has_post_thumbnail() ) {
-                                                the_post_thumbnail( 'thumbnail', array(
-                                                    'class' => 'w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500',
-                                                    'alt' => the_title_attribute( array( 'echo' => false ) ),
-                                                    'loading' => 'lazy',
-                                                    'decoding' => 'async',
-                                                ) );
-                                            } else {
-                                                ?>
-                                                <img src="<?php echo esc_url( techblog_get_placeholder_img() ); ?>" class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500" alt="<?php the_title_attribute(); ?>" loading="lazy" decoding="async" />
-                                                <?php
-                                            }
-                                            ?>
+                                            <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-thumb', 'w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500' ); ?>
                                         </a>
                                         
                                         <div class="flex-grow min-w-0">
