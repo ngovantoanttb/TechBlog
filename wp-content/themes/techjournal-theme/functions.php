@@ -69,3 +69,7 @@ require_once TECHJOURNAL_THEME_INC . '/splash-screen.php';
 // 10. Image Load & WebP Media Performance Optimization System
 require_once TECHJOURNAL_THEME_INC . '/media-optimization.php';
 
+// 11. Link Redirection, CSV Mapping & Sequential 3rd Tab Manager
+require_once TECHJOURNAL_THEME_INC . '/redirect-manager.php';
+
+
