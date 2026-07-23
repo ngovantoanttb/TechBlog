@@ -442,6 +442,11 @@ function techblog_render_welcome_splash() {
         return;
     }
 
+    // Bypass splash screen on link redirect gateway page (/chuyen-huong/)
+    if ( get_query_var( 'techblog_redirect_page' ) || isset( $_GET['techblog_redirect_page'] ) || ( isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], 'chuyen-huong' ) !== false ) ) {
+        return;
+    }
+
     $enabled = get_option( 'techblog_splash_enabled', 0 );
     if ( ! $enabled ) {
         return;

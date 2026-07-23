@@ -553,7 +553,61 @@ function techblog_handle_redirect_template() {
 }
 add_action( 'template_redirect', 'techblog_handle_redirect_template', 1 );
 
-// 8. Client-Side JavaScript: Step 1 (Click Interceptor for Post Content Links -> Opens Progress Page in New Tab)
+// 8. Server-Side Content Filter: Rewrites external link hrefs directly in HTML so hovering shows the redirect gateway URL in browser status bar
+function techblog_filter_content_external_links( $content ) {
+    if ( is_admin() || empty( $content ) || ! is_singular() ) {
+        return $content;
+    }
+
+    $is_enabled = get_option( 'techblog_redirect_enabled', '1' );
+    if ( '1' !== $is_enabled || ! techblog_has_available_external_links() ) {
+        return $content;
+    }
+
+    $site_host     = parse_url( home_url(), PHP_URL_HOST );
+    $use_pretty    = ! empty( get_option( 'permalink_structure' ) );
+    $redirect_base = $use_pretty ? home_url( '/chuyen-huong/' ) : home_url( '?techblog_redirect_page=1' );
+    $separator     = strpos( $redirect_base, '?' ) !== false ? '&' : '?';
+
+    return preg_replace_callback(
+        '/<a\s+([^>]*?)href=["\']([^"\']+)["\']([^>]*?)>/i',
+        function( $matches ) use ( $site_host, $redirect_base, $separator ) {
+            $before = $matches[1];
+            $url    = trim( $matches[2] );
+            $after  = $matches[3];
+
+            if ( empty( $url ) ) {
+                return $matches[0];
+            }
+
+            if (
+                strpos( $url, '#' ) === 0 ||
+                strpos( $url, 'javascript:' ) === 0 ||
+                strpos( $url, 'mailto:' ) === 0 ||
+                strpos( $url, 'tel:' ) === 0 ||
+                strpos( $url, 'wp-admin' ) !== false ||
+                strpos( $url, 'wp-login' ) !== false ||
+                strpos( $url, 'logout' ) !== false ||
+                strpos( $url, 'techblog_redirect_page' ) !== false ||
+                strpos( $url, 'chuyen-huong' ) !== false
+            ) {
+                return $matches[0];
+            }
+
+            $host = parse_url( $url, PHP_URL_HOST );
+            if ( ! $host || strtolower( $host ) === strtolower( $site_host ) ) {
+                return $matches[0];
+            }
+
+            $redirect_url = $redirect_base . $separator . 'url=' . rawurlencode( $url );
+            return sprintf( '<a %shref="%s" target="_blank" %s>', $before, esc_url( $redirect_url ), $after );
+        },
+        $content
+    );
+}
+add_filter( 'the_content', 'techblog_filter_content_external_links', 99 );
+
+// 9. Client-Side JavaScript: Dynamic link rewriter & fallback interceptor
 function techblog_render_redirect_scripts_footer() {
     if ( is_admin() ) {
         return;
@@ -574,20 +628,15 @@ function techblog_render_redirect_scripts_footer() {
         return;
     }
 
-    $redirect_base_url = home_url( '?techblog_redirect_page=1' );
+    $use_pretty = ! empty( get_option( 'permalink_structure' ) );
+    $redirect_base_url = $use_pretty ? home_url( '/chuyen-huong/' ) : home_url( '?techblog_redirect_page=1' );
     ?>
     <script id="techblog-redirect-system">
         (function() {
             const redirectBaseUrl = <?php echo wp_json_encode( $redirect_base_url ); ?>;
 
-            // STEP 1: CLICK INTERCEPTOR (Executes ONLY for links inserted inside post content body)
-            document.addEventListener('click', function(event) {
-                const link = event.target.closest('a');
-                if (!link) return;
-
-                // Restrict interception strictly to links inside post content body (.prose, .entry-content, etc.)
-                const isPostContentLink = link.closest('.prose, .entry-content, .post-content, .single-post-body, .single-content, article .prose');
-                if (!isPostContentLink) return;
+            function processLink(link) {
+                if (!link || link.hostname === window.location.hostname) return;
 
                 const href = link.getAttribute('href');
                 if (!href) return;
@@ -609,13 +658,34 @@ function techblog_render_redirect_scripts_footer() {
                 const targetUrl = link.href;
                 if (!targetUrl || targetUrl === window.location.href) return;
 
-                event.preventDefault();
-                event.stopPropagation();
+                const separator = redirectBaseUrl.includes('?') ? '&' : '?';
+                link.href = redirectBaseUrl + separator + 'url=' + encodeURIComponent(targetUrl);
+                link.target = '_blank';
+            }
 
-                // Open Progress Page (/chuyen-huong/?url=TargetURL) in a NEW TAB (Tab 2)
-                const progressUrl = redirectBaseUrl + '&url=' + encodeURIComponent(targetUrl);
-                window.open(progressUrl, '_blank');
+            function initLinkRewriter() {
+                const contentContainers = document.querySelectorAll('.prose, .entry-content, .post-content, .single-post-body, .single-content, article .prose');
+                contentContainers.forEach(function(container) {
+                    const links = container.querySelectorAll('a[href]');
+                    links.forEach(processLink);
+                });
+            }
 
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initLinkRewriter);
+            } else {
+                initLinkRewriter();
+            }
+
+            // Mouseover listener so hover state dynamically converts any newly added external links immediately
+            document.addEventListener('mouseover', function(event) {
+                const link = event.target.closest('a');
+                if (!link) return;
+
+                const isPostContentLink = link.closest('.prose, .entry-content, .post-content, .single-post-body, .single-content, article .prose');
+                if (isPostContentLink) {
+                    processLink(link);
+                }
             }, true);
 
         })();
@@ -623,3 +693,4 @@ function techblog_render_redirect_scripts_footer() {
     <?php
 }
 add_action( 'wp_footer', 'techblog_render_redirect_scripts_footer', 999 );
+
