@@ -77,10 +77,11 @@ function techblog_get_external_links_data() {
     return $result;
 }
 
-// Check if system has active external CSV links
+// Check if system has active external CSV links or a configured default fallback redirect link
 function techblog_has_available_external_links() {
     $data = techblog_get_external_links_data();
-    return ! empty( $data['has_csv_links'] );
+    $default_link = get_option( 'techblog_redirect_default_link', '' );
+    return ! empty( $data['has_csv_links'] ) || ! empty( $default_link );
 }
 
 // 3. Save raw links to CSV file (Flushes transient cache automatically)
@@ -157,6 +158,9 @@ function techblog_render_redirect_admin_page() {
 
     // Process Form Submissions
     if ( isset( $_POST['techblog_save_redirect_settings'] ) && check_admin_referer( 'techblog_redirect_settings_nonce' ) ) {
+        // Clear cached redirect data transient to force immediate setting application
+        delete_transient( 'techblog_external_links_cache' );
+
         // Save Enable/Disable option
         $enabled = isset( $_POST['redirect_enabled'] ) ? '1' : '0';
         update_option( 'techblog_redirect_enabled', $enabled );

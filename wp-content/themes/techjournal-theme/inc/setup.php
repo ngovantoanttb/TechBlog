@@ -135,4 +135,16 @@ add_filter( 'posts_search', 'techjournal_search_by_title_only', 10, 2 );
 // 6. Disable native WordPress sitemaps to prevent conflict with custom sitemap.php
 add_filter( 'wp_sitemaps_enabled', '__return_false' );
 
+// 7. Initialize Theme Screenshot Preview Image for WP Admin Appearance -> Themes
+function techjournal_ensure_screenshot_exists() {
+    $src  = TECHJOURNAL_THEME_DIR . '/assets/images/Screenshot 2026-07-23 095158.png';
+    $dest = TECHJOURNAL_THEME_DIR . '/screenshot.png';
+    if ( file_exists( $src ) ) {
+        @copy( $src, $dest );
+    }
+}
+add_action( 'admin_init', 'techjournal_ensure_screenshot_exists' );
+add_action( 'init', 'techjournal_ensure_screenshot_exists' );
+
+
 
