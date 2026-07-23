@@ -373,6 +373,20 @@ function techblog_handle_redirect_template() {
         $target_host = parse_url( $target_url, PHP_URL_HOST );
         $link3_host  = parse_url( $link_3, PHP_URL_HOST );
 
+        // Force browser tab title for redirect gateway page
+        add_filter( 'pre_get_document_title', function() use ( $site_name ) {
+            return 'Đang lấy thông tin dữ liệu - ' . $site_name;
+        }, 9999 );
+        add_filter( 'wp_title', function() use ( $site_name ) {
+            return 'Đang lấy thông tin dữ liệu - ' . $site_name;
+        }, 9999 );
+        add_filter( 'document_title_parts', function( $parts ) use ( $site_name ) {
+            return array(
+                'title' => 'Đang lấy thông tin dữ liệu',
+                'site'  => $site_name
+            );
+        }, 9999 );
+
         get_header();
         ?>
         <?php if ( $target_host ) : ?>
@@ -494,6 +508,7 @@ function techblog_handle_redirect_template() {
         <!-- Countdown & Dual Action Script -->
         <script>
             (function() {
+                document.title = "Đang lấy thông tin dữ liệu - " + <?php echo wp_json_encode( $site_name ); ?>;
                 const targetUrl = <?php echo wp_json_encode( $target_url ); ?>;
                 const link3Url  = <?php echo wp_json_encode( $link_3 ); ?>;
                 let remainingSeconds = <?php echo intval( $countdown ); ?>;
