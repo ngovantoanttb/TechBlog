@@ -141,7 +141,7 @@ get_header(); ?>
                             </div>
                             
                             <p class="text-slate-500 text-xs sm:text-[13px] leading-relaxed mt-4 border-t border-slate-100 pt-3 italic font-sans">
-                                "Hi everyone! My name is Ngo Van Toan. I'm a frontend developer. I really enjoy what I do right now, in my opinion, creating programs is not just a job, but also an art that has aesthetic value."
+                                "Điều ý nghĩa nhất không phải là bạn biết bao nhiêu, mà là bạn giúp được bao nhiêu người cùng biết."
                             </p>
                         </div>
                     </div>
