@@ -1,8 +1,59 @@
+# --- 1. SITEMAP & ROBOTS REWRITE RULES ---
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 RewriteRule ^robots\.txt$ robots.php [L]
+</IfModule>
+
+# --- 2. SECURITY HARDENING & FILE ACCESS PROTECTIONS ---
+# Disable Directory Browsing
+Options -Indexes
+
+# Block Access to Sensitive Files (.htaccess, wp-config.php, .git, .env, xmlrpc.php)
+<FilesMatch "^(wp-config\.php|\.htaccess|\.git|\.env|xmlrpc\.php|readme\.html|license\.txt)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Security HTTP Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# --- 3. SERVER COMPRESSION (GZIP / DEFLATE) ---
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript application/json application/xml
+    AddOutputFilterByType DEFLATE image/svg+xml image/x-icon font/ttf font/otf font/woff font/woff2
+</IfModule>
+
+# --- 4. BROWSER CACHING (EXPIRES HEADERS) ---
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    
+    # CSS & JavaScript (1 year)
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    
+    # Images & WebP (1 year)
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # Fonts (1 year)
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
 </IfModule>
 
 # BEGIN WordPress
@@ -16,5 +67,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
 </IfModule>
-
 # END WordPress
