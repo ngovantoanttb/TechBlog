@@ -40,11 +40,11 @@ function techjournal_setup() {
 }
 add_action( 'after_setup_theme', 'techjournal_setup' );
 
-// 2. Programmatic Custom Permalinks Setup (danh-sach-bai-viet/post-name)
+// 2. Programmatic Custom Permalinks Setup (%postname%)
 function techjournal_set_custom_permalinks() {
     global $wp_rewrite;
     $current_structure = get_option( 'permalink_structure' );
-    $target_structure  = '/danh-sach-bai-viet/%postname%/';
+    $target_structure  = '/%postname%/';
     
     if ( $current_structure !== $target_structure ) {
         update_option( 'permalink_structure', $target_structure );
