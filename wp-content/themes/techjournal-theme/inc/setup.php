@@ -79,34 +79,60 @@ add_action( 'after_switch_theme', 'techblog_create_contact_table' );
 add_action( 'init', 'techblog_create_contact_table', 5 );
 
 // 4. Exclude static Pages and Privacy Policy posts from site search results
-function techjournal_customize_search_query( $query ) {
-    if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
-        // Only return blog posts (bài viết) in search results, excluding normal pages
-        $query->set( 'post_type', 'post' );
+// function techjournal_customize_search_query( $query ) {
+//     if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
+//         // Only return blog posts (bài viết) in search results, excluding normal pages
+//         $query->set( 'post_type', 'post' );
         
-        // Exclude specific privacy policy page/post slugs just in case
-        $excluded_slugs = array( 'chinh-sach-bao-mat', 'privacy-policy' );
-        $excluded_ids = array();
+//         // Exclude specific privacy policy page/post slugs just in case
+//         $excluded_slugs = array( 'chinh-sach-bao-mat', 'privacy-policy' );
+//         $excluded_ids = array();
         
-        foreach ( $excluded_slugs as $slug ) {
-            $post = get_page_by_path( $slug, OBJECT, array( 'post', 'page' ) );
-            if ( $post ) {
-                $excluded_ids[] = $post->ID;
+//         foreach ( $excluded_slugs as $slug ) {
+//             $post = get_page_by_path( $slug, OBJECT, array( 'post', 'page' ) );
+//             if ( $post ) {
+//                 $excluded_ids[] = $post->ID;
+//             }
+//         }
+        
+//         if ( ! empty( $excluded_ids ) ) {
+//             $current_not_in = $query->get( 'post__not_in' );
+//             if ( ! is_array( $current_not_in ) ) {
+//                 $current_not_in = ! empty( $current_not_in ) ? array( $current_not_in ) : array();
+//             }
+//             $query->set( 'post__not_in', array_merge( $current_not_in, $excluded_ids ) );
+//         }
+//     }
+// }
+// add_action( 'pre_get_posts', 'techjournal_customize_search_query' );
+
+// // 5. Disable native WordPress sitemaps to prevent conflict with custom sitemap.php
+// add_filter( 'wp_sitemaps_enabled', '__return_false' );
+
+function techjournal_search_by_title_only( $search, $wp_query ) {
+    if ( ! is_admin() && $wp_query->is_search() ) {
+        global $wpdb;
+        $search_terms = isset( $wp_query->query_vars['search_terms'] ) ? $wp_query->query_vars['search_terms'] : array();
+        if ( ! empty( $search_terms ) ) {
+            $n = ! empty( $wp_query->query_vars['exact'] ) ? '' : '%';
+            $search_clauses = array();
+            foreach ( (array) $search_terms as $term ) {
+                $term = esc_sql( $wpdb->esc_like( $term ) );
+                $search_clauses[] = "({$wpdb->posts}.post_title LIKE '{$n}{$term}{$n}')";
             }
-        }
-        
-        if ( ! empty( $excluded_ids ) ) {
-            $current_not_in = $query->get( 'post__not_in' );
-            if ( ! is_array( $current_not_in ) ) {
-                $current_not_in = ! empty( $current_not_in ) ? array( $current_not_in ) : array();
+            if ( ! empty( $search_clauses ) ) {
+                $search = ' AND (' . implode( ' AND ', $search_clauses ) . ') ';
+                if ( ! is_user_logged_in() ) {
+                    $search .= " AND ({$wpdb->posts}.post_password = '') ";
+                }
             }
-            $query->set( 'post__not_in', array_merge( $current_not_in, $excluded_ids ) );
         }
     }
+    return $search;
 }
-add_action( 'pre_get_posts', 'techjournal_customize_search_query' );
+add_filter( 'posts_search', 'techjournal_search_by_title_only', 10, 2 );
 
-// 5. Disable native WordPress sitemaps to prevent conflict with custom sitemap.php
+// 6. Disable native WordPress sitemaps to prevent conflict with custom sitemap.php
 add_filter( 'wp_sitemaps_enabled', '__return_false' );
 
 
