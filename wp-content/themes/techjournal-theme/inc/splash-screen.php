@@ -87,7 +87,8 @@ function techblog_render_splash_page() {
                 update_option( 'techblog_splash_active_campaign', 'default' );
             }
             
-            wp_safe_redirect( admin_url( 'options-general.php?page=techblog-splash&deleted=1' ) );
+            $redirect_url = admin_url( 'options-general.php?page=techblog-splash&deleted=1' );
+            echo '<script type="text/javascript">window.location.href = "' . esc_url( $redirect_url ) . '";</script>';
             exit;
         }
     }
@@ -95,7 +96,7 @@ function techblog_render_splash_page() {
     // B. Handle Create Campaign Action
     if ( isset( $_POST['techblog_splash_create_campaign'] ) ) {
         check_admin_referer( 'techblog_splash_settings_nonce', 'techblog_splash_nonce' );
-        $new_name = sanitize_text_field( $_POST['new_campaign_name'] );
+        $new_name = sanitize_text_field( wp_unslash( $_POST['new_campaign_name'] ) );
         if ( ! empty( $new_name ) ) {
             $new_id = 'campaign_' . time();
             $campaigns[ $new_id ] = array(
@@ -114,7 +115,8 @@ function techblog_render_splash_page() {
                 'accent_color' => '#2563eb',
             );
             update_option( 'techblog_splash_campaigns', $campaigns );
-            wp_safe_redirect( admin_url( 'options-general.php?page=techblog-splash&edit_campaign=' . $new_id . '&created=1' ) );
+            $redirect_url = admin_url( 'options-general.php?page=techblog-splash&edit_campaign=' . $new_id . '&created=1' );
+            echo '<script type="text/javascript">window.location.href = "' . esc_url( $redirect_url ) . '";</script>';
             exit;
         }
     }
