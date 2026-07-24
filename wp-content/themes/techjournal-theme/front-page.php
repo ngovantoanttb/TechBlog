@@ -12,10 +12,10 @@ get_header(); ?>
     <div class="max-w-container-max mx-auto px-4">
         
         <!-- Unified Premium Layout Grid (Resolves all structural gaps and alignment shifts) -->
-        <div class="grid grid-cols-12 gap-6 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
             
             <!-- Left Column: Content Section (Newsflash, Hero Slider, Thumbnails, and Article List) -->
-            <div class="col-span-12 lg:col-span-8 space-y-8">
+            <div class="col-span-12 md:col-span-8 space-y-8">
                 
                 <div class="bg-white border border-slate-200 flex items-stretch justify-between h-10 overflow-hidden shadow-sm">
                     <div class="flex items-center flex-grow min-w-0 h-full">
@@ -66,7 +66,8 @@ get_header(); ?>
                     $track_width = $slide_count * 100;
                     $slide_width = 100 / $slide_count;
                     ?>
-                    <div class="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-slate-900 overflow-hidden group/hero-slider border border-slate-100 shadow-sm">
+                    <div class="space-y-1.5">
+                        <div class="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-slate-900 overflow-hidden group/hero-slider border border-slate-100 shadow-sm">
                         <div class="w-full h-full relative overflow-hidden" id="hero-slider-wrapper">
                             <div class="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" id="hero-slider-track" style="width: <?php echo $track_width; ?>%; transform: translateX(0%);">
                                 <?php 
@@ -130,13 +131,14 @@ get_header(); ?>
                     </div>
 
                     <!-- Thumbnail indicators horizontally underneath the slider -->
-                    <div class="hidden sm:grid gap-2 mt-2" style="grid-template-columns: repeat(7, minmax(0, 1fr));">
+                    <div class="overflow-hidden relative w-full" id="hero-thumbs-wrapper">
+                        <div class="flex gap-2 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" id="hero-thumbs-track">
                             <?php 
                             foreach ( $slider_posts as $idx => $sp ) : 
                             ?>
-                            <div class="hero-thumb-btn aspect-[16/10] cursor-pointer transition-all relative group" data-thumb-index="<?php echo $idx; ?>">
-                                    <!-- Small upward triangle indicator placed above the border, visible only when active -->
-                                    <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-primary transition-opacity duration-300 pointer-events-none indicator-triangle <?php echo $idx === 0 ? '' : 'opacity-0'; ?>"></div>
+                            <div class="hero-thumb-btn aspect-[16/10] shrink-0 cursor-pointer transition-all relative group w-[calc((100%-3*8px)/4)] sm:w-[calc((100%-4*8px)/5)] md:w-[calc((100%-5*8px)/6)] lg:w-[calc((100%-6*8px)/7)]" data-thumb-index="<?php echo $idx; ?>">
+                                    <!-- Downward white triangle indicator pointing into the active thumbnail -->
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[10px] border-t-white transition-opacity duration-500 ease-out pointer-events-none indicator-triangle z-20 <?php echo $idx === 0 ? '' : 'opacity-0'; ?>"></div>
                                     <div class="w-full h-full overflow-hidden relative">
                                         <?php 
                                         if ( has_post_thumbnail($sp->ID) ) {
@@ -157,7 +159,9 @@ get_header(); ?>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
+                        </div>
                     </div>
+                </div>
                 <?php endif; ?>
 
                 <!-- ================= ARTICLES LIST SECTION ================= -->
@@ -214,11 +218,11 @@ get_header(); ?>
             </div>
 
             <!-- Right Column: Sidebar (Unified vertically without gaps) -->
-            <aside class="col-span-12 lg:col-span-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+            <aside class=" col-span-12 md:col-span-4 grid grid-cols-1 gap-10">
                 
                 <!-- Sidebar Widget 1: Ranked Popular Posts Widget (Photo 5 Style) -->
-                <div class="bg-white border border-slate-100 p-5 shadow-sm">
-                    <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-4 border-b border-slate-200 pb-2.5 relative anony-section-title">Xem Nhiều Nhất</h3>
+                <div class="">
+                    <!-- <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-4 border-b border-slate-200 pb-2.5 relative anony-section-title">Xem Nhiều Nhất</h3> -->
                     <div class="space-y-4">
                         <?php
                         $popular_posts = new WP_Query( array(
@@ -280,7 +284,7 @@ get_header(); ?>
                 </div>
 
                 <!-- Sidebar Widget 2: BÀI VIẾT NỔI BẬT (Featured/Pinned Posts - Pinned/Sticky system) -->
-                <div class="bg-white border border-slate-100 p-6 shadow-sm">
+                <div class=" ">
                     <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h3>
                     <div class="space-y-4">
                         <?php 
@@ -298,25 +302,23 @@ get_header(); ?>
                                 $rank = 1;
                                 while ( $sidebar_query->have_posts() ) : $sidebar_query->the_post();
                                 ?>
-                                    <div class="flex gap-4 items-center group/item py-3.5 border-b border-slate-100/50 last:border-0">
-                                        <div class="font-display text-2xl font-black text-slate-700 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
-                                            <?php echo sprintf('%02d', $rank); ?>
-                                        </div>
-                                        
-                                        <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                                    <div class="flex flex-row md:flex-col lg:flex-row gap-3 md:gap-2.5 items-start group/item py-3.5 border-b border-slate-100/50 last:border-0">
+                                        <a href="<?php the_permalink(); ?>" class="w-32 sm:w-36 md:w-full lg:w-20 aspect-[16/10] lg:aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
                                             <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-thumb', 'w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500' ); ?>
                                         </a>
-                                        
-                                        <div class="flex-grow min-w-0">
-                                            <h4 class="font-display text-xs sm:text-[12px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                        <div class="flex-grow min-w-0 w-full">
+                                            <h4 class="font-display text-xs sm:text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
                                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                             </h4>
-                                             <div class="flex items-center gap-3 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
-                                                 <span class="flex items-center gap-0.5">
-                                                     <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
-                                                     <?php echo get_the_date(); ?>
-                                                 </span>
-                                             </div>
+                                            <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 md:hidden leading-normal">
+                                                <?php echo esc_html( wp_trim_words( get_the_excerpt(), 12, '...' ) ); ?>
+                                            </p>
+                                            <div class="flex items-center gap-3 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
+                                                <span class="flex items-center gap-0.5">
+                                                    <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                                    <?php echo get_the_date(); ?>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 <?php
@@ -414,17 +416,32 @@ get_header(); ?>
                 if (newTriangle) newTriangle.classList.remove('opacity-0');
             }
             
-            // Slide thumbnail track if there are more than 7 thumbnails
+            // Slide thumbnail track so active thumbnail is always visible in the viewport
             const thumbsTrack = document.getElementById('hero-thumbs-track');
-            if (thumbsTrack && thumbs.length > 7) {
-                let shiftIdx = currentIdx - 3;
-                if (shiftIdx < 0) shiftIdx = 0;
-                const maxShift = thumbs.length - 7;
-                if (shiftIdx > maxShift) shiftIdx = maxShift;
-                const thumbWidth = thumbs[0].offsetWidth;
+            const thumbsWrapper = document.getElementById('hero-thumbs-wrapper');
+
+            if (thumbsTrack && thumbsWrapper && thumbs[currentIdx]) {
+                if (animated) {
+                    thumbsTrack.style.transition = 'transform 700ms cubic-bezier(0.25, 1, 0.5, 1)';
+                } else {
+                    thumbsTrack.style.transition = 'none';
+                }
+                const activeThumb = thumbs[currentIdx];
+                const thumbWidth = activeThumb.offsetWidth;
                 const gap = 8;
-                const translateX = -shiftIdx * (thumbWidth + gap);
-                thumbsTrack.style.transform = `translateX(${translateX}px)`;    
+                const itemFullWidth = thumbWidth + gap;
+                
+                // Calculate visible items count dynamically based on current wrapper width
+                const visibleCount = Math.round((thumbsWrapper.clientWidth + gap) / itemFullWidth) || 1;
+                
+                let shiftIdx = currentIdx - Math.floor((visibleCount - 1) / 2);
+                if (shiftIdx < 0) shiftIdx = 0;
+                const maxShift = thumbs.length - visibleCount;
+                if (maxShift > 0 && shiftIdx > maxShift) shiftIdx = maxShift;
+                if (maxShift <= 0) shiftIdx = 0;
+                
+                const translateX = -shiftIdx * itemFullWidth;
+                thumbsTrack.style.transform = `translateX(${translateX}px)`;
             }
         }
         

@@ -202,10 +202,10 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
         ?>
 
         <!-- ================= MAIN BODY LAYOUT (TechBlog Style) ================= -->
-        <div class="grid grid-cols-12 gap-6 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
             
             <!-- Left: Articles list grid (lg:col-span-8 to align with homepage) -->
-            <div class="col-span-12 lg:col-span-8 space-y-6">
+            <div class="col-span-12 md:col-span-8 space-y-6">
                 
                 <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-3 relative">
                     <div class="flex items-center gap-1.5 relative">
@@ -252,10 +252,10 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
             </div>
             
             <!-- Right: TechBlog Sidebar (lg:col-span-4 to align with homepage) -->
-            <aside class="col-span-12 lg:col-span-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+            <aside class=" col-span-12 md:col-span-4 grid grid-cols-1 gap-10">
 
                 <!-- Sidebar: BÀI VIẾT NỔI BẬT (Pinned/Sticky system) -->
-                <div class="bg-white border border-slate-100 p-6 shadow-sm">
+                <div class=" ">
                     <h3 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-5 border-b border-slate-200 pb-3 relative anony-section-title">Bài Viết Nổi Bật</h3>
                     <div class="space-y-4">
                         <?php 
@@ -273,19 +273,17 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                                 $rank = 1;
                                 while ( $sidebar_query->have_posts() ) : $sidebar_query->the_post();
                                 ?>
-                                    <div class="flex gap-4 items-center group/item py-3.5 border-b border-slate-100/50 last:border-0">
-                                        <div class="font-display text-2xl font-black text-slate-700 group-hover/item:text-primary transition-colors w-10 shrink-0 text-left tracking-tighter">
-                                            <?php echo sprintf('%02d', $rank); ?>
-                                        </div>
-                                        
-                                        <a href="<?php the_permalink(); ?>" class="w-24 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                                    <div class="flex flex-row md:flex-col lg:flex-row gap-3 md:gap-2.5 items-start group/item py-3.5 border-b border-slate-100/50 last:border-0">
+                                        <a href="<?php the_permalink(); ?>" class="w-32 sm:w-36 md:w-full lg:w-20 aspect-[16/10] lg:aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
                                             <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-thumb', 'w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500' ); ?>
                                         </a>
-                                        
-                                        <div class="flex-grow min-w-0">
+                                        <div class="flex-grow min-w-0 w-full">
                                             <h4 class="font-display text-xs sm:text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
                                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                             </h4>
+                                            <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 md:hidden leading-normal">
+                                                <?php echo esc_html( wp_trim_words( get_the_excerpt(), 12, '...' ) ); ?>
+                                            </p>
                                             <div class="flex items-center gap-3 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
                                                 <span class="flex items-center gap-0.5">
                                                     <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
