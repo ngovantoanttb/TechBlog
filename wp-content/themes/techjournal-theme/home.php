@@ -59,19 +59,6 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                 <?php 
                 $post = $hero_posts[0];
                 setup_postdata($post);
-                
-                $cats = get_the_category();
-                $category_to_show = null;
-                foreach($cats as $c) {
-                    if($c->term_id != get_option('default_category')) {
-                        $category_to_show = $c;
-                        break;
-                    }
-                }
-                if (!$category_to_show && !empty($cats)) {
-                    $category_to_show = $cats[0];
-                }
-                $display_cat_name = $category_to_show ? $category_to_show->name : 'Tin tức';
                 ?>
                 <article class="relative h-[320px] sm:h-[400px] md:h-[436px] overflow-hidden group cursor-pointer bg-slate-950 shrink-0 w-[80vw] md:w-auto">
                     <a href="<?php the_permalink(); ?>" class="absolute inset-0 block z-0">
@@ -80,7 +67,7 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                     </a>
                     <div class="absolute inset-0 p-5 sm:p-7 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
                         <span class="bg-red-600 text-white text-[10px] sm:text-[9px] font-black uppercase px-2.5 py-1 self-start tracking-widest shadow-sm mb-3">
-                            Tất cả bài viết
+                            <?php echo esc_html( techblog_get_post_category_name( get_the_ID() ) ); ?>
                         </span>
                         <h2 class="font-display text-base sm:text-lg md:text-xl text-white font-extrabold tracking-tight leading-snug pointer-events-auto mb-2 break-words">
                             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
@@ -115,7 +102,7 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                             </a>
                             <div class="absolute inset-0 p-5 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
                                 <span class="bg-red-600 text-white text-[10px] sm:text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
-                                    Tất cả bài viết
+                                    <?php echo esc_html( techblog_get_post_category_name( get_the_ID() ) ); ?>
                                 </span>
                                 <h3 class="font-display text-sm md:text-base text-white font-extrabold tracking-tight leading-snug pointer-events-auto break-words">
                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
@@ -148,7 +135,7 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                                 </a>
                                 <div class="absolute inset-0 p-4 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
                                     <span class="bg-red-600 text-white text-[10px] sm:text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
-                                        Tất cả bài viết
+                                        <?php echo esc_html( techblog_get_post_category_name( get_the_ID() ) ); ?>
                                     </span>
                                     <h3 class="font-display text-sm sm:text-[13px] md:text-[14px] text-white font-extrabold tracking-tight leading-snug pointer-events-auto break-words">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
@@ -178,7 +165,7 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
                                 </a>
                                 <div class="absolute inset-0 p-4 flex flex-col justify-end z-20 pointer-events-none max-w-[80%] sm:max-w-[80%]">
                                     <span class="bg-red-600 text-white text-[10px] sm:text-[8px] font-black uppercase px-2 py-0.5 self-start tracking-widest shadow-sm mb-2">
-                                        Tất cả bài viết
+                                        <?php echo esc_html( techblog_get_post_category_name( get_the_ID() ) ); ?>
                                     </span>
                                     <h3 class="font-display text-sm sm:text-[13px] md:text-[14px] text-white font-extrabold tracking-tight leading-snug pointer-events-auto">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>

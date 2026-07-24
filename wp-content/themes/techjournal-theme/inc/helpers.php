@@ -314,3 +314,28 @@ function techblog_render_post_thumbnail( $post = null, $size = 'techjournal-card
     );
 }
 
+/**
+ * 9. Helper to get primary display category name for a post
+ *
+ * @param int|WP_Post|null $post Post ID or object.
+ * @return string Category name.
+ */
+function techblog_get_post_category_name( $post = null ) {
+    $post_id = $post ? ( is_object( $post ) ? $post->ID : intval( $post ) ) : get_the_ID();
+    $cats    = get_the_category( $post_id );
+    $category_to_show = null;
+    if ( ! empty( $cats ) ) {
+        foreach ( $cats as $c ) {
+            if ( $c->term_id != get_option( 'default_category' ) ) {
+                $category_to_show = $c;
+                break;
+            }
+        }
+        if ( ! $category_to_show ) {
+            $category_to_show = $cats[0];
+        }
+    }
+    return $category_to_show ? $category_to_show->name : 'Tin tức';
+}
+
+
