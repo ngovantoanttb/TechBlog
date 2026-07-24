@@ -73,7 +73,7 @@ get_header(); ?>
                     <?php endif; ?> -->
 
                     <!-- Rich Post Body -->
-                    <div class="prose max-w-none text-slate-600 text-base sm:text-[14.5px] leading-relaxed space-y-6">
+                    <div class="sm:text-[14.5px] leading-relaxed space-y-6 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-4 [&_li]:my-1.5">
                         <?php
                         $content = get_the_content();
                         
