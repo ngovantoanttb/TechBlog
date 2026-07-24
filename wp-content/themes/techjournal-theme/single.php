@@ -153,39 +153,134 @@ get_header(); ?>
                         </div>
                     </div>
 
-                    <!-- ================= RELATED ARTICLES SECTION (Compact Cards Grid - Flattened) ================= -->
+                    <!-- ================= RELATED ARTICLES SECTION (6 Posts Grid per Page) ================= -->
                     <section class="mt-12 pt-8 border-t border-slate-100" aria-label="Related Articles">
-                        <h2 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight mb-6 anony-section-title">Bài Viết Cùng Chủ Đề</h2>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                            <?php
-                            // Fetch related posts from the SAME category
-                            $cats = get_the_category( get_the_ID() );
-                            $cat_ids = array();
-                            if ( ! empty( $cats ) ) {
-                                foreach ( $cats as $c ) {
-                                    $cat_ids[] = $c->term_id;
-                                }
+                        <?php
+                        // Fetch related posts from the SAME category ONLY (up to 18 posts)
+                        $cats = get_the_category( get_the_ID() );
+                        $cat_ids = array();
+                        if ( ! empty( $cats ) ) {
+                            foreach ( $cats as $c ) {
+                                $cat_ids[] = $c->term_id;
                             }
-                            
-                            $related_query = new WP_Query( array(
-                                'post_type'           => 'post',
-                                'posts_per_page'      => 3,
-                                'post__not_in'        => array( get_the_ID() ),
-                                'category__in'        => $cat_ids,
-                                'ignore_sticky_posts' => true,
-                                'orderby'             => 'rand'
-                            ) );
+                        }
+                        
+                        $related_posts_query = get_posts( array(
+                            'post_type'           => 'post',
+                            'posts_per_page'      => 18,
+                            'post__not_in'        => array( get_the_ID() ),
+                            'category__in'        => $cat_ids,
+                            'ignore_sticky_posts' => true,
+                            'orderby'             => 'date',
+                            'order'               => 'DESC'
+                        ) );
 
-                            if ( $related_query->have_posts() ) :
-                                while ( $related_query->have_posts() ) : $related_query->the_post();
-                                    get_template_part( 'template-parts/content', 'grid' );
-                                endwhile;
-                                wp_reset_postdata();
-                            else :
-                                echo '<p class="text-slate-400 text-xs italic">Chưa có bài viết liên quan.</p>';
-                            endif;
-                            ?>
+                        $post_chunks = ! empty( $related_posts_query ) ? array_chunk( $related_posts_query, 6 ) : array();
+                        $total_pages = count( $post_chunks );
+                        ?>
+
+                        <div class="mb-6 pb-2 border-b border-slate-200/80">
+                            <h2 class="font-display text-sm font-black text-slate-800 uppercase tracking-tight relative anony-section-title">Bài Viết Cùng Chủ Đề</h2>
                         </div>
+
+                        <?php if ( empty( $post_chunks ) ) : ?>
+                            <p class="text-slate-400 text-xs italic">Chưa có bài viết liên quan.</p>
+                        <?php else : ?>
+                            <!-- Instant Switch Grid Pages Container -->
+                            <div id="related-pages-container" class="relative">
+                                <?php foreach ( $post_chunks as $page_index => $chunk_posts ) : ?>
+                                    <div class="related-page-grid grid grid-cols-1 sm:grid-cols-3 gap-6 <?php echo $page_index === 0 ? '' : 'hidden'; ?>" data-page-index="<?php echo $page_index; ?>">
+                                        <?php
+                                        foreach ( $chunk_posts as $post ) :
+                                            setup_postdata( $post );
+                                            get_template_part( 'template-parts/content', 'grid' );
+                                        endforeach;
+                                        wp_reset_postdata();
+                                        ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <?php if ( $total_pages > 1 ) : ?>
+                                <!-- Navigation Buttons Below Grid -->
+                                <div class="flex items-center justify-center gap-2 mt-8 select-none">
+                                    <button id="related-prev-page-btn" aria-label="Bài trước" class="w-8 h-8 bg-slate-100/70 border border-slate-200/80 text-slate-300 flex items-center justify-center cursor-not-allowed select-none opacity-60 shadow-none">
+                                        <?php echo techjournal_get_svg( 'chevron-left', 'w-4 h-4 fill-current' ); ?>
+                                    </button>
+                                    <button id="related-next-page-btn" aria-label="Bài tiếp theo" class="w-8 h-8 bg-white border border-slate-200 text-slate-600 hover:text-red-600 hover:border-red-600 hover:bg-slate-50 flex items-center justify-center cursor-pointer active:scale-95 transition-all shadow-sm">
+                                        <?php echo techjournal_get_svg( 'chevron-right', 'w-4 h-4 fill-current' ); ?>
+                                    </button>
+                                </div>
+
+                                <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const pages = document.querySelectorAll('#related-pages-container .related-page-grid');
+                                    const prevBtn = document.getElementById('related-prev-page-btn');
+                                    const nextBtn = document.getElementById('related-next-page-btn');
+                                    const totalPages = pages.length;
+                                    let currentPage = 0;
+
+                                    const enabledClass = 'w-8 h-8 bg-white border border-slate-200 text-slate-600 hover:text-red-600 hover:border-red-600 hover:bg-slate-50 flex items-center justify-center cursor-pointer active:scale-95 transition-all shadow-sm';
+                                    const disabledClass = 'w-8 h-8 bg-slate-100/70 border border-slate-200/80 text-slate-300 flex items-center justify-center cursor-not-allowed select-none opacity-60 shadow-none';
+
+                                    function showPage(index) {
+                                        pages.forEach((page, idx) => {
+                                            if (idx === index) {
+                                                page.classList.remove('hidden');
+                                            } else {
+                                                page.classList.add('hidden');
+                                            }
+                                        });
+
+                                        // Update prevBtn state
+                                        if (prevBtn) {
+                                            if (index === 0) {
+                                                prevBtn.className = disabledClass;
+                                                prevBtn.setAttribute('disabled', 'disabled');
+                                            } else {
+                                                prevBtn.className = enabledClass;
+                                                prevBtn.removeAttribute('disabled');
+                                            }
+                                        }
+
+                                        // Update nextBtn state
+                                        if (nextBtn) {
+                                            if (index === totalPages - 1) {
+                                                nextBtn.className = disabledClass;
+                                                nextBtn.setAttribute('disabled', 'disabled');
+                                            } else {
+                                                nextBtn.className = enabledClass;
+                                                nextBtn.removeAttribute('disabled');
+                                            }
+                                        }
+                                    }
+
+                                    // Set initial button states
+                                    showPage(0);
+
+                                    if (nextBtn) {
+                                        nextBtn.addEventListener('click', function(e) {
+                                            e.preventDefault();
+                                            if (currentPage < totalPages - 1) {
+                                                currentPage++;
+                                                showPage(currentPage);
+                                            }
+                                        });
+                                    }
+
+                                    if (prevBtn) {
+                                        prevBtn.addEventListener('click', function(e) {
+                                            e.preventDefault();
+                                            if (currentPage > 0) {
+                                                currentPage--;
+                                                showPage(currentPage);
+                                            }
+                                        });
+                                    }
+                                });
+                                </script>
+                            <?php endif; ?>
+                        <?php endif; ?>
                     </section>
 
                     <!-- Comments area -->
