@@ -12,10 +12,10 @@ get_header(); ?>
     <div class="max-w-container-max mx-auto px-4">
         
         <!-- Unified Premium Layout Grid (Resolves all structural gaps and alignment shifts) -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-y-8 gap-x-0 md:gap-10 items-start">
             
             <!-- Left Column: Content Section (Newsflash, Hero Slider, Thumbnails, and Article List) -->
-            <div class="col-span-12 md:col-span-8 space-y-8">
+            <div class="col-span-1 md:col-span-8 space-y-8 min-w-0">
                 
                 <div class="bg-white border border-slate-200 flex items-stretch justify-between h-10 overflow-hidden shadow-sm">
                     <div class="flex items-center flex-grow min-w-0 h-full">
@@ -218,7 +218,7 @@ get_header(); ?>
             </div>
 
             <!-- Right Column: Sidebar (Unified vertically without gaps) -->
-            <aside class=" col-span-12 md:col-span-4 grid grid-cols-1 gap-10">
+            <aside class="col-span-1 md:col-span-4 grid grid-cols-1 gap-10 min-w-0 p-5 md:p-0">
                 
                 <!-- Sidebar Widget 1: Ranked Popular Posts Widget (Photo 5 Style) -->
                 <div class="">

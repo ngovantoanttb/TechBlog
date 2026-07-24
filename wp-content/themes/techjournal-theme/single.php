@@ -9,10 +9,10 @@
 get_header(); ?>
 
 <main class="pt-6 sm:pt-8 pb-section-gap bg-background min-h-screen">
-    <div class="max-w-container-max mx-auto px-0 sm:px-4 grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+    <div class="max-w-container-max mx-auto px-0 sm:px-4 grid grid-cols-1 md:grid-cols-12 gap-y-8 gap-x-0 md:gap-10 items-start">
         
         <!-- Left: Main Post Reading Area -->
-        <div class="col-span-12 md:col-span-8 bg-white border border-slate-100/80 p-5 sm:p-8 premium-shadow">
+        <div class="col-span-1 md:col-span-8 bg-white border border-slate-100/80 p-5 sm:p-8 premium-shadow min-w-0">
             <?php
             if ( have_posts() ) :
                 while ( have_posts() ) : the_post();
@@ -204,7 +204,7 @@ get_header(); ?>
         </div>
         
         <!-- Right Sidebar (TechBlog Premium Sidebar Style) -->
-        <aside class=" col-span-12 md:col-span-4 grid grid-cols-1 gap-10">
+        <aside class="col-span-1 md:col-span-4 grid grid-cols-1 gap-10 min-w-0 p-5 md:p-0">
 
             <!-- Sidebar: BÀI VIẾT NỔI BẬT (Featured/Pinned Posts - Strictly Pinned/Sticky system) -->
             <?php

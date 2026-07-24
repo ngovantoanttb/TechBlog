@@ -202,10 +202,10 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
         ?>
 
         <!-- ================= MAIN BODY LAYOUT (TechBlog Style) ================= -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-y-8 gap-x-0 md:gap-10 items-start">
             
             <!-- Left: Articles list grid (lg:col-span-8 to align with homepage) -->
-            <div class="col-span-12 md:col-span-8 space-y-6">
+            <div class="col-span-1 md:col-span-8 space-y-6 min-w-0">
                 
                 <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-3 relative">
                     <div class="flex items-center gap-1.5 relative">
@@ -252,7 +252,7 @@ $paged = ( get_query_var( 'paged' ) ) ? intval( get_query_var( 'paged' ) ) : 1;
             </div>
             
             <!-- Right: TechBlog Sidebar (lg:col-span-4 to align with homepage) -->
-            <aside class=" col-span-12 md:col-span-4 grid grid-cols-1 gap-10">
+            <aside class="col-span-1 md:col-span-4 grid grid-cols-1 gap-10 min-w-0 p-5 md:p-0">
 
                 <!-- Sidebar: BÀI VIẾT NỔI BẬT (Pinned/Sticky system) -->
                 <div class=" ">
