@@ -150,7 +150,7 @@ get_header(); ?>
                                             ) );
                                         } else {
                                             ?>
-                                            <img src="<?php echo esc_url( techblog_get_placeholder_img() ); ?>" class="w-full h-full object-cover" alt="" loading="lazy" decoding="async" />
+                                            <img src="<?php echo esc_url( techblog_get_placeholder_img() ); ?>" class="w-full h-full object-cover" alt="image thumbnail" loading="lazy" decoding="async" />
                                             <?php
                                         }
                                         ?>

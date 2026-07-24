@@ -135,9 +135,9 @@ function techblog_render_splash_page() {
         // Save current edited campaign options
         $edit_id = sanitize_text_field( $_POST['edit_campaign_id'] );
         if ( isset( $campaigns[ $edit_id ] ) ) {
-            $campaigns[ $edit_id ]['name']         = sanitize_text_field( $_POST['name'] );
+            $campaigns[ $edit_id ]['name']         = sanitize_text_field( wp_unslash( $_POST['name'] ) );
             // Allow unfiltered HTML/CSS/JS for administrators
-            $campaigns[ $edit_id ]['custom_html']  = isset( $_POST['custom_html'] ) ? $_POST['custom_html'] : '';
+            $campaigns[ $edit_id ]['custom_html']  = isset( $_POST['custom_html'] ) ? wp_unslash( $_POST['custom_html'] ) : '';
             $campaigns[ $edit_id ]['duration']     = absint( $_POST['duration'] );
             $campaigns[ $edit_id ]['bg_color']     = sanitize_hex_color( $_POST['bg_color'] );
             $campaigns[ $edit_id ]['animation']    = sanitize_text_field( $_POST['animation'] );
@@ -259,7 +259,7 @@ function techblog_render_splash_page() {
                     <tr>
                         <th scope="row"><label for="custom_html">Mã giao diện tùy biến (Custom HTML)</label></th>
                         <td>
-                            <textarea id="custom_html" name="custom_html" rows="12" class="large-text" style="font-family: Consolas, Monaco, monospace; font-size: 13px; background:#f9f9f9;"><?php echo esc_textarea( isset( $camp['custom_html'] ) ? $camp['custom_html'] : '' ); ?></textarea>
+                            <textarea id="custom_html" name="custom_html" rows="12" class="large-text" style="font-family: Consolas, Monaco, monospace; font-size: 13px; background:#f9f9f9;"><?php echo esc_textarea( isset( $camp['custom_html'] ) ? wp_unslash( $camp['custom_html'] ) : '' ); ?></textarea>
                             <p class="description">
                                 <b>Mã HTML/CSS/JS tùy biến của riêng bạn</b>. Cho phép sử dụng thẻ <code>&lt;style&gt;</code> và <code>&lt;script&gt;</code> để tự thiết kế giao diện theo ý muốn.<br/>
                                 <span style="color:#d32f2f;">Lưu ý:</span> Để trống ô này nếu muốn sử dụng thiết kế mặc định (Logo + Tiêu đề + Nút) ở phía dưới.
@@ -460,7 +460,7 @@ function techblog_render_welcome_splash() {
     }
     
     $camp         = $campaigns[ $active_id ];
-    $custom_html  = isset( $camp['custom_html'] ) ? trim( $camp['custom_html'] ) : '';
+    $custom_html  = isset( $camp['custom_html'] ) ? trim( stripslashes( wp_unslash( $camp['custom_html'] ) ) ) : '';
     $duration     = isset( $camp['duration'] ) ? intval( $camp['duration'] ) : 5;
     $bg_color     = isset( $camp['bg_color'] ) ? $camp['bg_color'] : '#0f172a';
     $animation    = isset( $camp['animation'] ) ? $camp['animation'] : 'fade';
@@ -511,8 +511,23 @@ function techblog_render_welcome_splash() {
             transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
+        #techblog-splash-content.has-custom-html {
+            max-width: 100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            gap: 0 !important;
+            transform: none !important;
+        }
+
         #techblog-splash-content.active {
             transform: scale(1);
+            opacity: 1;
+        }
+
+        #techblog-splash-content.has-custom-html.active {
+            transform: none !important;
             opacity: 1;
         }
 
@@ -663,7 +678,7 @@ function techblog_render_welcome_splash() {
 
     <!-- Welcome Splash Screen Overlay markup -->
     <div id="techblog-splash-overlay" role="dialog" aria-modal="true">
-        <div id="techblog-splash-content" style="<?php echo ! empty( $custom_html ) ? 'max-width:100%;' : ''; ?>">
+        <div id="techblog-splash-content" class="<?php echo ! empty( $custom_html ) ? 'has-custom-html' : ''; ?>" style="<?php echo ! empty( $custom_html ) ? 'max-width:100%; width:100%; height:100%; padding:0; gap:0; transform:none;' : ''; ?>">
             
             <?php if ( ! empty( $custom_html ) ) : ?>
                 <!-- Render custom pasted HTML layout -->
