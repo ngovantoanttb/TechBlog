@@ -293,7 +293,7 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
         <div class="flex items-center gap-4">
             <!-- Date display -->
             <div class="flex items-center gap-2">
-                <?php echo techjournal_get_svg( 'calendar', 'w-4 h-4 fill-current text-slate-400' ); ?>
+                <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 fill-current text-slate-400' ); ?>
                 <span><?php echo date_i18n('l, d F Y'); ?></span>
             </div>
             

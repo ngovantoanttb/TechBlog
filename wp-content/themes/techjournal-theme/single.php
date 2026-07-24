@@ -55,7 +55,7 @@ get_header(); ?>
                             <?php echo techjournal_get_svg( 'user', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?>
                         </span>
                         <span class="flex items-center gap-1">
-                            <?php echo techjournal_get_svg( 'calendar', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo get_the_date(); ?>
+                            <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo get_the_date(); ?>
                         </span>
                         <span class="flex items-center gap-1">
                             <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo $read_time; ?> phút đọc
@@ -227,26 +227,33 @@ get_header(); ?>
                         $rank = 1;
                         while ( $sidebar_query->have_posts() ) : $sidebar_query->the_post();
                         ?>
-                            <div class="flex flex-row md:flex-col lg:flex-row gap-3 md:gap-2.5 items-start group/item py-3.5 border-b border-slate-100/50 last:border-0">
-                                <a href="<?php the_permalink(); ?>" class="w-32 sm:w-36 md:w-full lg:w-20 aspect-[16/10] lg:aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                            <div class="flex gap-3 items-start group/item py-3.5 border-b border-slate-100/50 last:border-0">
+                                <a href="<?php the_permalink(); ?>" class="w-28 sm:w-32 md:w-24 lg:w-28 aspect-[16/10] md:aspect-[4/3] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
                                     <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-thumb', 'w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500' ); ?>
                                 </a>
                                 <div class="flex-grow min-w-0 w-full">
-                                    <h4 class="font-display text-xs sm:text-[12.5px] font-bold text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words">
+                                    <h4 class="font-display text-xs sm:text-[12.5px] md:text-[13px] font-bold md:font-medium text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words mb-1 md:mb-1.5">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </h4>
+                                    <!-- Mobile Excerpt -->
                                     <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 md:hidden leading-normal">
                                         <?php echo esc_html( wp_trim_words( get_the_excerpt(), 12, '...' ) ); ?>
                                     </p>
-                                    <div class="flex items-center gap-3 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider">
-                                        <span class="flex items-center gap-0.5">
-                                            <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
-                                            <?php echo get_the_date(); ?>
-                                        </span>
+                                    <!-- Mobile Meta -->
+                                    <div class="flex items-center flex-wrap gap-2 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider md:hidden">
+                                        <span>BY <span class="font-bold text-primary uppercase"><?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?></span></span>
                                         <span>•</span>
                                         <span class="flex items-center gap-0.5">
-                                            <?php echo techjournal_get_svg( 'eye', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
-                                            <?php echo techjournal_get_post_views( get_the_ID() ); ?> xem
+                                            <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                            <?php echo get_the_date(); ?>
+                                        </span>
+                                    </div>
+                                    <!-- Desktop Meta -->
+                                    <div class="hidden md:flex items-center flex-wrap gap-x-2 gap-y-1 text-[11px] text-slate-400 font-normal">
+                                        <span>BY <span class="font-bold text-primary uppercase"><?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?></span></span>
+                                        <span class="inline-flex items-center gap-1">
+                                            <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                            <span><?php echo get_the_date( 'd/m/Y' ); ?></span>
                                         </span>
                                     </div>
                                 </div>
@@ -281,17 +288,35 @@ get_header(); ?>
                     if ( $sidebar_latest->have_posts() ) :
                         while ( $sidebar_latest->have_posts() ) : $sidebar_latest->the_post();
                             ?>
-                            <div class="flex gap-2.5 items-center group py-2.5 border-b border-slate-100/50 last:border-0">
-                                <a href="<?php the_permalink(); ?>" class="w-16 sm:w-20 aspect-[16/9] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
-                                    <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-thumb', 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500' ); ?>
+                            <div class="flex gap-3 items-start group/item py-3.5 border-b border-slate-100/50 last:border-0">
+                                <a href="<?php the_permalink(); ?>" class="w-28 sm:w-32 md:w-24 lg:w-28 aspect-[16/10] md:aspect-[4/3] overflow-hidden shrink-0 bg-slate-100 shadow-sm block relative">
+                                    <?php echo techblog_render_post_thumbnail( get_the_ID(), 'techjournal-thumb', 'w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-500' ); ?>
                                 </a>
-                                <div class="flex-grow min-w-0">
-                                    <h4 class="font-display text-xs sm:text-[12px] font-bold text-slate-700 hover:text-primary transition-colors leading-snug break-words">
+                                <div class="flex-grow min-w-0 w-full">
+                                    <h4 class="font-display text-xs sm:text-[12.5px] md:text-[13px] font-bold md:font-medium text-slate-800 group-hover/item:text-primary transition-colors leading-snug break-words mb-1 md:mb-1.5">
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </h4>
-                                    <p class="text-[11px] sm:text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
-                                        <?php echo techjournal_get_svg( 'calendar', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?> <?php echo get_the_date(); ?>
+                                    <!-- Mobile Excerpt -->
+                                    <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 md:hidden leading-normal">
+                                        <?php echo esc_html( wp_trim_words( get_the_excerpt(), 12, '...' ) ); ?>
                                     </p>
+                                    <!-- Mobile Meta -->
+                                    <div class="flex items-center flex-wrap gap-2 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold uppercase tracking-wider md:hidden">
+                                        <span>BY <span class="font-bold text-primary uppercase"><?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?></span></span>
+                                        <span>•</span>
+                                        <span class="flex items-center gap-0.5">
+                                            <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                            <?php echo get_the_date(); ?>
+                                        </span>
+                                    </div>
+                                    <!-- Desktop Meta -->
+                                    <div class="hidden md:flex items-center flex-wrap gap-x-2 gap-y-1 text-[11px] text-slate-400 font-normal">
+                                        <span>BY <span class="font-bold text-primary uppercase"><?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?></span></span>
+                                        <span class="inline-flex items-center gap-1">
+                                            <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                            <span><?php echo get_the_date( 'd/m/Y' ); ?></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <?php
