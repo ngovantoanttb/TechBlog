@@ -41,3 +41,8 @@ Allow: /
 
 # XML Sitemap
 Sitemap: <?php echo esc_url($site_url . '/sitemap.xml'); ?>
+
+# LLM Text File (https://llmstxt.org)
+Allow: /llms.txt
+Allow: /llms-full.txt
+

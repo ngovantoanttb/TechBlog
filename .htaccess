@@ -1,9 +1,11 @@
-# --- 1. SITEMAP & ROBOTS REWRITE RULES ---
+# --- 1. SITEMAP, ROBOTS & LLMS REWRITE RULES ---
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 RewriteRule ^robots\.txt$ robots.php [L]
+RewriteRule ^llms\.txt$ llms.php [L]
+RewriteRule ^llms-full\.txt$ llms.php?full=1 [L]
 </IfModule>
 
 # --- 2. SECURITY HARDENING & FILE ACCESS PROTECTIONS ---
