@@ -45,6 +45,10 @@ if ( ! empty( $cats ) ) {
                 <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-500 fill-current' ); ?>
                 <?php echo get_the_date('d/m/Y'); ?>
             </span>
+            <?php if ( get_the_modified_time( 'U' ) > get_the_time( 'U' ) + 60 ) : ?>
+                <span>•</span>
+                <span>update <?php echo get_the_modified_date('d/m/Y'); ?></span>
+            <?php endif; ?>
             <span>•</span>
             <span class="flex items-center gap-1">
                 <?php echo techjournal_get_svg( 'comment', 'w-4 h-4 text-slate-500 fill-current' ); ?>

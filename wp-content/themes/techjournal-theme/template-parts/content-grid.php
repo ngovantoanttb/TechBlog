@@ -36,9 +36,15 @@ if ( ! empty( $cats ) ) {
         </h3>
         
         <!-- Date and Clock at the bottom -->
-        <div class="flex items-center gap-1.5 text-xs text-slate-500 font-medium mt-auto">
-            <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-500 fill-current' ); ?>
-            <span><?php echo get_the_date('d/m/Y'); ?></span>
+        <div class="flex items-center gap-2 text-xs text-slate-500 font-medium mt-auto flex-wrap">
+            <span class="flex items-center gap-1">
+                <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-500 fill-current' ); ?>
+                <span><?php echo get_the_date('d/m/Y'); ?></span>
+            </span>
+            <?php if ( get_the_modified_time( 'U' ) > get_the_time( 'U' ) + 60 ) : ?>
+                <span>•</span>
+                <span>update <?php echo get_the_modified_date('d/m/Y'); ?></span>
+            <?php endif; ?>
         </div>
     </div>
 </article>

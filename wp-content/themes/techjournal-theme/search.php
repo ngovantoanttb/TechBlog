@@ -108,8 +108,12 @@ $search_query = get_search_query();
                                                 <span>•</span>
                                                 <span class="flex items-center gap-0.5">
                                                     <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
-                                                    <?php echo get_the_date(); ?>
+                                                    <?php echo get_the_date( 'd/m/Y' ); ?>
                                                 </span>
+                                                <?php if ( get_the_modified_time( 'U' ) > get_the_time( 'U' ) + 60 ) : ?>
+                                                    <span>•</span>
+                                                    <span>update <?php echo get_the_modified_date( 'd/m/Y' ); ?></span>
+                                                <?php endif; ?>
                                             </div>
                                             <!-- Desktop Meta -->
                                             <div class="hidden md:flex items-center flex-wrap gap-x-2 gap-y-1 text-[11px] text-slate-400 font-normal">
@@ -118,6 +122,10 @@ $search_query = get_search_query();
                                                     <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                                                     <span><?php echo get_the_date( 'd/m/Y' ); ?></span>
                                                 </span>
+                                                <?php if ( get_the_modified_time( 'U' ) > get_the_time( 'U' ) + 60 ) : ?>
+                                                    <span>•</span>
+                                                    <span>update <?php echo get_the_modified_date( 'd/m/Y' ); ?></span>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
