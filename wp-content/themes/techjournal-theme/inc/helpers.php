@@ -87,12 +87,37 @@ function techjournal_track_post_view( $post_id ) {
         update_post_meta( $post_id, $count_key, $count );
     }
     
-    // Set transient cache value
-    $cache_key = 'techblog_views_' . $post_id;
-    set_transient( $cache_key, $count, HOUR_IN_SECONDS );
+    // Track device view stats (Mobile vs Desktop vs Tablet)
+    techblog_track_device_view();
     
     // Set cookie for 2 hours
     setcookie( $cookie_name, '1', time() + 7200, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+}
+
+function techblog_track_device_view() {
+    $user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
+    
+    $device = 'desktop';
+    if ( function_exists( 'wp_is_mobile' ) && wp_is_mobile() ) {
+        if ( preg_match( '/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i', $user_agent ) ) {
+            $device = 'tablet';
+        } else {
+            $device = 'mobile';
+        }
+    }
+    
+    $stats = get_option( 'techblog_device_views_stats', array(
+        'desktop' => 0,
+        'mobile'  => 0,
+        'tablet'  => 0,
+    ) );
+    
+    if ( ! isset( $stats[ $device ] ) ) {
+        $stats[ $device ] = 0;
+    }
+    
+    $stats[ $device ]++;
+    update_option( 'techblog_device_views_stats', $stats );
 }
 
 // Track views dynamically on single template redirect

@@ -72,8 +72,9 @@ require_once TECHJOURNAL_THEME_INC . '/media-optimization.php';
 // 11. Link Redirection, CSV Mapping & Sequential 3rd Tab Manager
 require_once TECHJOURNAL_THEME_INC . '/redirect-manager.php';
 
-// 12. Security Hardening & Anti-DevTools Protection
-require_once TECHJOURNAL_THEME_INC . '/security.php';
+// 13. Admin Content & Analytics Dashboard System
+require_once TECHJOURNAL_THEME_INC . '/admin-dashboard.php';
+
 
 
 
