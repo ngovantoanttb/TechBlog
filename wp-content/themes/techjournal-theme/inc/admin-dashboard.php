@@ -1062,22 +1062,70 @@ function techblog_render_analytics_dashboard_page() {
             transform: rotate(-90deg);
             transform-origin: 50% 50%;
         }
+        /* Premium Custom Styled Select Dropdowns & Inputs */
         #techblog-dashboard-root select {
-            background-color: #f1f5f9 !important;
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            background-color: #f8fafc !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 10px center !important;
+            background-size: 14px 14px !important;
             border: 1px solid #cbd5e1 !important;
             border-radius: 0.75rem !important;
-            color: #334155 !important;
-            height: 32px !important;
-            line-height: 30px !important;
-            padding: 0 10px !important;
-            box-shadow: none !important;
+            color: #1e293b !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            height: 34px !important;
+            padding: 0 30px 0 12px !important;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
             outline: none !important;
+            transition: all 0.2s ease !important;
+            cursor: pointer !important;
         }
+
+        #techblog-dashboard-root select:hover {
+            background-color: #ffffff !important;
+            border-color: #94a3b8 !important;
+        }
+
+        #techblog-dashboard-root select:focus {
+            border-color: #0284c7 !important;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15) !important;
+        }
+
+        /* Dark Mode Select Dropdowns */
         .dark #techblog-dashboard-root select {
             background-color: #1e293b !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E") !important;
             border-color: #334155 !important;
-            color: #cbd5e1 !important;
+            color: #f1f5f9 !important;
         }
+
+        .dark #techblog-dashboard-root select:hover {
+            background-color: #0f172a !important;
+            border-color: #475569 !important;
+        }
+
+        .dark #techblog-dashboard-root select option {
+            background-color: #0f172a !important;
+            color: #f1f5f9 !important;
+        }
+
+        /* Inputs & Search Boxes Reset */
+        #techblog-dashboard-root input[type="text"],
+        #techblog-dashboard-root input[type="search"] {
+            font-size: 12px !important;
+            color: #1e293b !important;
+            box-shadow: none !important;
+        }
+
+        .dark #techblog-dashboard-root input[type="text"],
+        .dark #techblog-dashboard-root input[type="search"] {
+            color: #f1f5f9 !important;
+        }
+
         #techblog-dashboard-root #input-search-posts,
         #techblog-dashboard-root #input-search-comments {
             background: transparent !important;
