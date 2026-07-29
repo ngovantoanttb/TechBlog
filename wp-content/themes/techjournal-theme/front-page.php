@@ -249,10 +249,16 @@ get_header(); ?>
                                                 <h4 class="font-display text-sm sm:text-[13px] font-black text-slate-700 group-hover:text-primary transition-colors leading-snug break-words">
                                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                                 </h4>
-                                                 <span class="text-[11px] sm:text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
-                                                     <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
-                                                     <?php echo get_the_date(); ?>
-                                                 </span>
+                                                 <div class="flex items-center flex-wrap gap-2 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold tracking-wider">
+                                                     <span class="flex items-center gap-0.5">
+                                                         <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                                         <?php echo get_the_date( 'd/m/Y' ); ?>
+                                                     </span>
+                                                     <?php if ( get_the_modified_time( 'U' ) > get_the_time( 'U' ) + 60 ) : ?>
+                                                         <span>•</span>
+                                                         <span>update <?php echo get_the_modified_date( 'd/m/Y' ); ?></span>
+                                                     <?php endif; ?>
+                                                 </div>
                                              </div>
                                          </div>
                                      </div>
@@ -265,10 +271,16 @@ get_header(); ?>
                                              <h4 class="font-display text-xs sm:text-[12px] font-bold text-slate-700 group-hover:text-primary transition-colors leading-snug break-words">
                                                  <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                              </h4>
-                                              <span class="text-[11px] sm:text-[9px] text-slate-400 mt-1 font-bold uppercase tracking-wider flex items-center gap-1">
-                                                  <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
-                                                  <?php echo get_the_date(); ?>
-                                              </span>
+                                              <div class="flex items-center flex-wrap gap-2 text-[11px] sm:text-[9px] text-slate-400 mt-1.5 font-bold tracking-wider">
+                                                  <span class="flex items-center gap-0.5">
+                                                      <?php echo techjournal_get_svg( 'clock', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                                      <?php echo get_the_date( 'd/m/Y' ); ?>
+                                                  </span>
+                                                  <?php if ( get_the_modified_time( 'U' ) > get_the_time( 'U' ) + 60 ) : ?>
+                                                      <span>•</span>
+                                                      <span>update <?php echo get_the_modified_date( 'd/m/Y' ); ?></span>
+                                                  <?php endif; ?>
+                                              </div>
                                          </div>
                                      </div>
                                  <?php 
