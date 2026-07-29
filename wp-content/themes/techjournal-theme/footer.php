@@ -348,10 +348,29 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
 
         btn.addEventListener("click", function (e) {
           e.preventDefault();
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
+          const duration = 800; // 800ms
+          const startPosition = window.pageYOffset || document.documentElement.scrollTop;
+          if (startPosition === 0) return;
+          const startTime = performance.now();
+
+          // easeOutCubic: Vọt lên nhanh ngay lập tức khi ấn, và chậm dần êm ái khi đến gần đỉnh
+          function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+          }
+
+          function scrollStep(timestamp) {
+            const timeElapsed = timestamp - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            const ease = easeOutCubic(progress);
+
+            window.scrollTo(0, startPosition * (1 - ease));
+
+            if (progress < 1) {
+              requestAnimationFrame(scrollStep);
+            }
+          }
+
+          requestAnimationFrame(scrollStep);
         });
       }
     });
