@@ -41,16 +41,17 @@
         Thông báo tạm dừng hoạt động
     </h1>
 
-    <p class="text-slate-600 text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
-        <?php echo esc_html( get_option( 'techblog_suspended_message', 'Trang web này hiện đã tạm thời dừng hoạt động theo yêu cầu của ban quản trị.' ) ); ?>
-    </p>
-
-    <div class="pt-2">
+    <div class="">
         <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-slate-100 text-slate-800">
             <span class="w-2 h-2 mr-2 bg-slate-500 rounded-full"></span>
             Tạm đóng liên kết
         </span>
     </div>
+
+    <p class="pt-4 text-slate-600 text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
+        <?php echo esc_html( get_option( 'techblog_suspended_message', 'Trang web này hiện đã tạm thời dừng hoạt động theo yêu cầu của ban quản trị.' ) ); ?>
+    </p>
+
 
     <p class="text-slate-400 text-xs mt-16 uppercase tracking-wider font-bold">
         &copy; <?php echo date('Y'); ?> <?php bloginfo( 'name' ); ?>

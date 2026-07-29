@@ -64,17 +64,18 @@
     <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4 tracking-tight">
         Hệ thống đang bảo trì
     </h1>
-
-    <p class="text-slate-600 text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
-        <?php echo esc_html( get_option( 'techblog_maintenance_message', 'Hệ thống đang được nâng cấp để mang lại trải nghiệm tốt nhất cho bạn. Chúng tôi sẽ quay trở lại sớm!' ) ); ?>
-    </p>
-
-    <div class="pt-2">
+    
+    <div class="">
         <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold bg-yellow-100 text-yellow-800">
             <span class="w-2 h-2 mr-2 bg-yellow-500 rounded-full animate-pulse"></span>
             Đang nâng cấp hệ thống
         </span>
     </div>
+
+    <p class="pt-4 text-slate-600 text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
+        <?php echo esc_html( get_option( 'techblog_maintenance_message', 'Hệ thống đang được nâng cấp để mang lại trải nghiệm tốt nhất cho bạn. Chúng tôi sẽ quay trở lại sớm!' ) ); ?>
+    </p>
+
 
     <p class="text-slate-400 text-xs mt-16 uppercase tracking-wider font-bold">
         &copy; <?php echo date('Y'); ?> <?php bloginfo( 'name' ); ?>
