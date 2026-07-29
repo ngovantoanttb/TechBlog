@@ -218,7 +218,7 @@ get_header(); ?>
             </div>
 
             <!-- Right Column: Sidebar (Unified vertically without gaps) -->
-            <aside class="col-span-1 md:col-span-4 grid grid-cols-1 gap-10 min-w-0 p-5 md:p-0">
+            <aside class="col-span-1 md:col-span-4 grid grid-cols-1 gap-10 min-w-0">
                 
                 <!-- Sidebar Widget 1: Ranked Popular Posts Widget (Photo 5 Style) -->
                 <div class="">

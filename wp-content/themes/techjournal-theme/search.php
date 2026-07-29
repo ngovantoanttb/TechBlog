@@ -69,7 +69,7 @@ $search_query = get_search_query();
             </div>
             
             <!-- Right: TechBlog Sidebar (lg:col-span-4 to align with homepage) -->
-            <aside class="col-span-1 md:col-span-4 grid grid-cols-1 gap-10 min-w-0 p-5 md:p-0">
+            <aside class="col-span-1 md:col-span-4 grid grid-cols-1 gap-10 min-w-0">
 
                 <!-- Sidebar: BÀI VIẾT NỔI BẬT (Pinned/Sticky system) -->
                 <div class=" ">

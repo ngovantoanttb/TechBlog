@@ -303,7 +303,7 @@ get_header(); ?>
         </div>
         
         <!-- Right Sidebar (TechBlog Premium Sidebar Style) -->
-        <aside class="col-span-1 md:col-span-4 grid grid-cols-1 gap-10 min-w-0 p-5 md:p-0">
+        <aside class="col-span-1 md:col-span-4 grid grid-cols-1 gap-10 min-w-0">
 
             <!-- Sidebar: BÀI VIẾT NỔI BẬT (Featured/Pinned Posts - Strictly Pinned/Sticky system) -->
             <?php
