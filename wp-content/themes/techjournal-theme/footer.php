@@ -344,33 +344,17 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
           } else {
             btn.style.display = "none";
           }
-        });
+        }, { passive: true });
 
-        btn.addEventListener("click", function () {
-          const duration = 800; // 800ms for a premium, gentle slide-up
-          const startPosition = window.pageYOffset || document.documentElement.scrollTop;
-          const startTime = performance.now();
-
-          function easeOutQuad(t) {
-            return t * (2 - t);
-          }
-
-          function scrollStep(timestamp) {
-            const timeElapsed = timestamp - startTime;
-            const progress = Math.min(timeElapsed / duration, 1);
-            const ease = easeOutQuad(progress);
-
-            window.scrollTo(0, startPosition * (1 - ease));
-
-            if (progress < 1) {
-              requestAnimationFrame(scrollStep);
-            }
-          }
-
-          requestAnimationFrame(scrollStep);
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
         });
       }
     });
-    </script>
+</script>
 </body>
 </html>
