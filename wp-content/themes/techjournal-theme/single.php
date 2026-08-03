@@ -16,19 +16,7 @@ get_header(); ?>
             <?php
             if ( have_posts() ) :
                 while ( have_posts() ) : the_post();
-                    $cats = get_the_category();
-                    $category_to_show = null;
-                    if ( ! empty( $cats ) ) {
-                        foreach($cats as $c) {
-                            if($c->term_id != get_option('default_category')) {
-                                $category_to_show = $c;
-                                break;
-                            }
-                        }
-                        if (!$category_to_show) {
-                            $category_to_show = $cats[0];
-                        }
-                    }
+                    $category_to_show = techblog_get_post_primary_category();
                     $read_time = techjournal_calculate_read_time( get_the_content() );
                     $views = techjournal_get_post_views( get_the_ID() );
                     ?>
@@ -38,6 +26,13 @@ get_header(); ?>
                         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="hover:text-primary transition-all">Trang Chủ</a>
                         <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                         <?php if ( $category_to_show ) : ?>
+                            <?php if ( $category_to_show->parent != 0 ) : 
+                                $parent_cat_obj = get_category( $category_to_show->parent );
+                                if ( $parent_cat_obj && ! is_wp_error( $parent_cat_obj ) ) : ?>
+                                    <a href="<?php echo esc_url( get_category_link( $parent_cat_obj->term_id ) ); ?>" class="hover:text-primary transition-all"><?php echo esc_html( $parent_cat_obj->name ); ?></a>
+                                    <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
                             <a href="<?php echo esc_url( get_category_link( $category_to_show->term_id ) ); ?>" class="hover:text-primary transition-all"><?php echo esc_html( $category_to_show->name ); ?></a>
                             <?php echo techjournal_get_svg( 'chevron-right', 'w-3.5 h-3.5 text-slate-400 fill-current' ); ?>
                         <?php endif; ?>

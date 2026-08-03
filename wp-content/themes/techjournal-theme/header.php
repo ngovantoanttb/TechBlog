@@ -467,9 +467,9 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
                 
                 $current_cat_id = 0;
                 if ( is_single() ) {
-                    $post_cats = get_the_category();
-                    if ( ! empty( $post_cats ) ) {
-                        $current_cat_id = $post_cats[0]->term_id;
+                    $primary_cat = techblog_get_post_primary_category();
+                    if ( $primary_cat ) {
+                        $current_cat_id = $primary_cat->term_id;
                     }
                 }
                 

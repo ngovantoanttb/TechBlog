@@ -340,27 +340,57 @@ function techblog_render_post_thumbnail( $post = null, $size = 'techjournal-card
 }
 
 /**
- * 9. Helper to get primary display category name for a post
+ * 9. Get primary category WP_Term object for a post (Prioritizes child categories with parent != 0)
+ *
+ * @param int|WP_Post|null $post Post ID or object.
+ * @return WP_Term|null Category object or null.
+ */
+function techblog_get_post_primary_category( $post = null ) {
+    $post_id = $post ? ( is_object( $post ) ? $post->ID : intval( $post ) ) : get_the_ID();
+    $cats    = get_the_category( $post_id );
+    
+    if ( empty( $cats ) ) {
+        return null;
+    }
+    
+    $default_cat_id = get_option( 'default_category' );
+    $child_category  = null;
+    $parent_category = null;
+
+    foreach ( $cats as $c ) {
+        if ( $c->term_id == $default_cat_id ) {
+            continue;
+        }
+        // If child category (parent > 0), prioritize it immediately
+        if ( $c->parent != 0 ) {
+            $child_category = $c;
+            break;
+        }
+        if ( ! $parent_category ) {
+            $parent_category = $c;
+        }
+    }
+
+    if ( $child_category ) {
+        return $child_category;
+    }
+
+    if ( $parent_category ) {
+        return $parent_category;
+    }
+
+    return isset( $cats[0] ) ? $cats[0] : null;
+}
+
+/**
+ * 10. Helper to get primary display category name for a post
  *
  * @param int|WP_Post|null $post Post ID or object.
  * @return string Category name.
  */
 function techblog_get_post_category_name( $post = null ) {
-    $post_id = $post ? ( is_object( $post ) ? $post->ID : intval( $post ) ) : get_the_ID();
-    $cats    = get_the_category( $post_id );
-    $category_to_show = null;
-    if ( ! empty( $cats ) ) {
-        foreach ( $cats as $c ) {
-            if ( $c->term_id != get_option( 'default_category' ) ) {
-                $category_to_show = $c;
-                break;
-            }
-        }
-        if ( ! $category_to_show ) {
-            $category_to_show = $cats[0];
-        }
-    }
-    return $category_to_show ? $category_to_show->name : 'Tin tức';
+    $cat = techblog_get_post_primary_category( $post );
+    return $cat ? $cat->name : 'Tin tức';
 }
 
 

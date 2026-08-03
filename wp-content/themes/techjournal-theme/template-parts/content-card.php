@@ -6,19 +6,7 @@
  * @since 1.0.0
  */
 
-$cats = get_the_category();
-$category_to_show = null;
-if ( ! empty( $cats ) ) {
-    foreach($cats as $c) {
-        if($c->term_id != get_option('default_category')) {
-            $category_to_show = $c;
-            break;
-        }
-    }
-    if (!$category_to_show) {
-        $category_to_show = $cats[0];
-    }
-}
+$category_to_show = techblog_get_post_primary_category();
 ?>
 <article class="group flex flex-col sm:flex-row gap-6 cursor-pointer transition-all duration-300">
     <!-- Image container on Left -->

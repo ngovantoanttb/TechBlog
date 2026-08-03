@@ -72,8 +72,7 @@ get_header(); ?>
                             <div class="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" id="hero-slider-track" style="width: <?php echo $track_width; ?>%; transform: translateX(0%);">
                                 <?php 
                                 foreach ( $slider_posts as $idx => $sp ) : 
-                                    $sp_cats = get_the_category($sp->ID);
-                                    $sp_cat_name = !empty($sp_cats) ? $sp_cats[0]->name : 'Tin tức';
+                                    $sp_cat_name = techblog_get_post_category_name( $sp->ID );
                                 ?>
                                     <div class="h-full shrink-0 relative hero-slide" style="width: <?php echo $slide_width; ?>%;" data-slide-index="<?php echo $idx; ?>">
                                         <a href="<?php echo get_permalink($sp->ID); ?>" class="absolute inset-0 block">
@@ -284,7 +283,7 @@ get_header(); ?>
                                          </div>
                                      </div>
                                  <?php 
-                                 endif;
+                                 endif; 
                                  $p_idx++;
                              endwhile;
                              wp_reset_postdata();
