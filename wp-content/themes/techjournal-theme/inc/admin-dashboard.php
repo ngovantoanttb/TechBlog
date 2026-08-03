@@ -1172,7 +1172,7 @@ function techblog_render_analytics_dashboard_page() {
         }
     </style>
 
-    <div id="techblog-dashboard-root" class="wrap font-sans antialiased text-slate-800 dark:text-slate-100 min-h-screen pr-4 pt-2">
+    <div id="techblog-dashboard-root" class="wrap font-sans antialiased text-slate-800 dark:text-slate-100 min-h-screen pt-2">
         
         <!-- PDF EXECUTIVE REPORT HEADER BANNER (VISIBLE ONLY IN PDF/PRINT) -->
         <div id="pdf-report-header" class="hidden mb-6">
