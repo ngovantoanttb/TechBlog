@@ -138,7 +138,7 @@ function techblog_get_3rd_link( $target_url = '' ) {
 function techblog_register_redirect_admin_menu() {
     add_menu_page(
         'Quản lý Link CSV',
-        'Link Chuyển Hướng',
+        'Tiếp thị liên kết',
         'manage_options',
         'techblog-redirect-manager',
         'techblog_render_redirect_admin_page',
