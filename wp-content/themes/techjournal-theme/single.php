@@ -46,7 +46,7 @@ get_header(); ?>
 
                     <!-- Article Meta -->
                     <div class="flex flex-wrap items-center gap-y-2.5 gap-x-4 pb-5 border-b border-slate-100 text-xs sm:text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-6">
-                        <span class="flex items-center gap-1">
+                        <span class="flex items-center gap-1 text-primary">
                             <?php echo techjournal_get_svg( 'user', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo (strcasecmp(get_the_author(), 'admin') === 0) ? 'Admin TechBlog' : get_the_author(); ?>
                         </span>
                         <span class="flex items-center gap-1">
@@ -56,12 +56,12 @@ get_header(); ?>
                             <span>•</span>
                             <span>update <?php echo get_the_modified_date( 'd/m/Y' ); ?></span>
                         <?php endif; ?>
-                        <span class="flex items-center gap-1">
+                        <!-- <span class="flex items-center gap-1">
                             <?php echo techjournal_get_svg( 'clock', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo $read_time; ?> phút đọc
                         </span>
                         <span class="flex items-center gap-1">
                             <?php echo techjournal_get_svg( 'eye', 'w-4 h-4 text-slate-400 fill-current' ); ?> <?php echo $views; ?> lượt xem
-                        </span>
+                        </span> -->
                     </div>
 
                     <!-- Featured Thumbnail - Flattened & Optimized -->
@@ -101,6 +101,21 @@ get_header(); ?>
                         echo apply_filters( 'the_content', $content );
                         ?>
                     </div>
+
+                    <!-- Post Tags Section -->
+                    <?php
+                    $post_tags = get_the_tags();
+                    if ( ! empty( $post_tags ) && ! is_wp_error( $post_tags ) ) :
+                    ?>
+                        <div class="mt-8 flex flex-wrap items-center gap-2 text-sm">
+                            <span class="font-bold text-slate-800 text-sm sm:text-base mr-1">Tags:</span>
+                            <?php foreach ( $post_tags as $tag ) : ?>
+                                <a href="<?php echo esc_url( get_tag_link( $tag->term_id ) ); ?>" class="px-3 py-1 bg-slate-100 hover:bg-red-600 text-slate-600 hover:text-white text-xs sm:text-[13px] font-semibold transition-all duration-200 active:scale-95 inline-block">
+                                    <?php echo esc_html( $tag->name ); ?>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
 
                     <!-- Social Share CTA (Minimalistic TechBlog style - Left Aligned) -->
                     <div class="mt-10 py-5 border-y border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
