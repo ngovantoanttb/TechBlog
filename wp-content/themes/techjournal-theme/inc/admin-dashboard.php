@@ -1021,7 +1021,25 @@ function techblog_render_analytics_dashboard_page() {
     $ajax_nonce = wp_create_nonce( 'techblog_dashboard_nonce' );
     ?>
     <!-- CDN Assets for Dashboard -->
-    <link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() . '/css/main.min.css' ); ?>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            900: '#0c4a6e'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>

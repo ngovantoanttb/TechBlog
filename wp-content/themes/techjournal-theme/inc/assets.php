@@ -23,15 +23,17 @@ function techjournal_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'techjournal_scripts' );
 
-// 2. Preconnect and DNS prefetch for Google Fonts for ultra fast loading
+// 2. Preconnect and DNS prefetch for Google Fonts and Tailwind CDN for ultra fast loading
 function techjournal_resource_hints( $hints, $relation_type ) {
     if ( 'preconnect' === $relation_type ) {
         $hints[] = 'https://fonts.googleapis.com';
         $hints[] = 'https://fonts.gstatic.com';
+        $hints[] = 'https://cdn.tailwindcss.com';
     }
     if ( 'dns-prefetch' === $relation_type ) {
         $hints[] = 'fonts.googleapis.com';
         $hints[] = 'fonts.gstatic.com';
+        $hints[] = 'cdn.tailwindcss.com';
     }
     return $hints;
 }
