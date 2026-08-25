@@ -6,28 +6,32 @@
  * @since 1.0.0
  */
 
-// 1. Load Stylesheet & Asset Setup (With Dynamic Cache-Busting versioning)
+// 1. Load Stylesheets & Asset Setup (With Dynamic Cache-Busting versioning)
 function techjournal_scripts() {
     $theme_dir = get_template_directory();
-    $style_path = $theme_dir . '/style.css';
-    $version = file_exists( $style_path ) ? filemtime( $style_path ) : '1.0.0';
+    $theme_uri = get_template_directory_uri();
+    
+    // Main compiled Tailwind & custom styles
+    $main_css_path = $theme_dir . '/css/main.min.css';
+    $main_version  = file_exists( $main_css_path ) ? filemtime( $main_css_path ) : '1.0.0';
+    wp_enqueue_style( 'techjournal-main', $theme_uri . '/css/main.min.css', array(), $main_version );
 
-    // Primary main theme styles
-    wp_enqueue_style( 'techjournal-style', get_stylesheet_uri(), array(), $version );
+    // Primary main theme style.css
+    $style_path = $theme_dir . '/style.css';
+    $style_version = file_exists( $style_path ) ? filemtime( $style_path ) : '1.0.0';
+    wp_enqueue_style( 'techjournal-style', get_stylesheet_uri(), array('techjournal-main'), $style_version );
 }
 add_action( 'wp_enqueue_scripts', 'techjournal_scripts' );
 
-// 2. Preconnect and DNS prefetch for Google Fonts and Tailwind CDN for ultra fast loading
+// 2. Preconnect and DNS prefetch for Google Fonts for ultra fast loading
 function techjournal_resource_hints( $hints, $relation_type ) {
     if ( 'preconnect' === $relation_type ) {
         $hints[] = 'https://fonts.googleapis.com';
         $hints[] = 'https://fonts.gstatic.com';
-        $hints[] = 'https://cdn.tailwindcss.com';
     }
     if ( 'dns-prefetch' === $relation_type ) {
         $hints[] = 'fonts.googleapis.com';
         $hints[] = 'fonts.gstatic.com';
-        $hints[] = 'cdn.tailwindcss.com';
     }
     return $hints;
 }

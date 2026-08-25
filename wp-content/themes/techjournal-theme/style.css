@@ -160,28 +160,25 @@ figcaption,
     clear: both;
 }
 
-.back-to-top{
+.back-to-top {
     position: fixed;
     right: 24px;
     bottom: 24px;
-    width: 50px;
-    height: 50px;
-
-    background-color: var(--color-accent);
-
-    color:#fff;
-    border:none;
-    border-radius:50%;
-    cursor:pointer;
-
-    display:none;
-    align-items:center;
-    justify-content:center;
-
-    z-index:999;
-    transition:.3s;
+    width: 48px;
+    height: 48px;
+    background-color: #2563eb !important;
+    color: #fff;
+    border: none;
+    border-radius: 0 !important;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    transition: all 0.3s ease;
 }
 
-.back-to-top:hover{
-    transform:translateY(-4px);
+.back-to-top:hover {
+    background-color: #1d4ed8 !important;
+    transform: translateY(-4px);
 }

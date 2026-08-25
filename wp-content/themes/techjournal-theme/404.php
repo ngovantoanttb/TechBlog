@@ -18,36 +18,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#2563eb', // Royal Blue
-                        background: '#f8fafc',
-                        surface: '#ffffff',
-                        'on-surface': '#0f172a',
-                        'on-surface-variant': '#475569'
-                    },
-                    fontFamily: {
-                        sans: ['"Be Vietnam Pro"', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer base {
-            html, body {
-                @apply bg-background text-on-surface font-sans antialiased selection:bg-primary selection:text-white;
-                overflow-x: hidden;
-                width: 100%;
-            }
-        }
-    </style>
-    
     <?php wp_head(); ?>
 </head>
 <body <?php body_class( 'min-h-screen flex items-center justify-center bg-white' ); ?>>

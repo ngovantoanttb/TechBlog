@@ -329,8 +329,8 @@ $posts_page_url = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '
     });
 </script>
 
-<!-- Back to Top Button (Floating Zero Border-Radius Red Theme with Font Awesome SVG) -->
-<button class="back-to-top fixed bottom-10 lg:bottom-4 right-6 z-50 bg-primary text-white w-12 h-12 flex items-center justify-center rounded-none shadow-md hover:bg-primary/80 transition-all cursor-pointer duration-300 active:scale-95" id="backToTop" style="display: none;" aria-label="Quay lại đầu trang">
+<!-- Back to Top Button (Floating Square Primary Blue Theme) -->
+<button class="back-to-top fixed bottom-10 lg:bottom-4 right-6 z-50 bg-primary text-white w-12 h-12 flex items-center justify-center rounded-none shadow-md hover:bg-blue-700 transition-all cursor-pointer duration-300 active:scale-95" id="backToTop" style="display: none;" aria-label="Quay lại đầu trang">
     <?php echo techjournal_get_svg( 'back-to-top', 'w-5 h-5 fill-white' ); ?>
 </button>
 
