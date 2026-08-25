@@ -199,7 +199,7 @@ function techblog_render_splash_page() {
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="active_campaign">Sự kiện hoạt động ngoài frontend</label></th>
+                            <th scope="row"><label for="active_campaign">Sự kiện hoạt động</label></th>
                             <td>
                                 <select id="active_campaign" name="active_campaign" style="min-width: 200px;">
                                     <?php foreach ( $campaigns as $id => $c ) : ?>
@@ -215,9 +215,9 @@ function techblog_render_splash_page() {
                             <th scope="row"><label for="frequency">Tần suất hiển thị</label></th>
                             <td>
                                 <select id="frequency" name="frequency">
-                                    <option value="always" <?php selected( $frequency, 'always' ); ?>>Luôn hiển thị (Mỗi lần tải lại trang)</option>
-                                    <option value="session" <?php selected( $frequency, 'session' ); ?>>Một lần mỗi phiên (Session Storage - Khuyên dùng)</option>
-                                    <option value="day" <?php selected( $frequency, 'day' ); ?>>Một lần mỗi ngày (Local Storage - 24 giờ)</option>
+                                    <option value="always" <?php selected( $frequency, 'always' ); ?>>Luôn hiển thị (Mỗi lần tải lại trang / F5)</option>
+                                    <option value="session" <?php selected( $frequency, 'session' ); ?>>Một lần mỗi phiên (Session Storage & Cookie - Khuyên dùng)</option>
+                                    <option value="day" <?php selected( $frequency, 'day' ); ?>>Một lần mỗi 24 giờ (Local Storage & Cookie 24h)</option>
                                 </select>
                             </td>
                         </tr>
@@ -460,13 +460,25 @@ function techblog_render_welcome_splash() {
     if ( ! isset( $campaigns[ $active_id ] ) ) {
         return;
     }
+
+    $frequency = get_option( 'techblog_splash_frequency', 'session' );
+
+    // 1st Line of Defense: Server-Side Cookie Check on direct requests
+    if ( 'session' === $frequency ) {
+        if ( isset( $_COOKIE['techblog_splash_session_' . $active_id] ) || isset( $_COOKIE['techblog_splash_session'] ) ) {
+            return;
+        }
+    } elseif ( 'day' === $frequency ) {
+        if ( isset( $_COOKIE['techblog_splash_24h_' . $active_id] ) || isset( $_COOKIE['techblog_splash_24h'] ) ) {
+            return;
+        }
+    }
     
     $camp         = $campaigns[ $active_id ];
     $custom_html  = isset( $camp['custom_html'] ) ? trim( stripslashes( wp_unslash( $camp['custom_html'] ) ) ) : '';
     $duration     = isset( $camp['duration'] ) ? intval( $camp['duration'] ) : 5;
     $bg_color     = isset( $camp['bg_color'] ) ? $camp['bg_color'] : '#0f172a';
     $animation    = isset( $camp['animation'] ) ? $camp['animation'] : 'fade';
-    $frequency    = get_option( 'techblog_splash_frequency', 'session' );
     
     // Default layout fallbacks
     $logo         = isset( $camp['logo'] ) ? $camp['logo'] : '';
@@ -652,28 +664,48 @@ function techblog_render_welcome_splash() {
         }
     </style>
 
-    <!-- Prevent Flash of Unstyled Content (FOUC) via early JS execution -->
+    <!-- 2nd Line of Defense: Early JS check before overlay renders to prevent FOUC / flicker (especially on cached pages) -->
     <script type="text/javascript">
         (function() {
             var frequency = <?php echo json_encode( $frequency ); ?>;
+            var campaignId = <?php echo json_encode( $active_id ); ?>;
             var shouldShow = true;
             
-            if (frequency === 'session') {
-                if (sessionStorage.getItem('techblog_splash_shown')) {
-                    shouldShow = false;
-                }
-            } else if (frequency === 'day') {
-                var lastShown = localStorage.getItem('techblog_splash_shown_date');
-                if (lastShown) {
-                    var today = new Date().toDateString();
-                    if (lastShown === today) {
+            try {
+                if (frequency === 'session') {
+                    var sess1 = sessionStorage.getItem('techblog_splash_shown_' + campaignId);
+                    var sess2 = sessionStorage.getItem('techblog_splash_shown');
+                    var ck1   = document.cookie.indexOf('techblog_splash_session_' + encodeURIComponent(campaignId) + '=1') !== -1;
+                    var ck2   = document.cookie.indexOf('techblog_splash_session=1') !== -1;
+
+                    if (sess1 || sess2 || ck1 || ck2) {
+                        shouldShow = false;
+                    }
+                } else if (frequency === 'day') {
+                    var lastTime = localStorage.getItem('techblog_splash_time_' + campaignId) || localStorage.getItem('techblog_splash_shown_time');
+                    if (lastTime) {
+                        var elapsed = Date.now() - parseInt(lastTime, 10);
+                        if (!isNaN(elapsed) && elapsed < 24 * 60 * 60 * 1000) {
+                            shouldShow = false;
+                        }
+                    }
+                    var ckDay1 = document.cookie.indexOf('techblog_splash_24h_' + encodeURIComponent(campaignId) + '=1') !== -1;
+                    var ckDay2 = document.cookie.indexOf('techblog_splash_24h=1') !== -1;
+                    if (ckDay1 || ckDay2) {
                         shouldShow = false;
                     }
                 }
+            } catch (e) {
+                // Ignore storage errors in restricted contexts
             }
 
+            window.__techblogSplashShouldShow = shouldShow;
+
             if (!shouldShow) {
-                document.write('<style type="text/css">#techblog-splash-overlay { display: none !important; }</style>');
+                var hideStyle = document.createElement('style');
+                hideStyle.id = 'techblog-splash-hide-style';
+                hideStyle.textContent = '#techblog-splash-overlay { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }';
+                (document.head || document.documentElement).appendChild(hideStyle);
             }
         })();
     </script>
@@ -718,95 +750,130 @@ function techblog_render_welcome_splash() {
         </div>
     </div>
 
-    <!-- Script to manage showing, counting down, and exit animations -->
+    <!-- Script to manage showing, counting down, exit animations and persistent storage -->
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            var overlay = document.getElementById('techblog-splash-overlay');
-            var content = document.getElementById('techblog-splash-content');
-            var closeBtn = document.getElementById('techblog-splash-btn');
-            var progressBar = document.getElementById('techblog-splash-progress-bar');
-            
-            if (!overlay || window.getComputedStyle(overlay).display === 'none') {
-                return;
-            }
-
-            var duration = <?php echo intval( $duration ); ?>;
+        (function() {
             var frequency = <?php echo json_encode( $frequency ); ?>;
+            var campaignId = <?php echo json_encode( $active_id ); ?>;
+            var duration = <?php echo intval( $duration ); ?>;
             var animationType = <?php echo json_encode( $animation ); ?>;
 
-            // Set storage tags immediately on display
-            if (frequency === 'session') {
-                sessionStorage.setItem('techblog_splash_shown', 'true');
-            } else if (frequency === 'day') {
-                localStorage.setItem('techblog_splash_shown_date', new Date().toDateString());
+            // Helper to record that splash was shown
+            function recordSplashShown() {
+                try {
+                    if (frequency === 'session') {
+                        sessionStorage.setItem('techblog_splash_shown_' + campaignId, '1');
+                        sessionStorage.setItem('techblog_splash_shown', '1');
+                        document.cookie = 'techblog_splash_session_' + encodeURIComponent(campaignId) + '=1; path=/; SameSite=Lax';
+                        document.cookie = 'techblog_splash_session=1; path=/; SameSite=Lax';
+                    } else if (frequency === 'day') {
+                        var nowStr = Date.now().toString();
+                        localStorage.setItem('techblog_splash_time_' + campaignId, nowStr);
+                        localStorage.setItem('techblog_splash_shown_time', nowStr);
+                        localStorage.setItem('techblog_splash_shown_date', new Date().toDateString());
+                        var maxAge = 24 * 60 * 60; // 24 hours in seconds
+                        document.cookie = 'techblog_splash_24h_' + encodeURIComponent(campaignId) + '=1; max-age=' + maxAge + '; path=/; SameSite=Lax';
+                        document.cookie = 'techblog_splash_24h=1; max-age=' + maxAge + '; path=/; SameSite=Lax';
+                    }
+                } catch (e) {}
             }
 
-            // Lock scroll
-            document.documentElement.style.overflow = 'hidden';
-            document.body.style.overflow = 'hidden';
+            function initSplash() {
+                var overlay = document.getElementById('techblog-splash-overlay');
+                if (!overlay) return;
 
-            // Phase 1: pop-in the content smoothly
-            setTimeout(function() {
-                content.classList.add('active');
-                if (progressBar) {
-                    progressBar.style.transform = 'scaleX(0)';
-                }
-            }, 100);
-
-            // Close function
-            function closeSplash() {
-                var exitClass = 'exit-fade';
-                if (animationType === 'slide-up') {
-                    exitClass = 'exit-slide-up';
-                } else if (animationType === 'zoom-out') {
-                    exitClass = 'exit-zoom-out';
-                }
-
-                overlay.classList.add(exitClass);
-
-                // Release scrolling locks
-                document.documentElement.style.overflow = '';
-                document.body.style.overflow = '';
-
-                // Clean up DOM after transition finishes
-                setTimeout(function() {
+                // If early check decided not to show, remove immediately from DOM
+                if (window.__techblogSplashShouldShow === false) {
                     overlay.style.display = 'none';
-                    overlay.remove();
-                }, 600);
-            }
+                    if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+                    return;
+                }
 
-            // Bind click to manually-configured close elements inside custom HTML or default button
-            var closeElements = overlay.querySelectorAll('.techblog-splash-close');
-            closeElements.forEach(function(el) {
-                el.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if (autoCloseTimer) clearTimeout(autoCloseTimer);
-                    closeSplash();
+                // Record immediately on display so any rapid page refresh or navigation respects frequency
+                recordSplashShown();
+
+                var content = document.getElementById('techblog-splash-content');
+                var closeBtn = document.getElementById('techblog-splash-btn');
+                var progressBar = document.getElementById('techblog-splash-progress-bar');
+                var autoCloseTimer = null;
+
+                // Lock scroll while splash is actively displayed
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+
+                // Phase 1: pop-in content smoothly
+                setTimeout(function() {
+                    if (content) content.classList.add('active');
+                    if (progressBar) {
+                        progressBar.style.transform = 'scaleX(0)';
+                    }
+                }, 50);
+
+                // Close function
+                function closeSplash() {
+                    recordSplashShown();
+                    if (autoCloseTimer) {
+                        clearTimeout(autoCloseTimer);
+                        autoCloseTimer = null;
+                    }
+
+                    var exitClass = 'exit-fade';
+                    if (animationType === 'slide-up') {
+                        exitClass = 'exit-slide-up';
+                    } else if (animationType === 'zoom-out') {
+                        exitClass = 'exit-zoom-out';
+                    }
+
+                    overlay.classList.add(exitClass);
+
+                    // Unlock scrolling locks
+                    document.documentElement.style.overflow = '';
+                    document.body.style.overflow = '';
+
+                    // Clean up DOM after transition finishes
+                    setTimeout(function() {
+                        if (overlay && overlay.parentNode) {
+                            overlay.style.display = 'none';
+                            overlay.parentNode.removeChild(overlay);
+                        }
+                    }, 600);
+                }
+
+                // Bind click to manually-configured close elements inside custom HTML or default button
+                var closeElements = overlay.querySelectorAll('.techblog-splash-close');
+                closeElements.forEach(function(el) {
+                    el.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        closeSplash();
+                    });
                 });
-            });
 
-            if (closeBtn) {
-                closeBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if (autoCloseTimer) clearTimeout(autoCloseTimer);
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        closeSplash();
+                    });
+                }
+
+                // Support global JS action for custom HTML script controls
+                window.techblogCloseSplash = function() {
                     closeSplash();
-                });
+                };
+
+                // Auto close after duration
+                if (duration > 0) {
+                    autoCloseTimer = setTimeout(function() {
+                        closeSplash();
+                    }, duration * 1000);
+                }
             }
 
-            // Support global JS action for custom HTML script controls
-            window.techblogCloseSplash = function() {
-                if (autoCloseTimer) clearTimeout(autoCloseTimer);
-                closeSplash();
-            };
-
-            // Auto close after duration
-            var autoCloseTimer = null;
-            if (duration > 0) {
-                autoCloseTimer = setTimeout(function() {
-                    closeSplash();
-                }, duration * 1000);
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initSplash);
+            } else {
+                initSplash();
             }
-        });
+        })();
     </script>
     <?php
 }
